@@ -16,8 +16,13 @@
     "angular-route": "^1.5.8",
     "angular-ui-bootstrap": "^2.1.4",
     "autoprefixer": "^6.5.0",
+    "css-loader": "^0.25.0",
     "cssnano": "^3.7.5",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
     "ng-cache-loader": "0.0.21",
+    "postcss-loader": "^0.13.0",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.2"
   }
 }

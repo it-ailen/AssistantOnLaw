@@ -7,6 +7,7 @@ require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
 
+
 var app = angular.module("LA.mobile", [
     "ngRoute",
     "ui.bootstrap"

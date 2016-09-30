@@ -20,12 +20,8 @@ var config = {
     module: {
         loaders: [
             {
-                test: /\.css$/i,
-                loader: "style-loader!css-loader!postcss-loader"
-            },
-            {
                 test: /\.less$/i,
-                loader: "style-loader!css-loader!postcss-loader!less-loader"
+                loaders: ["style", "css", "less"]
             },
             {
                 test: /\.json$/i,

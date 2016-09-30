@@ -4,6 +4,8 @@
 
 "use strict";
 
+require("./view/style/home.less");
+
 function controller($scope) {
 
 }
