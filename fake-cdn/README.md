@@ -1,0 +1,1 @@
+Fake CDN server.
