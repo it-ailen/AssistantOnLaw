@@ -17,6 +17,7 @@
     "angular-ui-bootstrap": "^2.1.4",
     "autoprefixer": "^6.5.0",
     "cssnano": "^3.7.5",
+    "ng-cache-loader": "0.0.21",
     "webpack": "^1.13.2"
   }
 }
