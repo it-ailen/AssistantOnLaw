@@ -7,13 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config scripts/webpack.config.minified.js",
     "build.uncompressed": "webpack --config scripts/webpack.config.base.js",
-    "install": "scripts/install.sh"
+    "install": "bash scripts/install.sh"
   },
   "author": "Allen Zou",
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
+    "angular-ui-bootstrap": "^2.1.4",
     "autoprefixer": "^6.5.0",
     "cssnano": "^3.7.5",
     "webpack": "^1.13.2"
