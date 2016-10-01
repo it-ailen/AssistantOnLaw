@@ -1,5 +1,7 @@
 {
-  "title": "test",
+  "title_bar": {
+    "text": "LA"
+  },
   "carousel": [
     {
       "poster": "/ugc/demo.jpg",
@@ -10,7 +12,7 @@
     {
       "icon": "/ugc/icon-demo.jpg",
       "id": "123",
-      "text": "demo"
+      "text": "合同纠纷"
     }
   ]
 }

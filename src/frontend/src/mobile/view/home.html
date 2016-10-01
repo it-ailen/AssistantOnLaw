@@ -1,10 +1,18 @@
 <div id="page-mobile-home">
-  <div class="row title-bar">
-    test
-  </div>
+  <div class="row title-bar">{{ layout.title_bar.text }}</div>
   <div class="row carousel">
-    posters here
+    <div ng-repeat="poster in layout.carousel">
+      <div class="poster">
+        <img ng-src="{{ poster.poster }}">
+      </div>
+    </div>
   </div>
   <div class="row channels">
+    <div ng-repeat="channel in layout.channels">
+      <a href="#/channels/{{ channel.id }}" class="channel">
+        <img ng-src="{{ channel.icon }}">
+        <div class="text">{{ channel.text }}</div>
+      </a>
+    </div>
   </div>
 </div>

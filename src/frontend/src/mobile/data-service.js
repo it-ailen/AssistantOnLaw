@@ -51,6 +51,74 @@ function service($http, $q) {
         }
         return defer.promise;
     };
+    this.loadChannel = function(cid) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                // TODO load data from server
+                var d = $q.defer();
+                d.resolve({
+                    title: "test",
+                    poster: {
+                        url: "/ugc/demo.jpg",
+                        title: "test",
+                        description: "description"
+                    },
+                    entries: [
+                        {
+                            id: "2321",
+                            icon: "/ugc/icon-demo.jpg",
+                            text: "Test"
+                        }
+                    ]
+                });
+                return d.promise;
+            })
+            .then(function(data) {
+                defer.resolve(data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.loadEntry = function(eid) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                // TODO load data from server
+                var d = $q.defer();
+                d.resolve({
+                    title: "test",
+                    layout: "single-page",
+                    step: {
+                        id: "1312321",
+                        title: "测试",
+                        actions: [
+                            {
+                                id: "action12dsf",
+                                text: "action1"
+                            },
+                            {
+                                id: "action231d",
+                                text: "action2"
+                            }
+                        ]
+
+                    }
+                });
+                return d.promise;
+            })
+            .then(function(data) {
+                defer.resolve(data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
 }
 
 module.exports = service;

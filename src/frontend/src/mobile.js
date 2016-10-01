@@ -7,6 +7,8 @@ require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
 
+require("./common/common.less");
+
 
 var app = angular.module("LA.mobile", [
     "ngRoute",
@@ -16,14 +18,9 @@ var app = angular.module("LA.mobile", [
 var mobile = require("./mobile/entrance");
 mobile.register(app);
 
-app
-    .config(function($routeProvider) {
-        $routeProvider
-            .when("/", {
-                redirectTo: "/mobile"
-            })
-        ;
-    })
-;
+// app
+//     .config(function($routeProvider) {
+//     })
+// ;
 
 module.exports = app;
