@@ -1,0 +1,16 @@
+{
+  "title": "test",
+  "carousel": [
+    {
+      "poster": "/ugc/demo.jpg",
+      "title": "demo1"
+    }
+  ],
+  "channels": [
+    {
+      "icon": "/ugc/icon-demo.jpg",
+      "id": "123",
+      "text": "demo"
+    }
+  ]
+}

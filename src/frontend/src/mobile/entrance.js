@@ -7,12 +7,12 @@
 require('!!ng-cache?prefix=mobile/view/!./view/home.html');
 
 function register_controllers(app) {
-    app
+    app.service("MobileDataService", require("./data-service"))
         .controller("mobile.home", require("./home"))
         ;
     app.config(function($routeProvider) {
         route($routeProvider);
-    })
+    });
 }
 
 function route($routeProvider) {

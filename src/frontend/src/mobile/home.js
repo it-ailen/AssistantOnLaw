@@ -6,8 +6,16 @@
 
 require("./view/style/home.less");
 
-function controller($scope) {
-
+function controller($scope, MobileDataService) {
+    MobileDataService.loadHome()
+        .then(function(layout) {
+            $scope.layout = layout;
+            console.log(layout);
+        })
+        .catch(function(err) {
+            console.error(err);
+        })
+    ;
 }
 
 module.exports = controller;

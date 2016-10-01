@@ -6,11 +6,20 @@ services:
     ports:
       - 80:80
 #    tty: true
-#    volumes:
-#      - ./configs/sample:/configs
-#      - ./static:/static/root
+    volumes:
+      - ./fake-cdn:/data/cdn:ro
 #    links:
 #      - mysql
 #      - redis
 #    environment:
 #      - CONFIG=/configs/go.yaml
+  gateway.dev:
+    image: gateway.dev
+    build: .
+    ports:
+      - 80:80
+    volumes:
+      - ./fake-cdn:/data/cdn:ro
+      - ./src/frontend/entries:/data/www:ro
+
+
