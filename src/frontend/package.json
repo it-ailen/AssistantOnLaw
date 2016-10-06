@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config scripts/webpack.config.minified.js",
     "build.uncompressed": "webpack --config scripts/webpack.config.base.js",
-    "install": "bash scripts/install.sh"
+    "install": "bash scripts/install.sh",
+    "clean": "bash scripts/clean.sh"
   },
   "author": "Allen Zou",
   "license": "ISC",

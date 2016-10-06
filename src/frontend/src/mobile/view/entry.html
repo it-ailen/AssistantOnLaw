@@ -1,6 +1,20 @@
-<div id="page-mobile-channel">
+<div id="page-mobile-entry">
   <div class="row title-bar">
-    <a href="javascript:history.back()">返回</a>
-    <span>{{ entry.title }}</span>
+    <!--<a href="javascript:history.back()">返回</a>-->
+    <a href ng-click="back()">Back</a>
+    <span>{{ title }}</span>
+  </div>
+  <div class="row single-page" ng-if="entry.layout==='single-page'">
+    <div ng-repeat="step in steps" class="step" ng-class="stepStatus(step)">
+      <div class="title">{{ step.title }}</div>
+      <div class="choices">
+        <div class="choice" ng-repeat="action in step.actions">
+          <input type="radio" name="{{ step.id }}"
+                 ng-click="actionClick(action)">{{ action.text }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row multiple-pages" ng-if="entry.layout==='multiple-pages'">
   </div>
 </div>

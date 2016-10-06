@@ -4,8 +4,38 @@
 
 "use strict";
 
+var pageTypes = ["home", "channel", "entry", "report"];
+
 function service($http, $q) {
     var svc = this;
+    this.pageStack = [];
+    function type2index(type) {
+        var index = pageTypes.indexOf(type);
+        if (index >= 0) {
+            return index;
+        }
+        throw "Unknown type: " + type;
+    }
+    this.pagePush = function(type, meta) {
+        var index = type2index(type);
+        var data = {
+            type: type,
+            meta: meta
+        };
+        svc.pageStack.splice(index, svc.pageStack.length, data);
+    };
+    this.pagePopTo = function(type) {
+        var index = type2index(type);
+        svc.pageStack.splice(index + 1, svc.pageStack.length);
+    };
+    this.currentMeta = function(type) {
+        var index = type2index(type);
+        if (svc.pageStack.length > index) {
+            return svc.pageStack[index].meta;
+        } else {
+            throw "Current page is empty: " + type;
+        }
+    };
     this.getConfig = function(key) {
         var defer = $q.defer();
         if (svc.configs) {
@@ -98,15 +128,50 @@ function service($http, $q) {
                         actions: [
                             {
                                 id: "action12dsf",
+                                type: "step",
                                 text: "action1"
                             },
                             {
                                 id: "action231d",
+                                type: "report",
                                 text: "action2"
                             }
                         ]
 
                     }
+                });
+                return d.promise;
+            })
+            .then(function(data) {
+                defer.resolve(data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.loadStep = function(sid) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                // TODO load data from server
+                var d = $q.defer();
+                d.resolve({
+                    id: "1312321" + Math.random(),
+                    title: "测试",
+                    actions: [
+                        {
+                            id: "action12dsf",
+                            type: "step",
+                            text: "action1"
+                        },
+                        {
+                            id: "action231d",
+                            type: "report",
+                            text: "action2"
+                        }
+                    ]
                 });
                 return d.promise;
             })

@@ -3,7 +3,6 @@
 #page-mobile-channel {
   width: 100vw;
   .title-bar {
-
   }
   .poster {
     position: relative;
@@ -21,20 +20,28 @@
     }
   }
   @entry-height: 20;
+  @border: solid 1px #9c9c9c;
   .entries {
     .entry {
+      padding-left: 4vw;
       display: block;
       text-decoration: none;
       color: black;
-      padding-top: unit(@entry-height / 2, vw);
-      padding-left: 8vw;
-      padding-right: 8vw;
+      border-top: @border;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
       height: unit(@entry-height, vw);
+      &:last-of-type {
+        border-bottom: @border;
+      }
       img {
-        width: 10vw;
-        height: 10vw;
+        margin-top: unit(@entry-height * .2, vw);
+        width: unit(@entry-height * .6, vw);
+        height: unit(@entry-height * .6, vw);
       }
       .text {
+        margin-left: 2vw;
         font-size: unit(@entry-height / 2, vw);
         line-height: unit(@entry-height, vw);
       }

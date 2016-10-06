@@ -6,7 +6,11 @@
 
 require("./view/style/home.less");
 
-function controller($scope, MobileDataService) {
+function controller($scope, MobileDataService, $location) {
+    var homeData = {
+        url: $location.url()
+    };
+    MobileDataService.pagePush("home", homeData);
     MobileDataService.loadHome()
         .then(function(layout) {
             $scope.layout = layout;
