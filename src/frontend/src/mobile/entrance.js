@@ -7,12 +7,14 @@
 require('!!ng-cache?prefix=mobile/view/!./view/home.html');
 require('!!ng-cache?prefix=mobile/view/!./view/channel.html');
 require('!!ng-cache?prefix=mobile/view/!./view/entry.html');
+require('!!ng-cache?prefix=mobile/view/!./view/report.html');
 
 function register_controllers(app) {
     app.service("MobileDataService", require("./data-service"))
         .controller("mobile.home", require("./home"))
         .controller("mobile.channel", require("./channel"))
         .controller("mobile.entry", require("./entry"))
+        .controller("mobile.report", require("./report"))
     ;
     app.config(function($routeProvider) {
         route($routeProvider);
@@ -32,6 +34,10 @@ function route($routeProvider) {
         .when("/entries/:id", {
             controller: "mobile.entry",
             templateUrl: "mobile/view/entry.html"
+        })
+        .when("/reports/:id", {
+            controller: "mobile.report",
+            templateUrl: "mobile/view/report.html"
         })
         .when("/", {
             redirectTo: "/home"

@@ -12,6 +12,7 @@ var config = {
     },
     output: {
         path: path.resolve(__dirname, "../entries/dist"),
+        publicPath: "./dist/",
         filename: "[name].js"
     },
     resolve: {
@@ -24,12 +25,20 @@ var config = {
                 loaders: ["style", "css", "less"]
             },
             {
+                test: /\.css$/i,
+                loaders: ["style", "css"]
+            },
+            {
                 test: /\.json$/i,
                 loader: "json"
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loader: "url-loader?limit=10000&name=images/[name].[ext]"
+            },
+            {
+                test: /\.(ttf|eot|woff2?)$/,
+                loader: 'file?name=etc/[name].[ext]'
             }
         ]
     },

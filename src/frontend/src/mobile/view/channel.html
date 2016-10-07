@@ -1,16 +1,18 @@
 <div id="page-mobile-channel">
-  <div class="row title-bar">
-    <a href="#/">主页</a>
+  <div class="title-bar">
+    <a href="#/">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
     <span>{{ channel.title }}</span>
   </div>
-  <div class="row poster">
+  <div class="poster">
     <img ng-src="{{ channel.poster.url }}">
     <div class="text">
       <div class="title">{{ channel.poster.title }}</div>
       <div class="description">{{ channel.poster.description }}</div>
     </div>
   </div>
-  <div class="row entries">
+  <div class="entries">
     <a ng-repeat="entry in channel.entries" href="#/entries/{{ entry.id }}" class="entry">
       <img ng-src="{{ entry.icon }}">
       <span class="text">{{ entry.text }}</span>

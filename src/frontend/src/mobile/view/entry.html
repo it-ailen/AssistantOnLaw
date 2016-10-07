@@ -1,10 +1,12 @@
 <div id="page-mobile-entry">
-  <div class="row title-bar">
+  <div class="title-bar">
     <!--<a href="javascript:history.back()">返回</a>-->
-    <a href ng-click="back()">Back</a>
+    <a href="#/channels/{{ entry.channelId }}">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
     <span>{{ title }}</span>
   </div>
-  <div class="row single-page" ng-if="entry.layout==='single-page'">
+  <div class="single-page" ng-if="entry.layout==='single-page'">
     <div ng-repeat="step in steps" class="step" ng-class="stepStatus(step)">
       <div class="title">{{ step.title }}</div>
       <div class="choices">
@@ -15,6 +17,6 @@
       </div>
     </div>
   </div>
-  <div class="row multiple-pages" ng-if="entry.layout==='multiple-pages'">
+  <div class="multiple-pages" ng-if="entry.layout==='multiple-pages'">
   </div>
 </div>

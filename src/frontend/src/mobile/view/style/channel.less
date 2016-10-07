@@ -23,6 +23,7 @@
   @border: solid 1px #9c9c9c;
   .entries {
     .entry {
+      position: relative;
       padding-left: 4vw;
       display: block;
       text-decoration: none;
@@ -36,12 +37,14 @@
         border-bottom: @border;
       }
       img {
-        margin-top: unit(@entry-height * .2, vw);
+        //margin-top: unit(@entry-height * .2, vw);
         width: unit(@entry-height * .6, vw);
         height: unit(@entry-height * .6, vw);
+        position: absolute;
+        top: unit(@entry-height * .2, vw);
       }
       .text {
-        margin-left: 2vw;
+        margin-left: unit(@entry-height * .6 + 2, vw);
         font-size: unit(@entry-height / 2, vw);
         line-height: unit(@entry-height, vw);
       }

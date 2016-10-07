@@ -29,12 +29,15 @@ function service($http, $q) {
         svc.pageStack.splice(index + 1, svc.pageStack.length);
     };
     this.currentMeta = function(type) {
+        console.log("type: " + type);
         var index = type2index(type);
+        console.log("index");
         if (svc.pageStack.length > index) {
+            console.log(svc.pageStack);
+            console.log(index);
             return svc.pageStack[index].meta;
-        } else {
-            throw "Current page is empty: " + type;
         }
+        throw "Current page is empty: " + type;
     };
     this.getConfig = function(key) {
         var defer = $q.defer();
@@ -89,6 +92,7 @@ function service($http, $q) {
                 var d = $q.defer();
                 d.resolve({
                     title: "test",
+                    id: cid,
                     poster: {
                         url: "/ugc/demo.jpg",
                         title: "test",
@@ -122,6 +126,8 @@ function service($http, $q) {
                 d.resolve({
                     title: "test",
                     layout: "single-page",
+                    channelId: "123",
+                    id: eid,
                     step: {
                         id: "1312321",
                         title: "测试",
@@ -134,6 +140,7 @@ function service($http, $q) {
                             {
                                 id: "action231d",
                                 type: "report",
+                                channelId: "123",
                                 text: "action2"
                             }
                         ]
@@ -160,6 +167,7 @@ function service($http, $q) {
                 d.resolve({
                     id: "1312321" + Math.random(),
                     title: "测试",
+                    channelId: "123",
                     actions: [
                         {
                             id: "action12dsf",
@@ -169,7 +177,45 @@ function service($http, $q) {
                         {
                             id: "action231d",
                             type: "report",
+                            channelId: "123",
                             text: "action2"
+                        }
+                    ]
+                });
+                return d.promise;
+            })
+            .then(function(data) {
+                defer.resolve(data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.loadReport = function(rid) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                // TODO load data from server
+                var d = $q.defer();
+                d.resolve({
+                    id: rid,
+                    title: "测试",
+                    channelId: "123",
+                    conclusion: {
+                        detail: "测试结论"
+                    },
+                    decrees: [
+                        {
+                            source: "《中国人民共和国宪法》",
+                            content: "第一款第一条: 测试"
+                        }
+                    ],
+                    cases: [
+                        {
+                            intro: "案例简介",
+                            link: "http://detail..."
                         }
                     ]
                 });

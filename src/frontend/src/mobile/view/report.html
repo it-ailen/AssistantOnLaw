@@ -1,0 +1,29 @@
+<div id="page-mobile-report">
+  <div class="title-bar">
+    <!--<a href="javascript:history.back()">返回</a>-->
+    <a href="#/channels/{{ report.channelId }}">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <span>{{ title }}</span>
+  </div>
+  <div class="conclusion">
+    <div class="title">结论</div>
+    <div class="detail">{{ report.conclusion.detail }}</div>
+  </div>
+  <div class="decrees" ng-if="report.decrees && report.decrees.length > 0">
+    <div class="title">法条</div>
+    <div class="detail">
+      <div class="decree" ng-repeat="decree in report.decrees">
+        {{ decree.content }}<span class="source">({{ decree.source }})</span>
+      </div>
+    </div>
+  </div>
+  <div class="cases" ng-if="report.cases && report.cases.length > 0">
+    <div class="title">案例</div>
+    <div class="detail">
+      <div class="case" ng-repeat="case in report.cases">
+        {{ case.intro }}<a href="{{ case.link }}" class="link">查看详情</a>
+      </div>
+    </div>
+  </div>
+</div>
