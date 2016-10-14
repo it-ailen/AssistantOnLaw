@@ -177,7 +177,7 @@
 
 
 	// module
-	exports.push([module.id, ".tree {\n  overflow: auto;\n}\n.tree .node .directory-level {\n  padding-right: 4px;\n  white-space: nowrap;\n}\n.tree .node .sub-node {\n  padding-left: 14px;\n}\n", ""]);
+	exports.push([module.id, ".tree {\n  overflow: auto;\n}\n.tree .node .directory-level {\n  padding-right: 4px;\n  white-space: nowrap;\n  font-size: 16px;\n  line-height: 16px;\n}\n.tree .node .directory-level > .icon {\n  height: 16px;\n}\n.tree .node .sub-node {\n  padding-left: 14px;\n}\n", ""]);
 
 	// exports
 
@@ -245,7 +245,7 @@
 	var angular=window.angular,ngModule;
 	try {ngModule=angular.module(["ng"])}
 	catch(e){ngModule=angular.module("ng",[])}
-	var v1="<div ng-class=\"node_class()\">\n<div class=\"directory-level\" ng-click=\"node_click()\">\n<img ng-src=\"{{ resolve_icon() }}\">\n<span>{{ adapter(item).text }}</span>\n</div>\n<div class=\"sub-node\" ng-if=\"open\" ng-repeat=\"node in subNodes\">\n<tree-node item=\"node\" adapter=\"adapter\" icon=\"icon\" folder-open=\"folderOpen\" folder-close=\"folderClose\" leaf-click=\"leafClick\" children-loader=\"childrenLoader\">\n</tree-node>\n</div>\n</div>";
+	var v1="<div ng-class=\"node_class()\">\n<div class=\"directory-level\" ng-click=\"node_click()\">\n<img class=\"icon\" ng-src=\"{{ resolve_icon() }}\">\n<span>{{ adapter(item).text }}</span>\n</div>\n<div class=\"sub-node\" ng-if=\"open\" ng-repeat=\"node in subNodes\">\n<tree-node item=\"node\" adapter=\"adapter\" icon=\"icon\" folder-open=\"folderOpen\" folder-close=\"folderClose\" leaf-click=\"leafClick\" children-loader=\"childrenLoader\">\n</tree-node>\n</div>\n</div>";
 	var id1="directive/tree/node.html";
 	var inj=angular.element(window.document).injector();
 	if(inj){inj.get("$templateCache").put(id1,v1);}
