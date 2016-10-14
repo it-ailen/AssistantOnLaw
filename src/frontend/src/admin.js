@@ -8,20 +8,19 @@ require("angular-route");
 require("angular-ui-bootstrap");
 require("bootstrap/dist/css/bootstrap.css");
 
+require("./libs/treeview");
+
 require("./common/common.less");
+require("./common/grid.less");
 
 
-var app = angular.module("LA.mobile", [
+var app = angular.module("LA.admin", [
     "ngRoute",
-    "ui.bootstrap"
+    "ui.bootstrap",
+    "tree"
 ]);
 
-var mobile = require("./mobile/entrance");
-mobile.register(app);
-
-// app
-//     .config(function($routeProvider) {
-//     })
-// ;
+var admin = require("./admin/entrance");
+admin.register(app);
 
 module.exports = app;

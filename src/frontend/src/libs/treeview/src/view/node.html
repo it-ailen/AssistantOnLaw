@@ -1,0 +1,12 @@
+<div ng-class="node_class()">
+  <div class="directory-level" ng-click="node_click()">
+    <img ng-src="{{ resolve_icon() }}">
+    <span>{{ adapter(item).text }}</span>
+  </div>
+  <div class="sub-node" ng-if="open" ng-repeat="node in subNodes">
+    <tree-node item="node" adapter="adapter" icon="icon"
+               folder-open="folderOpen" folder-close="folderClose"
+               leaf-click="leafClick" children-loader="childrenLoader">
+    </tree-node>
+  </div>
+</div>

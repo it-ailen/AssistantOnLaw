@@ -1,0 +1,23 @@
+.grid-col {
+  float: left;
+}
+
+.grid-col-loop(@i, @column-num) when (@i > 0) {
+  .grid-col-loop(@i - 1, @column-num);
+  .grid-col-@{i} {
+    width: percentage(@i / @column-num);
+    .grid-col;
+  }
+}
+
+.grid-col-generator(@n: 20) {
+  .grid-col-loop(@n, @n);
+}
+
+.grid-row {
+  width: 100%;
+}
+
+.grid-col-generator();
+
+

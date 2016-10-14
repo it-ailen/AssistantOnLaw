@@ -1,0 +1,12 @@
+{
+  "name": "treeview",
+  "version": "0.0.1",
+  "author": "Allen Zou",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config build/webpack.config.base.js"
+  },
+  "dependencies": {
+    "webpack": "^1.13.2"
+  }
+}

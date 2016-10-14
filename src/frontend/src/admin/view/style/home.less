@@ -1,0 +1,40 @@
+#page-admin-home {
+  .current {
+    pointer-events: none;
+    background-color: white;
+  }
+  .standard {
+    width: 0;
+    height: 100%!important;
+  }
+  background-color: #dcdcdc;
+  @admin-panel-title-height: 40;
+  @admin-panel-title-height-unit: unit(@admin-panel-title-height, px);
+  .channel {
+    .panel-title {
+      position: relative;
+      height: @admin-panel-title-height-unit;
+      .icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: @admin-panel-title-height-unit;
+        height: @admin-panel-title-height-unit;
+        img {
+          position: absolute;
+          top: 20%;
+          left: 20%;
+          width: 60%;
+          height: 60%;
+        }
+      }
+      .text {
+        position: absolute;
+        top: 0;
+        left: @admin-panel-title-height-unit;
+        font-size: unit(@admin-panel-title-height * .8, px);
+        line-height: @admin-panel-title-height-unit;
+      }
+    }
+  }
+}

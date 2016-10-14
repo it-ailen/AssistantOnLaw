@@ -24,3 +24,5 @@ _testmain.go
 *.prof
 
 .idea
+.DS_store
+node_modules

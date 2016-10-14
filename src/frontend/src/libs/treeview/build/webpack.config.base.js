@@ -8,17 +8,15 @@ const cssnano = require('cssnano');
 
 var config = {
     entry: {
-        mobile: "./src/mobile.js",
-        admin: "./src/admin.js"
+        tree: "./src/tree.js"
     },
     output: {
-        path: path.resolve(__dirname, "../entries/dist"),
-        publicPath: "./dist/",
+        path: path.resolve(__dirname, ".."),
         filename: "[name].js"
     },
-    resolve: {
-        root: path.resolve(__dirname, "./src")
-    },
+    // resolve: {
+    //     root: path.resolve(__dirname, "./src")
+    // },
     module: {
         loaders: [
             {
@@ -30,10 +28,6 @@ var config = {
                 loaders: ["style", "css"]
             },
             {
-                test: /\.json$/i,
-                loader: "json"
-            },
-            {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loader: "url-loader?limit=10000&name=images/[name].[ext]"
             },
@@ -42,11 +36,6 @@ var config = {
                 loader: 'file?name=etc/[name].[ext]'
             }
         ]
-    },
-    postcss: function () {
-        return {
-            plugins: [autoprefixer, cssnano]
-        };
     },
     plugins: [
         new webpack.optimize.DedupePlugin(),
