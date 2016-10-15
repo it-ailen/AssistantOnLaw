@@ -1,6 +1,7 @@
 <div ng-class="tree_class()">
-  <tree-node item="root" adapter="adapter" icon="icon"
+  <tree-node item="root" adapter="itemAdapter" icon="icon"
              folder-open="folderOpen" folder-close="folderClose"
-             leaf-click="leafClick" children-loader="childrenLoader">
+             leaf-click="leafClick" children-loader="childrenLoader"
+             add-item="addItem" remove-item="removeItem">
   </tree-node>
 </div>

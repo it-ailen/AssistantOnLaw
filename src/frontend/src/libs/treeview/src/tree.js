@@ -12,6 +12,8 @@ require("./view/tree.less");
 var fileIcon = require("./view/imgs/file.png");
 var folderIcon = require("./view/imgs/folder.png");
 var closedFolderIcon = require("./view/imgs/folder-closed.png");
+var plusIcon = require("./view/imgs/plus.png");
+var removeIcon = require("./view/imgs/remove.png");
 
 var tree = angular.module("tree", []);
 tree
@@ -24,7 +26,9 @@ tree
                 folderOpen: "=",
                 folderClose: "=",
                 leafClick: "=",
-                childrenLoader: "="
+                childrenLoader: "=",
+                addItem: "=",
+                removeItem: "="
             },
             require: [],
             restrict: "E",
@@ -32,6 +36,8 @@ tree
             link: function($scope, element, attributes, controllers) {
                 console.log("link tree node");
                 $scope.open = false;
+                $scope.add_btn = plusIcon;
+                $scope.remove_btn = removeIcon;
                 $scope.node_click = function() {
                     if ($scope.item) {
                         var adaptedItem = $scope.adapter && $scope.adapter($scope.item);
@@ -43,10 +49,7 @@ tree
                             else {
                                 $scope.open = true;
                                 $scope.folderOpen && $scope.folderOpen($scope.item);
-                                console.log("load subitems now");
-                                console.log($scope.childrenLoader);
                                 $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
-                                console.log($scope.subNodes);
                             }
                         }
                         else {
@@ -86,13 +89,35 @@ tree
                     }
                     return classes;
                 };
+                $scope.add_child = function() {
+                    console.log("add_child...")
+                    if ($scope.addItem) {
+                        console.log("call addItemWorker...")
+                        $scope.addItem($scope.item)
+                            .then(function() {
+                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+                            })
+                        ;
+                    }
+                    return false;
+                };
+                $scope.remove_self = function() {
+                    if ($scope.removeItem) {
+                        $scope.removeItem($scope.item)
+                            .then(function() {
+                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+                            })
+                        ;
+                    }
+                    return false;
+                };
             }
         };
     })
     .directive("tree", function () {
         var link = function($scope, element, attributes, controllers) {
             console.log($scope.root);
-            $scope.adapter = $scope.itemAdapter || function(item) {
+            $scope.itemAdapter = $scope.adapter || function(item) {
                     console.log("in tree .adapter");
                     return item;
                 };
@@ -104,12 +129,14 @@ tree
         return {
             scope: {
                 root: "=root",
-                itemAdapter: "=adapter",
+                adapter: "=",
                 icon: "=",
                 folderOpen: "=",
                 folderClose: "=",
                 leafClick: "=",
-                childrenLoader: "="
+                childrenLoader: "=",
+                addItem: "=",
+                removeItem: "="
             },
             require: [],
             restrict: "E",

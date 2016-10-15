@@ -6,7 +6,7 @@
 
 require("./view/style/home.less");
 
-function controller($scope, AdminDataService) {
+function controller($scope, AdminDataService, $q) {
     $scope.status = {};
     AdminDataService.loadChannels()
         .then(function(channels) {
@@ -71,6 +71,20 @@ function controller($scope, AdminDataService) {
                 title: "Report test"
             }
         ];
+    };
+    $scope.add_item = function(parent) {
+        var defer = $q.defer();
+        console.log("add item now");
+        console.log(parent);
+        defer.resolve();
+        return defer.promise;
+    };
+    $scope.remove_item = function(item) {
+        var defer = $q.defer();
+        console.log("remove item now");
+        console.log(parent);
+        defer.resolve();
+        return defer.promise;
     };
 }
 

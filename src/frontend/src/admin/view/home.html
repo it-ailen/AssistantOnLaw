@@ -19,18 +19,10 @@
     <div class="panel panel-default">
       <div class="panel-title">Entry</div>
       <div class="panel-body">
-        <!--<div class="panel panel-default entry" ng-repeat="entry in entries"-->
-             <!--ng-class="entryClass(entry)" ng-click="entryClick(entry)">-->
-          <!--<div class="panel-title">-->
-            <!--<div class="icon">-->
-              <!--<img ng-src="{{ entry.icon }}">-->
-            <!--</div>-->
-            <!--<div class="text">{{ entry.text }}</div>-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="panel panel-default entry" ng-repeat="entry in entries">
           <tree root="entry" adapter="entry_adapter"
-                children-loader="load_children">
+                children-loader="load_children"
+                add-item="add_item" remove-item="remove_item">
           </tree>
         </div>
       </div>
