@@ -40,6 +40,10 @@ var config = {
             {
                 test: /\.(ttf|eot|woff2?)$/,
                 loader: 'file?name=etc/[name].[ext]'
+            },
+            {
+                test: /\.html$/i,
+                loaders: ["html"]
             }
         ]
     },

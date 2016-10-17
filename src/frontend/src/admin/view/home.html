@@ -22,9 +22,39 @@
         <div class="panel panel-default entry" ng-repeat="entry in entries">
           <tree root="entry" adapter="entry_adapter"
                 children-loader="load_children"
-                add-item="add_item" remove-item="remove_item">
+                add-item="add_item" remove-item="remove_item"
+                node-click="item_click">
           </tree>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-col-8">
+    <div class="panel panel-default" ng-show="currentItem">
+      <div class="panel-title">{{ currentItem.type }}</div>
+      <div class="panel-body" ng-if="currentItem.type==='step'">
+        <table class="table">
+          <tr>
+            <td>id</td>
+            <td>{{ currentItem.id }}</td>
+          </tr>
+          <tr>
+            <td>text</td>
+            <td>{{ currentItem.text }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="panel-body" ng-if="currentItem.type==='report'">
+        <table class="table">
+          <tr>
+            <td>id</td>
+            <td>{{ currentItem.id }}</td>
+          </tr>
+          <tr>
+            <td>title</td>
+            <td>{{ currentItem.title }}</td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>

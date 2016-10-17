@@ -71,7 +71,7 @@
 	                icon: "=",
 	                folderOpen: "=",
 	                folderClose: "=",
-	                leafClick: "=",
+	                nodeClick: "=",
 	                childrenLoader: "=",
 	                addItem: "=",
 	                removeItem: "="
@@ -84,9 +84,16 @@
 	                $scope.open = false;
 	                $scope.add_btn = plusIcon;
 	                $scope.remove_btn = removeIcon;
-	                $scope.node_click = function() {
+	                function load_children() {
+	                    var children = [];
+	                    if ($scope.childrenLoader) {
+	                        children = $scope.childrenLoader($scope.item);
+	                    }
+	                    $scope.subNodes = children;
+	                }
+	                $scope.wrap_node_click = function() {
 	                    if ($scope.item) {
-	                        var adaptedItem = $scope.adapter && $scope.adapter($scope.item);
+	                        var adaptedItem = $scope.adapter($scope.item);
 	                        if (adaptedItem.type === "branch") {
 	                            if ($scope.open) {
 	                                $scope.open = false;
@@ -95,18 +102,17 @@
 	                            else {
 	                                $scope.open = true;
 	                                $scope.folderOpen && $scope.folderOpen($scope.item);
-	                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+	                                load_children();
 	                            }
 	                        }
-	                        else {
-	                            $scope.leafClick && $scope.leafClick($scope.item);
-	                        }
+	                        $scope.nodeClick && $scope.nodeClick($scope.item);
+
 	                    }
 	                    return false;
 	                };
 	                $scope.resolve_icon = function() {
 	                    var icon = null;
-	                    var adaptedItem = $scope.adapter && $scope.adapter($scope.item);
+	                    var adaptedItem = $scope.adapter($scope.item);
 	                    if (adaptedItem.type === 'branch') {
 	                        icon = ($scope.icon && $scope.icon($scope.item, $scope.open))
 	                            || (!$scope.open && closedFolderIcon)
@@ -120,7 +126,7 @@
 	                };
 	                $scope.node_class = function() {
 	                    var classes = ["node"];
-	                    var adaptedItem = $scope.adapter && $scope.adapter($scope.item);
+	                    var adaptedItem = $scope.adapter($scope.item);
 	                    if (adaptedItem.type === 'branch') {
 	                        classes.push("branch");
 	                        if ($scope.open) {
@@ -141,7 +147,7 @@
 	                        console.log("call addItemWorker...")
 	                        $scope.addItem($scope.item)
 	                            .then(function() {
-	                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+	                                load_children();
 	                            })
 	                        ;
 	                    }
@@ -151,7 +157,7 @@
 	                    if ($scope.removeItem) {
 	                        $scope.removeItem($scope.item)
 	                            .then(function() {
-	                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+	                                load_children();
 	                            })
 	                        ;
 	                    }
@@ -179,7 +185,7 @@
 	                icon: "=",
 	                folderOpen: "=",
 	                folderClose: "=",
-	                leafClick: "=",
+	                nodeClick: "=",
 	                childrenLoader: "=",
 	                addItem: "=",
 	                removeItem: "="
@@ -272,7 +278,7 @@
 	var angular=window.angular,ngModule;
 	try {ngModule=angular.module(["ng"])}
 	catch(e){ngModule=angular.module("ng",[])}
-	var v1="<div ng-class=\"node_class()\">\n<div class=\"directory-level\" ng-click=\"node_click()\">\n<img class=\"icon\" ng-src=\"{{ resolve_icon() }}\">\n<span>{{ adapter(item).text }}</span>\n<div class=\"operation\" ng-click=\"$event.stopPropagation()\">\n<a href class=\"add\" ng-click=\"add_child()\" ng-if=\"adapter(item).type==='branch'\">\n<img ng-src=\"{{ add_btn }}\">\n</a>\n<a href class=\"remove\" ng-click=\"remove_self()\">\n<img ng-src=\"{{ remove_btn }}\">\n</a>\n</div>\n</div>\n<div class=\"sub-node\" ng-if=\"open\" ng-repeat=\"node in subNodes\">\n<tree-node item=\"node\" adapter=\"adapter\" icon=\"icon\" folder-open=\"folderOpen\" folder-close=\"folderClose\" leaf-click=\"leafClick\" children-loader=\"childrenLoader\" add-item=\"addItem\" remove-item=\"removeItem\">\n</tree-node>\n</div>\n</div>";
+	var v1="<div ng-class=\"node_class()\">\n<div class=\"directory-level\" ng-click=\"wrap_node_click()\">\n<img class=\"icon\" ng-src=\"{{ resolve_icon() }}\">\n<span>{{ adapter(item).text }}</span>\n<div class=\"operation\" ng-click=\"$event.stopPropagation()\">\n<a href class=\"add\" ng-click=\"add_child()\" ng-if=\"adapter(item).type==='branch'\">\n<img ng-src=\"{{ add_btn }}\">\n</a>\n<a href class=\"remove\" ng-click=\"remove_self()\">\n<img ng-src=\"{{ remove_btn }}\">\n</a>\n</div>\n</div>\n<div class=\"sub-node\" ng-if=\"open\" ng-repeat=\"node in subNodes\">\n<tree-node item=\"node\" adapter=\"adapter\" icon=\"icon\" folder-open=\"folderOpen\" folder-close=\"folderClose\" node-click=\"nodeClick\" children-loader=\"childrenLoader\" add-item=\"addItem\" remove-item=\"removeItem\">\n</tree-node>\n</div>\n</div>";
 	var id1="directive/tree/node.html";
 	var inj=angular.element(window.document).injector();
 	if(inj){inj.get("$templateCache").put(id1,v1);}
@@ -286,7 +292,7 @@
 	var angular=window.angular,ngModule;
 	try {ngModule=angular.module(["ng"])}
 	catch(e){ngModule=angular.module("ng",[])}
-	var v1="<div ng-class=\"tree_class()\">\n<tree-node item=\"root\" adapter=\"itemAdapter\" icon=\"icon\" folder-open=\"folderOpen\" folder-close=\"folderClose\" leaf-click=\"leafClick\" children-loader=\"childrenLoader\" add-item=\"addItem\" remove-item=\"removeItem\">\n</tree-node>\n</div>";
+	var v1="<div ng-class=\"tree_class()\">\n<tree-node item=\"root\" adapter=\"itemAdapter\" icon=\"icon\" folder-open=\"folderOpen\" folder-close=\"folderClose\" node-click=\"nodeClick\" children-loader=\"childrenLoader\" add-item=\"addItem\" remove-item=\"removeItem\">\n</tree-node>\n</div>";
 	var id1="directive/tree/tree.html";
 	var inj=angular.element(window.document).injector();
 	if(inj){inj.get("$templateCache").put(id1,v1);}

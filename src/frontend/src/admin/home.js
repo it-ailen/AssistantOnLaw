@@ -6,7 +6,7 @@
 
 require("./view/style/home.less");
 
-function controller($scope, AdminDataService, $q) {
+function controller($scope, AdminDataService, $q, ngDialog) {
     $scope.status = {};
     AdminDataService.loadChannels()
         .then(function(channels) {
@@ -64,19 +64,50 @@ function controller($scope, AdminDataService, $q) {
         return [
             {
                 type: "step",
-                text: "测试"
+                text: "测试",
+                id: "sfsadfdf"
             },
             {
-                type: "report",
-                title: "Report test"
+                id: rid,
+                title: "测试",
+                channelId: "123",
+                conclusion: {
+                    detail: "测试结论"
+                },
+                decrees: [
+                    {
+                        source: "《中国人民共和国宪法》",
+                        content: "第一款第一条: 测试"
+                    }
+                ],
+                cases: [
+                    {
+                        intro: "案例简介",
+                        link: "http://detail..."
+                    }
+                ]
             }
         ];
     };
     $scope.add_item = function(parent) {
         var defer = $q.defer();
-        console.log("add item now");
         console.log(parent);
-        defer.resolve();
+        var dialog = ngDialog.open({
+            template: require("./view/form/step.or.report.html"),
+            plain: true,
+            controller: require("./form.step.or.report"),
+            data: {
+                parent: parent
+            },
+            closeByDocument: false
+        });
+        dialog.closePromise
+            .then(function(data) {
+                console.log("!!!!")
+                console.log(data);
+                defer.resolve(data);
+            })
+        ;
         return defer.promise;
     };
     $scope.remove_item = function(item) {
@@ -85,6 +116,11 @@ function controller($scope, AdminDataService, $q) {
         console.log(parent);
         defer.resolve();
         return defer.promise;
+    };
+    $scope.item_click = function(item) {
+        console.log("item clicked");
+        console.log(item);
+        $scope.currentItem = item;
     };
 }
 

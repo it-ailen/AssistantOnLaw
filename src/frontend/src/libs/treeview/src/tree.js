@@ -25,7 +25,7 @@ tree
                 icon: "=",
                 folderOpen: "=",
                 folderClose: "=",
-                leafClick: "=",
+                nodeClick: "=",
                 childrenLoader: "=",
                 addItem: "=",
                 removeItem: "="
@@ -34,13 +34,19 @@ tree
             restrict: "E",
             templateUrl: "directive/tree/node.html",
             link: function($scope, element, attributes, controllers) {
-                console.log("link tree node");
                 $scope.open = false;
                 $scope.add_btn = plusIcon;
                 $scope.remove_btn = removeIcon;
-                $scope.node_click = function() {
+                function load_children() {
+                    var children = [];
+                    if ($scope.childrenLoader) {
+                        children = $scope.childrenLoader($scope.item);
+                    }
+                    $scope.subNodes = children;
+                }
+                $scope.wrap_node_click = function() {
                     if ($scope.item) {
-                        var adaptedItem = $scope.adapter && $scope.adapter($scope.item);
+                        var adaptedItem = $scope.adapter($scope.item);
                         if (adaptedItem.type === "branch") {
                             if ($scope.open) {
                                 $scope.open = false;
@@ -49,18 +55,17 @@ tree
                             else {
                                 $scope.open = true;
                                 $scope.folderOpen && $scope.folderOpen($scope.item);
-                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+                                load_children();
                             }
                         }
-                        else {
-                            $scope.leafClick && $scope.leafClick($scope.item);
-                        }
+                        $scope.nodeClick && $scope.nodeClick($scope.item);
+
                     }
                     return false;
                 };
                 $scope.resolve_icon = function() {
                     var icon = null;
-                    var adaptedItem = $scope.adapter && $scope.adapter($scope.item);
+                    var adaptedItem = $scope.adapter($scope.item);
                     if (adaptedItem.type === 'branch') {
                         icon = ($scope.icon && $scope.icon($scope.item, $scope.open))
                             || (!$scope.open && closedFolderIcon)
@@ -74,7 +79,7 @@ tree
                 };
                 $scope.node_class = function() {
                     var classes = ["node"];
-                    var adaptedItem = $scope.adapter && $scope.adapter($scope.item);
+                    var adaptedItem = $scope.adapter($scope.item);
                     if (adaptedItem.type === 'branch') {
                         classes.push("branch");
                         if ($scope.open) {
@@ -95,7 +100,7 @@ tree
                         console.log("call addItemWorker...")
                         $scope.addItem($scope.item)
                             .then(function() {
-                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+                                load_children();
                             })
                         ;
                     }
@@ -105,7 +110,7 @@ tree
                     if ($scope.removeItem) {
                         $scope.removeItem($scope.item)
                             .then(function() {
-                                $scope.subNodes = $scope.childrenLoader && $scope.childrenLoader($scope.item);
+                                load_children();
                             })
                         ;
                     }
@@ -116,7 +121,6 @@ tree
     })
     .directive("tree", function () {
         var link = function($scope, element, attributes, controllers) {
-            console.log($scope.root);
             $scope.itemAdapter = $scope.adapter || function(item) {
                     console.log("in tree .adapter");
                     return item;
@@ -133,7 +137,7 @@ tree
                 icon: "=",
                 folderOpen: "=",
                 folderClose: "=",
-                leafClick: "=",
+                nodeClick: "=",
                 childrenLoader: "=",
                 addItem: "=",
                 removeItem: "="

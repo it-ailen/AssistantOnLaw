@@ -8,6 +8,9 @@
     width: percentage(@i / @column-num);
     .grid-col;
   }
+  .grid-col-offset-@{i} {
+    margin-left: percentage(@i / @column-num);
+  }
 }
 
 .grid-col-generator(@n: 20) {
