@@ -53,7 +53,6 @@ func NewHTTPError(code int, err string, detail string) (*HTTPError) {
 func NewDefaultHTTPError() (*HTTPError) {
 	return &HTTPError{
 		StatusCode: 200,
-		StatusCode: http.StatusOK,
 		ErrorCode: ErrorOK,
 	}
 }
@@ -96,54 +95,35 @@ func (self *NotFoundHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 type Handler func(w http.ResponseWriter, r *http.Request)
 
-type BaseHandler struct {
-	HandlerMap map[string][]Handler
+type Method func(w http.ResponseWriter, r *http.Request) (*HTTPError)
+
+type GetMethod interface {
+	GET(w http.ResponseWriter, r *http.Request) *HTTPError
 }
 
-func (self *BaseHandler) GET(w http.ResponseWriter, r *http.Request) *HTTPError {
-	return &HTTPError{
-		StatusCode: 405,
-		ErrorCode: ErrorMethodNotAllowed,
+type PostMethod interface {
+	POST(w http.ResponseWriter, r *http.Request) *HTTPError
+}
+
+type PutMethod interface {
+	PUT(w http.ResponseWriter, r *http.Request) *HTTPError
+}
+
+type DeleteMethod interface {
+	DELETE(w http.ResponseWriter, r *http.Request) *HTTPError
+}
+
+/**
+统一执行ServeHTTP的方法，规范接口，由具体的 http.Handler 类在 ServeHTTP 方法中调用。
+ */
+func DoServeHTTP(self interface{}, w http.ResponseWriter, r *http.Request) {
+	if _, ok := self.(http.Handler); !ok {
+		panic("The instance is invalid")
 	}
+	serveHTTP(self, w, r)
 }
 
-func (self *BaseHandler) POST(w http.ResponseWriter, r *http.Request) *HTTPError {
-	return &HTTPError{
-		StatusCode: 405,
-		ErrorCode: ErrorMethodNotAllowed,
-	}
-}
-
-func (self *BaseHandler) PUT(w http.ResponseWriter, r *http.Request) *HTTPError {
-	return &HTTPError{
-		StatusCode: 405,
-		ErrorCode: ErrorMethodNotAllowed,
-	}
-}
-
-func (self *BaseHandler) DELETE(w http.ResponseWriter, r *http.Request) *HTTPError {
-	return &HTTPError{
-		StatusCode: 405,
-		ErrorCode: ErrorMethodNotAllowed,
-	}
-}
-
-func (self *BaseHandler) HEAD(w http.ResponseWriter, r *http.Request) *HTTPError {
-	return &HTTPError{
-		StatusCode: 405,
-		ErrorCode: ErrorMethodNotAllowed,
-	}
-}
-
-func (self *BaseHandler) Init() {
-	self.HandlerMap = make(map[string][]Handler)
-}
-
-func (self *BaseHandler) RegisterMethod(method string, handlers ...Handler) {
-	self.HandlerMap[method] = handlers
-}
-
-func (self *BaseHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func serveHTTP(self interface{}, w http.ResponseWriter, r *http.Request) {
 	var err *HTTPError
 	defer func() {
 		if tmp := recover(); tmp != nil {
@@ -164,29 +144,36 @@ func (self *BaseHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}()
+	err = &HTTPError{
+		StatusCode: 405,
+		ErrorCode: ErrorMethodNotAllowed,
+		Detail: fmt.Sprintf("Method `%s` isn't allowed", r.Method),
+	}
 	switch r.Method {
 	case "GET":
-		err = self.GET(w, r)
-	case "POST":
-		err = self.POST(w, r)
-	case "PUT":
-		err = self.PUT(w, r)
-	case "DELETE":
-		err = self.DELETE(w, r)
-	case "HEAD":
-		err = self.HEAD(w, r)
-	default:
-		err = &HTTPError{
-			StatusCode: 405,
-			ErrorCode: ErrorMethodNotAllowed,
+		if h, ok := self.(GetMethod); ok {
+			err = h.GET(w, r)
 		}
+	case "POST":
+		if h, ok := self.(PostMethod); ok {
+			err = h.POST(w, r)
+		}
+	case "PUT":
+		if h, ok := self.(PutMethod); ok {
+			err = h.PUT(w, r)
+		}
+	case "DELETE":
+		if h, ok := self.(DeleteMethod); ok {
+			err = h.DELETE(w, r)
+		}
+
 	}
 	if err != nil && err.StatusCode != 200 {
-		log.Printf("%s %s(%d): %s - %s\n", r.Method, r.RequestURI, err.StatusCode, err.ErrorCode, err.Detail)
+		log.Printf("%d %s %s: %s - %s\n", err.StatusCode, r.Method, r.RequestURI, err.ErrorCode, err.Detail)
 		w.WriteHeader(err.StatusCode)
-		w.WriteHeader(err.JSON())
+		w.Write(err.JSON())
 	} else {
-		log.Printf("%s %s(%d)\n", r.Method, r.RequestURI, 200)
+		log.Printf("%d %s %s\n", 200, r.Method, r.RequestURI)
 	}
 }
 
