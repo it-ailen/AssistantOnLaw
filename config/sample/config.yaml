@@ -1,0 +1,10 @@
+port: 8080
+mysql:
+  user: root
+  dbname: assistant_on_law
+  net: tcp
+  addr: localhost:3306
+
+ugc_files:
+  dir: /Users/hyku/allen/AssistantOnLaw/fake-cdn
+  prefix: /ugc
