@@ -1,0 +1,77 @@
+<form name="form" role="form" class="form-horizontal" ng-submit="submit()">
+  <div class="form-group">
+    <label class="grid-col-4 control-label">Parent</label>
+    <div class="grid-col-10">
+      <p class="form-control-static">{{ ngDialogData.parent.id }}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="grid-col-4 control-label">类型</label>
+    <div class="grid-col-10">
+      <select ng-model="item.type" class="form-control">
+        <option value="option">选项</option>
+        <option value="report">报告</option>
+      </select>
+    </div>
+  </div>
+  <div ng-if="item.type==='option'">
+    <div class="form-group">
+      <label class="grid-col-4 control-label"></label>
+      <div class="grid-col-10">
+        <input type="text" class="form-control" ng-model="item.text"
+               required>
+      </div>
+    </div>
+  </div>
+  <div ng-if="item.type==='report'">
+    <div class="form-group">
+      <label class="grid-col-4 control-label">标题</label>
+      <div class="grid-col-10">
+        <input type="text" class="form-control" ng-model="item.report.title">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="grid-col-4 control-label">结论</label>
+      <div class="grid-col-10">
+        <textarea ng-model="item.report.conclusion" class="form-control"></textarea>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <span>法条</span>
+          <span class="glyphicon glyphicon-plus" ng-click="addDecree()"></span>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div class="decree" ng-repeat="decree in item.report.decrees track by $index">
+          <textarea class="form-control" ng-model="item.report.decrees[$index].content"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <span>案例</span>
+          <span class="glyphicon glyphicon-plus" ng-click="addCase()"></span>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div class="decree" ng-repeat="case in item.report.cases track by $index">
+          <textarea class="form-control" ng-model="item.report.cases[$index].content"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="grid-col-offset-6 grid-col-4">
+      <input type="submit" class="btn btn-default" value="保存"
+             ng-disabled="form.$invalid || form.$pristine || submitStatus === 'submitting'">
+    </div>
+    <div class="grid-col-4">
+      <input type="button" class="btn btn-warn" value="取消"
+             ng-click="closeThisDialog({status: 'dismiss'})">
+    </div>
+  </div>
+</form>

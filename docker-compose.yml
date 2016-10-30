@@ -1,21 +1,39 @@
 version: '2.0'
 services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=assistant_on_law
+    volumes:
+      - ./.data:/var/lib/mysql:rw
+      - ./docs/mysql:/docker-entrypoint-initdb.d:ro
+  backend:
+    image: backend
+    build: ./src/backend
+    container_name: backend
+    links:
+      - mysql
+    volumes:
+      - ./config/config.yaml:/config/config.yaml
+      - ./fake-cdn:/data/cdn:rw
   gateway:
     image: gateway
+    container_name: gateway
     build: .
     ports:
       - 80:80
-#    tty: true
     volumes:
       - ./fake-cdn:/data/cdn:ro
-#    links:
-#      - mysql
-#      - redis
-#    environment:
-#      - CONFIG=/configs/go.yaml
   gateway.dev:
     image: gateway.dev
+    container_name: gateway.dev
     build: .
+    links:
+      - backend
     ports:
       - 80:80
     volumes:

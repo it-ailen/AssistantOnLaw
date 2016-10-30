@@ -6,7 +6,7 @@
 
 require("./view/style/home.less");
 
-function controller($scope, AdminDataService, $q, ngDialog) {
+function controller($scope, AdminDataService, $q, ngDialog, tools) {
     $scope.status = {};
     AdminDataService.loadChannels()
         .then(function(channels) {
@@ -14,6 +14,45 @@ function controller($scope, AdminDataService, $q, ngDialog) {
             console.log($scope.channels);
         })
     ;
+    $scope.editChannel = function(channel) {
+        ngDialog.open({
+            template: require("./view/form/channel.html"),
+            plain: true,
+            controller: require("./forms/channel"),
+            data: {
+                item: channel
+            }
+        }).closePromise
+            .then(function(result) {
+                var value = result.value;
+                if (value.status === 'success') {
+                    if (!channel) {
+                        $scope.channels.push(value.data);
+                    }
+                }
+            })
+        ;
+    };
+    $scope.removeChannel = function(index, channel) {
+        tools.confirm("删除Channel?" + channel.name)
+            .then(function(ensure) {
+                if (ensure) {
+                    AdminDataService
+                        .channelDelete(channel.id)
+                        .then(function() {
+                            $scope.channels.splice(index, 1);
+                        })
+                        .catch(function(error) {
+                            console.error(error);
+                        })
+                    ;
+                }
+            })
+            .catch(function(error) {
+                console.error(error);
+            })
+        ;
+    };
     $scope.channelClass = function(channel) {
         if ($scope.status.channel && $scope.status.channel.id === channel.id) {
             return "current";
@@ -28,9 +67,51 @@ function controller($scope, AdminDataService, $q, ngDialog) {
         AdminDataService.loadEntries(channel.id)
             .then(function(entries) {
                 $scope.entries = entries;
-                console.log($scope.entries);
             })
         ;
+    };
+    $scope.editEntryOrOption = function(type, channel, item, parent) {
+        var defer = $q.defer();
+        if (type === 'option' || type === 'report') {
+            var dialog = ngDialog.open({
+                template: require("./view/form/option.html"),
+                plain: true,
+                controller: require("./forms/option"),
+                data: {
+                    parent: parent,
+                    item: item
+                },
+                closeByDocument: false
+            });
+            dialog.closePromise
+                .then(function(data) {
+                    defer.resolve(data);
+                })
+            ;
+        } else {
+            ngDialog.open({
+                template: require("./view/form/entry.html"),
+                plain: true,
+                controller: require("./forms/entry"),
+                data: {
+                    channel: channel,
+                    item: item
+                }
+            })
+                .closePromise
+                .then(function(result) {
+                    var value = result.value;
+                    if (value.status === 'success') {
+                        $scope.entries.push(value.data);
+                    }
+                    defer.resolve();
+                })
+                .catch(function(error) {
+                    console.error(error);
+                })
+            ;
+        }
+        return defer.promise;
     };
     $scope.formatEntry = function(entry) {
         return {
@@ -39,88 +120,47 @@ function controller($scope, AdminDataService, $q, ngDialog) {
             data: entry
         };
     };
-    $scope.entry_adapter = function(item) {
+    $scope.entryAdapter = function(item) {
         var type = "leaf";
         var text = null;
         switch (item.type) {
             case "entry":
-            case "step":
+            case "option":
                 type = "branch";
                 text = item.text;
                 break;
             case "report":
                 type = "leaf";
-                text = item.title;
+                text = item.report.title;
                 break;
         }
-        var res = {
+        return {
             type: type,
             text: text,
             data: item
         };
-        return res;
     };
-    $scope.load_children = function(item) {
-        return [
-            {
-                type: "step",
-                text: "测试",
-                id: "sfsadfdf"
-            },
-            {
-                id: rid,
-                title: "测试",
-                channelId: "123",
-                conclusion: {
-                    detail: "测试结论"
-                },
-                decrees: [
-                    {
-                        source: "《中国人民共和国宪法》",
-                        content: "第一款第一条: 测试"
-                    }
-                ],
-                cases: [
-                    {
-                        intro: "案例简介",
-                        link: "http://detail..."
-                    }
-                ]
-            }
-        ];
-    };
-    $scope.add_item = function(parent) {
-        var defer = $q.defer();
-        console.log(parent);
-        var dialog = ngDialog.open({
-            template: require("./view/form/step.or.report.html"),
-            plain: true,
-            controller: require("./form.step.or.report"),
-            data: {
-                parent: parent
-            },
-            closeByDocument: false
-        });
-        dialog.closePromise
-            .then(function(data) {
-                console.log("!!!!")
-                console.log(data);
-                defer.resolve(data);
-            })
+    $scope.loadChildren = function(item) {
+        return AdminDataService
+            .loadOptions(item.id)
         ;
-        return defer.promise;
     };
-    $scope.remove_item = function(item) {
-        var defer = $q.defer();
-        console.log("remove item now");
-        console.log(parent);
-        defer.resolve();
-        return defer.promise;
+    $scope.addItem = function(parent) {
+        return $scope.editEntryOrOption("option", null, null, parent);
     };
-    $scope.item_click = function(item) {
+    $scope.removeItem = function(option) {
+        return AdminDataService
+            .optionDelete(option)
+        ;
+    };
+    $scope.itemClick = function(item) {
         console.log("item clicked");
         console.log(item);
         $scope.currentItem = item;
+    };
+    $scope.itemEdit = function(item) {
+        console.log(item);
+        return $scope.editEntryOrOption(item.type, $scope.status.channel, item);
     };
 }
 

@@ -1,0 +1,40 @@
+<form name="form" class="form-horizontal" role="form" ng-submit="submit()">
+  <div class="form-group" ng-show="ngDialogData.item">
+    <label class="col-sm-2 control-label">ID</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">{{ item.id }}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-6">
+      <input name="name" type="text" class="form-control" ng-model="item.name" required>
+    </div>
+    <div class="col-sm-4 form-error" ng-show="form.name.$error">
+      <span ng-show="form.name.$error.required">必填</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label">图标</label>
+    <div class="col-sm-6">
+      <ng-image-input name="icon" ng-model="item.icon" required upload="uploadIcon"
+                      src-to-url="imgSrcToUrl"></ng-image-input>
+      <!--<input type="file" name="icon" ng-model="item.icon" onchange="angular.element(this).scope().iconChange()" required>-->
+    </div>
+    <div class="col-sm-4 form-error">
+      <span ng-show="form.icon.$error.required">必填</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-2">
+      <input type="submit" class="btn btn-default" value="保存"
+             ng-disabled="form.$invalid || form.$pristine || formStatus === 'submitting'">
+    </div>
+    <div class="col-sm-2">
+      <input type="button" class="btn btn-warn" value="取消"
+             ng-click="closeThisDialog({status: 'dismiss'})">
+    </div>
+  </div>
+</form>

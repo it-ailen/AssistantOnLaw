@@ -19,6 +19,68 @@ function service($http, $q) {
         }
         return defer.promise;
     };
+    this.channelCreate = function(data) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/admin/channels",
+                    method: "POST",
+                    data: data,
+                    headers: {
+                        "Content-Type": undefined
+                    }
+                });
+            })
+            .then(function(res) {
+                defer.resolve(res.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.channelUpdate = function(id, data) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/admin/channels/" + id,
+                    method: "PUT",
+                    data: data,
+                    headers: {
+                        "Content-Type": undefined
+                    }
+                });
+            })
+            .then(function(res) {
+                defer.resolve(res.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.channelDelete = function(id) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/admin/channels/" + id,
+                    method: "DELETE"
+                });
+            })
+            .then(function(res) {
+                defer.resolve(res.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
     this.reloadChannels = function() {
         if (svc.cache && svc.cache.channels) {
             svc.cache.channels = null;
@@ -27,69 +89,192 @@ function service($http, $q) {
     };
     this.loadChannels = function() {
         var defer = $q.defer();
-        if (svc.cache && svc.cache.channels) {
-            defer.resolve(svc.cache.channels);
-        }
-        else {
-            svc.getConfig("host")
-                .then(function(host) {
-                    var req = {
-                        url: host + "/static/demo/admin-channels.json",
-                        method: "GET"
-                    };
-                    return $http(req)
-                })
-                .then(function(response) {
-                    var data = null;
-                    if (typeof response.data === "object") {
-                        data = response.data;
-                    } else {
-                        data = JSON.parse(response.data);
+        svc.getConfig("host")
+            .then(function(host) {
+                var req = {
+                    url: host + "/admin/channels",
+                    method: "GET"
+                };
+                return $http(req);
+            })
+            .then(function(response) {
+                var data = null;
+                if (typeof response.data === "object") {
+                    data = response.data;
+                } else {
+                    data = JSON.parse(response.data);
+                }
+                data.type = "entry";
+                defer.resolve(data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.entryCreate = function(data) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                var req = {
+                    url: host + "/admin/entries",
+                    method: "POST",
+                    data: data,
+                    headers: {
+                        "Content-Type": "application/json"
                     }
-                    if (!svc.cache) svc.cache = {};
-                    svc.cache.channels = data;
-                    defer.resolve(svc.cache.channels);
-                })
-                .catch(function(error) {
-                    defer.reject(error);
-                })
-            ;
-        }
+                };
+                return $http(req)
+            })
+            .then(function(response) {
+                defer.resolve(response.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.entryUpdate = function(id, data) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                var req = {
+                    url: host + "/admin/entries/" + id,
+                    method: "PUT",
+                    data: data,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                };
+                return $http(req)
+            })
+            .then(function(response) {
+                defer.resolve(response.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
         return defer.promise;
     };
     this.loadEntries = function(cid) {
         var defer = $q.defer();
-        if (svc.cache && svc.cache.entries && svc.cache.entries[cid]) {
-            defer.resolve(svc.cache.entries[cid]);
-        }
-        else {
-            svc.getConfig("host")
-                .then(function(host) {
-                    var req = {
-                        url: host + "/static/demo/admin-entries.json",
-                        method: "GET"
-                    };
-                    return $http(req)
-                })
-                .then(function(response) {
-                    var data = null;
-                    if (typeof response.data === "object") {
-                        data = response.data;
-                    } else {
-                        data = JSON.parse(response.data);
+        svc.getConfig("host")
+            .then(function(host) {
+                var req = {
+                    url: host + "/admin/entries",
+                    method: "GET",
+                    params: {
+                        channel_id: cid
                     }
-                    if (!svc.cache) svc.cache = {};
-                    if (!svc.cache.entries) svc.cache.entries = {};
-                    svc.cache.entries[cid] = data;
-                    defer.resolve(data);
-                })
-                .catch(function(error) {
-                    defer.reject(error);
-                })
-            ;
-        }
+                };
+                return $http(req)
+            })
+            .then(function(response) {
+                var data = null;
+                if (typeof response.data === "object") {
+                    data = response.data;
+                } else {
+                    data = JSON.parse(response.data);
+                }
+                for (var i in data) {
+                    data[i].type = "entry";
+                }
+                defer.resolve(data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
         return defer.promise;
-
+    };
+    this.loadOptions = function(pid) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                var req = {
+                    url: host + "/admin/options",
+                    method: "GET",
+                    params: {
+                        parent_id: pid
+                    }
+                };
+                return $http(req)
+            })
+            .then(function(response) {
+                defer.resolve(response.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.optionCreate = function(data) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                var req = {
+                    url: host + "/admin/options",
+                    method: "POST",
+                    data: data,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                };
+                return $http(req)
+            })
+            .then(function(response) {
+                defer.resolve(response.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.optionUpdate = function(id, data) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                var req = {
+                    url: host + "/admin/options/" + id,
+                    method: "PUT",
+                    data: data,
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                };
+                return $http(req)
+            })
+            .then(function(response) {
+                defer.resolve(response.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.optionDelete = function(option) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/admin/options/" + option.id,
+                    method: "DELETE"
+                });
+            })
+            .then(function(res) {
+                defer.resolve(res.data);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
     };
 }
 

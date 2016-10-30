@@ -12,7 +12,9 @@ require("ng-dialog");
 require("ng-dialog/css/ngDialog.min.css");
 require("ng-dialog/css/ngDialog-theme-default.min.css");
 
-require("./libs/treeview");
+// require("./libs/treeview");
+require("angular-treeview");
+require("angular-easy-input");
 
 require("./common/common.less");
 require("./common/grid.less");
@@ -21,9 +23,14 @@ require("./common/grid.less");
 var app = angular.module("LA.admin", [
     "ngRoute",
     "ui.bootstrap",
-    "tree",
-    "ngDialog"
+    "angular.tree",
+    "ngDialog",
+    "angular.easy.input"
 ]);
+
+app
+    .service("tools", require("./service/tools"))
+;
 
 var admin = require("./admin/entrance");
 admin.register(app);

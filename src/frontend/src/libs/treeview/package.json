@@ -1,12 +1,27 @@
 {
-  "name": "treeview",
+  "name": "angular-treeview",
   "version": "0.0.1",
-  "author": "Allen Zou",
+  "description": "Treeview with angular.",
   "main": "index.js",
-  "scripts": {
-    "build": "webpack --config build/webpack.config.base.js"
-  },
   "dependencies": {
     "webpack": "^1.13.2"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+	"build": "webpack --config build/webpack.config.base.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/it-ailen/angular-treeview.git"
+  },
+  "keywords": [
+    "angular",
+    "treeview"
+  ],
+  "author": "Allen Zou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/it-ailen/angular-treeview/issues"
+  },
+  "homepage": "https://github.com/it-ailen/angular-treeview#readme"
 }

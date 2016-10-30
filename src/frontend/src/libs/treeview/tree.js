@@ -80,7 +80,6 @@
 	            restrict: "E",
 	            templateUrl: "directive/tree/node.html",
 	            link: function($scope, element, attributes, controllers) {
-	                console.log("link tree node");
 	                $scope.open = false;
 	                $scope.add_btn = plusIcon;
 	                $scope.remove_btn = removeIcon;
@@ -168,7 +167,6 @@
 	    })
 	    .directive("tree", function () {
 	        var link = function($scope, element, attributes, controllers) {
-	            console.log($scope.root);
 	            $scope.itemAdapter = $scope.adapter || function(item) {
 	                    console.log("in tree .adapter");
 	                    return item;

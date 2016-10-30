@@ -1,38 +1,50 @@
 <div id="page-admin-home" class="grid-row">
   <div class="grid-col-4">
     <div class="panel panel-default">
-      <div class="panel-title">Channel</div>
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <span>Channel</span>
+          <span class="glyphicon glyphicon-plus pull-right" ng-click="editChannel()"></span>
+        </h4>
+      </div>
       <div class="panel-body">
-        <div class="panel panel-default channel" ng-repeat="channel in channels"
+        <div class="panel panel-default channel" ng-repeat="channel in channels track by $index"
              ng-class="channelClass(channel)" ng-click="channelClick(channel)">
           <div class="panel-title">
             <div class="icon">
               <img ng-src="{{ channel.icon }}">
             </div>
-            <div class="text">{{ channel.text }}</div>
+            <div class="text">{{ channel.name }}</div>
+            <div class="operation">
+              <span class="glyphicon glyphicon-edit" ng-click="editChannel(channel)"></span>
+              <span class="glyphicon glyphicon-remove" ng-click="removeChannel($index, channel)"></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="grid-col-4">
+  <div class="grid-col-4" ng-if="status.channel">
     <div class="panel panel-default">
-      <div class="panel-title">Entry</div>
+      <div class="panel-title">
+        <span>Entries & Steps</span>
+        <span class="glyphicon glyphicon-plus pull-right" ng-click="editEntryOrOption('entry', status.channel)"></span>
+      </div>
       <div class="panel-body">
-        <div class="panel panel-default entry" ng-repeat="entry in entries">
-          <tree root="entry" adapter="entry_adapter"
-                children-loader="load_children"
-                add-item="add_item" remove-item="remove_item"
-                node-click="item_click">
+        <div class="panel panel-default entry" ng-repeat="entry in entries track by $index">
+          <tree root="entry" adapter="entryAdapter"
+                children-loader="loadChildren"
+                add-item="addItem" remove-item="removeItem"
+                node-click="itemClick" edit-item="itemEdit">
           </tree>
         </div>
       </div>
     </div>
   </div>
   <div class="grid-col-8">
-    <div class="panel panel-default" ng-show="currentItem">
+    <div class="panel panel-default" ng-if="currentItem">
       <div class="panel-title">{{ currentItem.type }}</div>
-      <div class="panel-body" ng-if="currentItem.type==='step'">
+      <div class="panel-body" ng-if="currentItem.type==='option'">
         <table class="table">
           <tr>
             <td>id</td>

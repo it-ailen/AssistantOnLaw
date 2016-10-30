@@ -20,6 +20,7 @@ const (
 	ErrorNotFound = "ResourceNotFound"
 	ErrorInvalidJson = "InvalidJson"
 	ErrorUnknown = "Unknown"
+	ErrorUnknownResource = "UnknownResource"
 	ErrorThirdParty = "ThirdPartyError"
 )
 
@@ -55,6 +56,18 @@ func NewDefaultHTTPError() (*HTTPError) {
 		StatusCode: 200,
 		ErrorCode: ErrorOK,
 	}
+}
+
+func NotFoundHTTPError(detail string) (*HTTPError) {
+	return NewHTTPError(404, ErrorNotFound, detail)
+}
+
+func BadArgHTTPError(detail string) (*HTTPError) {
+	return NewHTTPError(400, ErrorBadArgument, detail)
+}
+
+func UnknownHTTPError(detail string) (*HTTPError) {
+	return NewHTTPError(500, ErrorUnknown, detail)
 }
 
 type HttpGetHandler interface {
@@ -120,6 +133,7 @@ func DoServeHTTP(self interface{}, w http.ResponseWriter, r *http.Request) {
 	if _, ok := self.(http.Handler); !ok {
 		panic("The instance is invalid")
 	}
+	w.Header()["Content-Type"] = []string{"application/json;charset=utf-8"}
 	serveHTTP(self, w, r)
 }
 
@@ -220,7 +234,7 @@ func queryArgumentWithDefault(r *http.Request, key string, defaults interface{})
 func QueryArgument(r *http.Request, key string) (string) {
 	val := queryArgumentWithDefault(r, key, nil)
 	if val == nil {
-		panic(HTTPError{
+		panic(&HTTPError{
 			StatusCode: http.StatusBadRequest,
 			ErrorCode: ErrorBadArgument,
 			Detail: fmt.Sprintf("Missing args: %s", key),
@@ -289,6 +303,7 @@ func QueryBoolArgumentWithDefault(r *http.Request, key string, defaults bool) (b
 }
 
 func formArgumentWithDefault(r *http.Request, key string, defaults interface{}) (interface{}) {
+	log.Printf("form: %#v", r.Form)
 	if values, ok := r.Form[key]; ok {
 		if len(values) > 0 {
 			return interface{}(values[0])
@@ -300,7 +315,7 @@ func formArgumentWithDefault(r *http.Request, key string, defaults interface{}) 
 func FormArgument(r *http.Request, key string) (string) {
 	val := formArgumentWithDefault(r, key, nil)
 	if val == nil {
-		panic(HTTPError{
+		panic(&HTTPError{
 			StatusCode: http.StatusBadRequest,
 			ErrorCode: ErrorBadArgument,
 			Detail: fmt.Sprintf("Missing args: %s", key),
@@ -316,13 +331,15 @@ func FormArgumentWithDefault(r *http.Request, key string, defaults string) strin
 	return s
 }
 
-func ParseJsonArgs(r *http.Request, dst interface{}) {
+func ParseJsonArgs(r *http.Request, dst interface{}) (*HTTPError) {
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(dst)
 	if err != nil {
-		panic(HTTPError{
+		return &HTTPError{
 			StatusCode: 400,
 			ErrorCode: ErrorInvalidJson,
-		})
+			Detail: err.Error(),
+		}
 	}
+	return nil
 }
