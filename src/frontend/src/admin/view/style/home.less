@@ -2,6 +2,9 @@
   .current {
     pointer-events: none;
     background-color: white;
+    .operation {
+      pointer-events: auto;
+    }
   }
   .standard {
     width: 0;
@@ -32,16 +35,20 @@
         position: absolute;
         top: 0;
         left: @admin-panel-title-height-unit;
-        font-size: unit(@admin-panel-title-height * .8, px);
+        font-size: unit(@admin-panel-title-height * .6, px);
         line-height: @admin-panel-title-height-unit;
       }
       .operation {
         position: absolute;
         top: 0;
         right: 0;
+        z-index: 100;
         height: @admin-panel-title-height-unit;
         text-align: right;
         line-height: @admin-panel-title-height-unit;
+        * {
+          z-index: 200;
+        }
       }
     }
   }

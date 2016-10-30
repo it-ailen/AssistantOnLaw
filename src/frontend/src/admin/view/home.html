@@ -1,11 +1,24 @@
 <div id="page-admin-home" class="grid-row">
-  <div class="grid-col-4">
+  <div class="grid-col-6" ng-if="false">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
+          <span>首页</span>
+          <span class="pull-right glyphicon glyphicon-edit" ng-click="editPageHome()"></span>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div page-preview-home ng-model="home"></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-col-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h6 class="panel-title">
           <span>Channel</span>
           <span class="glyphicon glyphicon-plus pull-right" ng-click="editChannel()"></span>
-        </h4>
+        </h6>
       </div>
       <div class="panel-body">
         <div class="panel panel-default channel" ng-repeat="channel in channels track by $index"
@@ -41,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div class="grid-col-8">
+  <div class="grid-col-6">
     <div class="panel panel-default" ng-if="currentItem">
       <div class="panel-title">{{ currentItem.type }}</div>
       <div class="panel-body" ng-if="currentItem.type==='option'">
@@ -63,8 +76,28 @@
             <td>{{ currentItem.id }}</td>
           </tr>
           <tr>
-            <td>title</td>
-            <td>{{ currentItem.title }}</td>
+            <td>标题</td>
+            <td>{{ currentItem.report.title }}</td>
+          </tr>
+          <tr>
+            <td>结论</td>
+            <td>{{ currentItem.report.conclusion }}</td>
+          </tr>
+          <tr ng-if="currentItem.report.decrees && currentItem.report.decrees.length > 0">
+            <td>法条</td>
+            <td>
+              <span ng-repeat="decree in currentItem.report.decrees">
+                {{ decree.content }}
+              </span>
+            </td>
+          </tr>
+          <tr ng-if="currentItem.report.cases && currentItem.report.cases.length > 0">
+            <td>案例</td>
+            <td>
+              <span ng-repeat="case in currentItem.report.cases">
+                {{ case.content }}
+              </span>
+            </td>
           </tr>
         </table>
       </div>

@@ -8,6 +8,9 @@ require("./view/style/home.less");
 
 function controller($scope, AdminDataService, $q, ngDialog, tools) {
     $scope.status = {};
+    $scope.home = {
+        posters: []
+    };
     AdminDataService.loadChannels()
         .then(function(channels) {
             $scope.channels = channels;
@@ -60,6 +63,7 @@ function controller($scope, AdminDataService, $q, ngDialog, tools) {
         return "";
     };
     $scope.channelClick = function(channel) {
+        console.log("channel clicked: " + channel.name);
         if ($scope.status.channel && $scope.status.channel.id === channel) {
             return;
         }
@@ -161,6 +165,17 @@ function controller($scope, AdminDataService, $q, ngDialog, tools) {
     $scope.itemEdit = function(item) {
         console.log(item);
         return $scope.editEntryOrOption(item.type, $scope.status.channel, item);
+    };
+    $scope.editPageHome = function() {
+        ngDialog.open({
+            template: require("./view/form/pages/home.html"),
+            plain: true,
+            controller: require("./forms/pages/home"),
+            data: {
+                data: $scope.home
+            },
+            closeByDocument: false
+        });
     };
 }
 

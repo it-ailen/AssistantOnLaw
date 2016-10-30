@@ -19,7 +19,7 @@ function routine($scope, $q, tools, AdminDataService) {
     };
     $scope.srcToUrl = function(src) {
         console.log("src: " + src);
-        return src.uri;
+        return src;
     };
     $scope.submit = function() {
         $scope.formStatus = "submitting";

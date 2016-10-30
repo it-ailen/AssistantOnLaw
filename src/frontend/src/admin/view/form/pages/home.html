@@ -1,0 +1,32 @@
+<form name="form" role="form" class="form-horizontal" ng-submit="submit()">
+  <div class="form-group">
+    <label class="grid-col-4 control-label">标题</label>
+    <div class="grid-col-10">
+      <input class="form-control" type="text" name="title" ng-model="data.title"
+             required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="grid-col-4 control-label">
+      <span>图片</span>
+      <span class="pull-right glyphicon glyphicon-plus" ng-click="addPoster()"></span>
+    </label>
+    <div class="grid-col-10">
+      <div class="poster" ng-repeat="poster in data.posters track by $index">
+        <ng-image-input ng-model="poster" required upload="uploadHomePoster"
+                        src-to-url="imgSrcToUrl"></ng-image-input>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="grid-col-offset-6 grid-col-4">
+      <input type="submit" class="btn btn-default" value="保存"
+             ng-disabled="form.$invalid || form.$pristine || submitStatus === 'submitting'">
+    </div>
+    <div class="grid-col-4">
+      <input type="button" class="btn btn-warn" value="取消"
+             ng-click="closeThisDialog({status: 'dismiss'})">
+    </div>
+  </div>
+</form>

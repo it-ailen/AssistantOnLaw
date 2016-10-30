@@ -19,13 +19,16 @@ require("angular-easy-input");
 require("./common/common.less");
 require("./common/grid.less");
 
+require("./admin/preview");
+
 
 var app = angular.module("LA.admin", [
     "ngRoute",
     "ui.bootstrap",
     "angular.tree",
     "ngDialog",
-    "angular.easy.input"
+    "angular.easy.input",
+    "previewer"
 ]);
 
 app
