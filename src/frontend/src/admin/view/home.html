@@ -57,6 +57,22 @@
   <div class="grid-col-6">
     <div class="panel panel-default" ng-if="currentItem">
       <div class="panel-title">{{ currentItem.type }}</div>
+      <div class="panel-body" ng-if="currentItem.type==='entry'">
+        <table class="table">
+          <tr>
+            <td>id</td>
+            <td>{{ currentItem.id }}</td>
+          </tr>
+          <tr>
+            <td>text</td>
+            <td>{{ currentItem.text }}</td>
+          </tr>
+          <tr>
+            <td>页面类型</td>
+            <td>{{ currentItem.layout_type }}</td>
+          </tr>
+        </table>
+      </div>
       <div class="panel-body" ng-if="currentItem.type==='option'">
         <table class="table">
           <tr>
