@@ -20,6 +20,11 @@ services:
     volumes:
       - ./config/config.yaml:/config/config.yaml
       - ./fake-cdn:/data/cdn:rw
+  frontend:
+    image: node:6.4
+    container_name: frontend
+    volumes:
+      - ./www:/data/www:ro
   gateway:
     image: gateway
     container_name: gateway
@@ -28,6 +33,9 @@ services:
       - 80:80
     volumes:
       - ./fake-cdn:/data/cdn:ro
+    links:
+      - backend
+      - frontend
   gateway.dev:
     image: gateway.dev
     container_name: gateway.dev
