@@ -9,7 +9,7 @@ RUN go get -v github.com/go-sql-driver/mysql
 RUN go get -v github.com/satori/go.uuid
 RUN go get -v gopkg.in/yaml.v2
 RUN go get -v gopkg.in/redis.v4
-RUN go get -v github.com/Sirupsen/logrus
+#RUN go get -v github.com/Sirupsen/logrus
 
 RUN mkdir -p /project
 COPY ./go/src /project/src
