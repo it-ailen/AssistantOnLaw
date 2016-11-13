@@ -1,0 +1,18 @@
+<div id="page-mobile-home">
+  <div class="carousel">
+    <ul rn-carousel rn-carousel-buffered>
+      <li ng-repeat="slide in layout.slides" class="slide">
+        <img ng-src="{{ slide.src }}">
+      </li>
+    </ul>
+  </div>
+  <div class="channels">
+    <a ng-repeat="channel in layout.channels" ng-href="#/channels/{{ channel.id }}"
+       class="channel">
+      <img ng-src="{{ channel.icon }}">
+      <div class="text">{{ channel.text }}</div>
+    </a>
+    <a ng-href="#/self-consult" class="channel self-consult">
+    </a>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+@title-height: 10vw;
+.title-bar {
+  position: relative;
+  text-align: center;
+  height: @title-height;
+  line-height: @title-height;
+  border-bottom: solid 1px #6f6f6f;
+  .back {
+    position: absolute;
+    width: @title-height;
+    height: @title-height;
+    left: 0;
+    top: 0;
+    background-image: url(./back.png);
+    -webkit-background-size: cover;
+    background-size: cover;
+  }
+}

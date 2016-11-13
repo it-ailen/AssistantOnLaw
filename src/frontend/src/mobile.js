@@ -6,22 +6,27 @@
 require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
+require("angular-touch");
+require("angular-carousel");
+require("ng-dialog");
+
+require("ng-dialog/css/ngDialog.min.css");
+require("ng-dialog/css/ngDialog-theme-default.min.css");
+
 require("bootstrap/dist/css/bootstrap.css");
 
 require("./common/common.less");
+require("./mobile/directive/etc");
 
 
 var app = angular.module("LA.mobile", [
     "ngRoute",
-    "ui.bootstrap"
+    "ui.bootstrap",
+    "angular-carousel",
+    "ngDialog",
+    "etc"
 ]);
 
-var mobile = require("./mobile/entrance");
-mobile.register(app);
-
-// app
-//     .config(function($routeProvider) {
-//     })
-// ;
+require("./mobile/entrance").register(app);
 
 module.exports = app;

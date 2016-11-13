@@ -1,10 +1,8 @@
 /**
- * Created by hyku on 16/10/1.
+ * Created by Allen on 2016/10/1.
  */
 
 "use strict";
-
-var pageTypes = ["home", "channel", "entry", "report"];
 
 function service($http, $q) {
     var svc = this;
@@ -228,6 +226,53 @@ function service($http, $q) {
                 defer.reject(error);
             })
         ;
+        return defer.promise;
+    };
+    this.upload_file = function(file) {
+        console.log(file);
+        var fd = new FormData();
+        fd.append("file", file);
+        var defer = $q.defer();
+        // svc.getConfig("host")
+        //     .then(function(host) {
+        //         return $http({
+        //             url: host + "/utils/images",
+        //             method: "POST",
+        //             data: fd,
+        //             headers: {
+        //                 "Content-Type": undefined
+        //             }
+        //         });
+        //     })
+        //     .then(function(res) {
+        //         defer.resolve(res.data);
+        //     })
+        //     .catch(function(error) {
+        //         defer.reject(error);
+        //     })
+        // ;
+        defer.resolve("test-id");
+        return defer.promise;
+    };
+    this.post_consulting = function(data) {
+        console.log(data);
+        var defer = $q.defer();
+        // svc.getConfig("host")
+        //     .then(function(host) {
+        //         return $http({
+        //             url: host + "/consultancy",
+        //             method: "POST",
+        //             data: data
+        //         });
+        //     })
+        //     .then(function(data) {
+        //         defer.resolve(data.value);
+        //     })
+        //     .catch(function(error) {
+        //         defer.reject(error);
+        //     })
+        // ;
+        defer.resolve();
         return defer.promise;
     };
 }

@@ -14,8 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.8",
+    "angular-carousel": "^1.0.1",
     "angular-easy-input": "^0.1.2",
     "angular-route": "^1.5.8",
+    "angular-touch": "^1.5.8",
     "angular-treeview": "^0.1.5",
     "angular-ui-bootstrap": "^2.1.4",
     "autoprefixer": "^6.5.0",

@@ -4,40 +4,26 @@
 
 "use strict";
 
-require('!!ng-cache?prefix=mobile/view/!./view/home.html');
-require('!!ng-cache?prefix=mobile/view/!./view/channel.html');
-require('!!ng-cache?prefix=mobile/view/!./view/entry.html');
-require('!!ng-cache?prefix=mobile/view/!./view/report.html');
 
 function register_controllers(app) {
-    app.service("MobileDataService", require("./data-service"))
-        .controller("mobile.home", require("./home"))
-        .controller("mobile.channel", require("./channel"))
-        .controller("mobile.entry", require("./entry"))
-        .controller("mobile.report", require("./report"))
+    app.service("MobileDataService", require("./m/data-service"))
+        .service("self", require("./service/self"))
+        .service("tools", require("./service/tools"))
+        .config(function($routeProvider) {
+            route($routeProvider);
+        })
     ;
-    app.config(function($routeProvider) {
-        route($routeProvider);
-    });
 }
 
 function route($routeProvider) {
     $routeProvider
         .when("/home", {
-            controller: "mobile.home",
-            templateUrl: "mobile/view/home.html"
+            controller: require("./c/home"),
+            template: require("./v/home.html")
         })
-        .when("/channels/:id", {
-            controller: "mobile.channel",
-            templateUrl: "mobile/view/channel.html"
-        })
-        .when("/entries/:id", {
-            controller: "mobile.entry",
-            templateUrl: "mobile/view/entry.html"
-        })
-        .when("/reports/:id", {
-            controller: "mobile.report",
-            templateUrl: "mobile/view/report.html"
+        .when("/self-consult", {
+            controller: require("./c/self-consult"),
+            template: require("./v/self-consult.html")
         })
         .when("/", {
             redirectTo: "/home"

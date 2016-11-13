@@ -11,7 +11,7 @@ var m = angular.module("previewer", [])
             },
             restrict: "A",
             controller: function($scope) {},
-            template: require("../mobile/view/home.html"),
+            template: require("../mobile/v/home.html"),
             link: function($scope, element, attr, controllers) {
             }
         }
