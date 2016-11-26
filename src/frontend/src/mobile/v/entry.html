@@ -1,0 +1,17 @@
+<div id="page-mobile-entry">
+  <div title-bar>
+    <span>{{ entry.text }}</span>
+  </div>
+  <div class="single-page" ng-if="entry.layout==='single'">
+    <div ng-repeat="option in entry.children track by $index" ng-class="option_class(option)">
+      <div class="question">{{  }}</div>
+      <div class="title">{{ option.title }}</div>
+      <div class="choices">
+        <div class="choice" ng-repeat="action in step.actions">
+          <input type="radio" name="{{ step.id }}"
+                 ng-click="action_click(action)">{{ action.text }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -46,3 +46,19 @@ CREATE TABLE `report` (
   `cases` JSON,
   `decrees` JSON
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `client_issue` (
+  `id` CHAR(32) PRIMARY KEY,
+  `created_time` BIGINT NOT NULL,
+  `client` JSON NOT NULL, /* The client who post this issue */
+  `description` TEXT NOT NULL,
+  `attachments` JSON, /* URIs for attachments */
+  `status` CHAR(10) DEFAULT 'open', /* status of this issue, open|closed */
+  `solution` TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `issue_tag` (
+  `issue_id` CHAR(32),
+  `tag` VARCHAR(100),
+  PRIMARY KEY (`issue_id`, `tag`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

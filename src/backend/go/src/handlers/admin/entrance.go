@@ -16,5 +16,10 @@ func Register(router *mux.Router) error {
 	optionHandler := NewOptionHandler()
 	adminRouter.Handle("/options", optionHandler)
 	adminRouter.Handle("/options/{id:[^/]+}", optionHandler)
+
+	issueHandler := NewIssueHandler()
+	adminRouter.Handle("/issues", issueHandler)
+	adminRouter.Handle("/issues/{id:[^/]+}/solutions", issueHandler)
+
 	return nil
 }

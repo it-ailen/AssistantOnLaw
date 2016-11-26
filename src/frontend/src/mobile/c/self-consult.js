@@ -7,8 +7,8 @@
 require("./style/self-consult.less");
 
 function routine($scope, ngDialog, $log, MobileDataService, tools, $window, self) {
-    $scope.problem = {
-        paths: self.footprints(),
+    $scope.client = {};
+    $scope.detail = {
         attachments: []
     };
     $scope.add_attachment = function() {
@@ -28,7 +28,7 @@ function routine($scope, ngDialog, $log, MobileDataService, tools, $window, self
             .then(function(value) {
                 console.log(value);
                 if (value.status === "ok") {
-                    $scope.problem.attachments.push(value.data.file);
+                    $scope.detail.attachments.push(value.data.file);
                 }
             })
             .catch(function(error) {
@@ -37,14 +37,16 @@ function routine($scope, ngDialog, $log, MobileDataService, tools, $window, self
         ;
     };
     $scope.remove_attachment = function(index) {
-        $scope.problem.attachments.splice(index, 1);
+        $scope.detail.attachments.splice(index, 1);
     };
 
     $scope.submit = function() {
         MobileDataService
-            .post_consulting($scope.problem)
+            .post_issue({
+                client: $scope.client,
+                detail: $scope.detail
+            })
             .then(function() {
-                console.log("您的问题已提交，我们会尽快给您答复");
                 return tools.alert("您的问题已提交，我们会尽快给您答复");
             })
             .then(function() {

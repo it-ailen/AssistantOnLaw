@@ -3,16 +3,16 @@
  */
 "use strict";
 
-require("angular");
+// require("angular");
 require("angular-route");
 require("angular-ui-bootstrap");
 require("bootstrap/dist/css/bootstrap.css");
 require("ng-dialog");
 
+
 require("ng-dialog/css/ngDialog.min.css");
 require("ng-dialog/css/ngDialog-theme-default.min.css");
 
-// require("./libs/treeview");
 require("angular-treeview");
 require("angular-easy-input");
 
@@ -21,6 +21,8 @@ require("./common/grid.less");
 
 require("./admin/preview");
 
+require("./admin/directives/item");
+
 
 var app = angular.module("LA.admin", [
     "ngRoute",
@@ -28,7 +30,9 @@ var app = angular.module("LA.admin", [
     "angular.tree",
     "ngDialog",
     "angular.easy.input",
-    "previewer"
+    "previewer",
+    "admin.custom.item",
+    "textAngular"
 ]);
 
 app

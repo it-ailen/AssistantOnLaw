@@ -7,8 +7,6 @@
 function controller($scope, MobileDataService, $log) {
     $scope.attachment = {};
     $scope.upload = function(file) {
-        $log.debug("uploading...");
-        $log.debug(file);
         return MobileDataService
             .upload_file(file);
     };

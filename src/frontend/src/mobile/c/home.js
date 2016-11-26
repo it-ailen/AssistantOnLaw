@@ -6,10 +6,16 @@
 
 require("../v/style/home.less");
 
-function routine($scope, MobileDataService, $rootScope, self) {
+function routine($scope, MobileDataService, self) {
+    $scope.layout = {};
     console.log("home controller...");
     self.walk_back();
-    $scope.layout = {};
+    MobileDataService
+        .loadLayoutHome()
+        .then(function(home) {
+            $scope.layout = home;
+        })
+    ;
 }
 
 module.exports = routine;

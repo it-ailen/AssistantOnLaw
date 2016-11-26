@@ -17,13 +17,16 @@
     "angular-carousel": "^1.0.1",
     "angular-easy-input": "^0.1.2",
     "angular-route": "^1.5.8",
+    "angular-summernote": "^0.8.1",
     "angular-touch": "^1.5.8",
     "angular-treeview": "^0.1.5",
     "angular-ui-bootstrap": "^2.1.4",
+    "angular-ui-router": "^0.3.2",
     "autoprefixer": "^6.5.0",
     "bootstrap": "^3.3.7",
     "css-loader": "^0.25.0",
     "cssnano": "^3.7.5",
+    "dateformat": "^1.0.12",
     "file-loader": "^0.9.0",
     "html-loader": "^0.4.4",
     "less": "^2.7.1",
@@ -34,5 +37,14 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.2"
+  },
+  "devDependencies": {
+    "angular-sanitize": "^1.5.8",
+    "bootstrap": "^3.3.7",
+    "codemirror": "^5.20.2",
+    "jquery": "^3.1.1",
+    "ng-sanitize": "0.0.2",
+    "summernote": "^0.8.2",
+    "textangular": "^1.5.13"
   }
 }

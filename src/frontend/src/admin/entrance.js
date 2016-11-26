@@ -20,6 +20,13 @@ function route($routeProvider) {
             controller: require("./home"),
             template: require("./view/home.html")
         })
+        .when("/issues/todo", {
+            controller: require("./c/issue/todo"),
+            template: require("./view/issue/todo.html")
+        })
+        .when("/issues", {
+            redirectTo: "/issues/todo"
+        })
         .when("/", {
             redirectTo: "/home"
         })

@@ -276,6 +276,42 @@ function service($http, $q) {
         ;
         return defer.promise;
     };
+    this.loadIssues = function(params) {
+        var defer = $q.defer();
+        svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/admin/issues",
+                    method: "GET",
+                    params: params
+                });
+            })
+            .then(function(res) {
+                return res.data;
+            })
+            .then(function(data) {
+                defer.resolve(data.list);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
+        return defer.promise;
+    };
+    this.submitSolution = function(id, data) {
+        return svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/admin/issues/" + id + "/solutions",
+                    method: "PUT",
+                    data: data
+                });
+            })
+            .then(function(res) {
+                return res.data;
+            })
+        ;
+    };
 }
 
 module.exports = service;

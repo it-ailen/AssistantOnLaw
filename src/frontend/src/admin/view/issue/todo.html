@@ -1,0 +1,55 @@
+<div id="page-issue-todo">
+  <div title-bar></div>
+  <div class="row-fluid">
+    <div class="col-md-4 left-list">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">待处理列表</h4>
+        </div>
+        <div class="panel-body">
+          <div class="issue-item" ng-repeat="issue in data.issues" ng-click="expandIssue(issue)">
+            {{ issue.id }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="panel panel-default" ng-show="status.current">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <span>详情</span>
+            <a href class="pull-right" data-toggle="tooltip"
+               title="解答" ng-click="addSolution(status.current)">
+              <span class="glyphicon glyphicon-console" aria-hidden="true"></span>
+            </a>
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div issue="status.current">
+          </div>
+          <div class="reply">
+            <form name="form" ng-submit="submit()" class="form-horizontal">
+              <div class="form-group">
+                <label class="col-md-2 control-label">标签</label>
+                <div class="col-md-10">
+                  <input type="text" ng-model="solution.tags" class="form-control">
+                  <p class="help-block">用空格分隔</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">解答</label>
+                <div class="col-md-10">
+                  <div text-angular ng-model="solution.solution"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="submit" class="btn btn-default" ng-disabled="form.$invalid || form.$pristine" value="提交">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

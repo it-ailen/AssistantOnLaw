@@ -10,10 +10,19 @@
     }
   }
   .channels {
+    @channel-size: 25vw;
+    @channel-icon-size: 14vw;
+    @channel-text-height: 8vw;
     .channel {
       display: inline-block;
-      width: 25vw;
-      height: 25vw;
+      width: @channel-size;
+      height: @channel-size;
+      line-height: @channel-text-height;
+      text-align: center;
+      img {
+        width: @channel-icon-size;
+        height: @channel-icon-size;
+      }
     }
     .self-consult {
       background-image: url(./images/free-consul.jpg);

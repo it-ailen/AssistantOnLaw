@@ -1,0 +1,44 @@
+<table class="table issue-item">
+  <tr>
+    <td>ID</td>
+    <td>{{ item.id }}</td>
+  </tr>
+  <tr>
+    <td>创建时间</td>
+    <td>{{ item.created_time | ms_2_time }}</td>
+  </tr>
+  <tr>
+    <td>状态</td>
+    <td>{{ item.status }}</td>
+  </tr>
+  <tr>
+    <td>姓名</td>
+    <td>{{ item.client.name }}</td>
+  </tr>
+  <tr>
+    <td>联系方式</td>
+    <td>{{ item.client.contact }}</td>
+  </tr>
+  <tr>
+    <td>详情</td>
+    <td>
+      <span>{{ item.detail.description }}</span>
+    </td>
+  </tr>
+  <tr ng-if="item.detail.attachments && item.detail.attachments.length > 0">
+    <td>附件</td>
+    <td>
+      <span ng-repeat="attachment in item.detail.attachments track by $index">
+        <a ng-href="{{ attachment }}" target="_blank">{{ attachment }}</a>
+      </span>
+    </td>
+  </tr>
+  <tr ng-if="item.tags && item.tags.length > 0">
+    <td>标签</td>
+    <td><span ng-repeat="tag in item.tags" class="tag">{{ tag }}</span></td>
+  </tr>
+  <tr ng-if="item.solution">
+    <td>解答</td>
+    <td>{{ item.solution | safehtml }}</td>
+  </tr>
+</table>

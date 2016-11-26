@@ -49,7 +49,7 @@ function service($http, $q) {
         }
         return defer.promise;
     };
-    this.loadHome = function() {
+    this.loadLayoutHome = function() {
         var defer = $q.defer();
         if (svc.cache && svc.cache.layout && svc.cache.layout.home) {
             defer.resolve(svc.cache.layout.home);
@@ -58,7 +58,7 @@ function service($http, $q) {
             svc.getConfig("host")
                 .then(function(host) {
                     var req = {
-                        url: host + "/static/layout/home.json",
+                        url: host + "/mobile/layout/home",
                         method: "GET"
                     };
                     return $http(req)
@@ -82,29 +82,17 @@ function service($http, $q) {
         }
         return defer.promise;
     };
-    this.loadChannel = function(cid) {
+    this.loadLayoutChannel = function(cid) {
         var defer = $q.defer();
         svc.getConfig("host")
             .then(function(host) {
-                // TODO load data from server
-                var d = $q.defer();
-                d.resolve({
-                    title: "test",
-                    id: cid,
-                    poster: {
-                        url: "/ugc/demo.jpg",
-                        title: "test",
-                        description: "description"
-                    },
-                    entries: [
-                        {
-                            id: "2321",
-                            icon: "/ugc/icon-demo.jpg",
-                            text: "Test"
-                        }
-                    ]
+                return $http({
+                    url: host + "/mobile/layout/channels/" + cid,
+                    method: "GET"
                 });
-                return d.promise;
+            })
+            .then(function(res) {
+                return res.data;
             })
             .then(function(data) {
                 defer.resolve(data);
@@ -115,72 +103,17 @@ function service($http, $q) {
         ;
         return defer.promise;
     };
-    this.loadEntry = function(eid) {
+    this.loadLayoutEntry = function(eid) {
         var defer = $q.defer();
         svc.getConfig("host")
             .then(function(host) {
-                // TODO load data from server
-                var d = $q.defer();
-                d.resolve({
-                    title: "test",
-                    layout: "single-page",
-                    channelId: "123",
-                    id: eid,
-                    step: {
-                        id: "1312321",
-                        title: "测试",
-                        actions: [
-                            {
-                                id: "action12dsf",
-                                type: "step",
-                                text: "action1"
-                            },
-                            {
-                                id: "action231d",
-                                type: "report",
-                                channelId: "123",
-                                text: "action2"
-                            }
-                        ]
-
-                    }
-                });
-                return d.promise;
+                return $http({
+                    url: host + "/mobile/layout/entries/" + eid,
+                    method: "GET"
+                })
             })
-            .then(function(data) {
-                defer.resolve(data);
-            })
-            .catch(function(error) {
-                defer.reject(error);
-            })
-        ;
-        return defer.promise;
-    };
-    this.loadStep = function(sid) {
-        var defer = $q.defer();
-        svc.getConfig("host")
-            .then(function(host) {
-                // TODO load data from server
-                var d = $q.defer();
-                d.resolve({
-                    id: "1312321" + Math.random(),
-                    title: "测试",
-                    channelId: "123",
-                    actions: [
-                        {
-                            id: "action12dsf",
-                            type: "step",
-                            text: "action1"
-                        },
-                        {
-                            id: "action231d",
-                            type: "report",
-                            channelId: "123",
-                            text: "action2"
-                        }
-                    ]
-                });
-                return d.promise;
+            .then(function(res) {
+                return res.data;
             })
             .then(function(data) {
                 defer.resolve(data);
@@ -233,46 +166,47 @@ function service($http, $q) {
         var fd = new FormData();
         fd.append("file", file);
         var defer = $q.defer();
-        // svc.getConfig("host")
-        //     .then(function(host) {
-        //         return $http({
-        //             url: host + "/utils/images",
-        //             method: "POST",
-        //             data: fd,
-        //             headers: {
-        //                 "Content-Type": undefined
-        //             }
-        //         });
-        //     })
-        //     .then(function(res) {
-        //         defer.resolve(res.data);
-        //     })
-        //     .catch(function(error) {
-        //         defer.reject(error);
-        //     })
-        // ;
-        defer.resolve("test-id");
+        svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/utils/files/self-consultant",
+                    method: "POST",
+                    data: fd,
+                    headers: {
+                        "Content-Type": undefined
+                    }
+                });
+            })
+            .then(function(res) {
+                return res.data;
+            })
+            .then(function(data) {
+                defer.resolve(data.uri);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
         return defer.promise;
     };
-    this.post_consulting = function(data) {
+    this.post_issue = function(data) {
         console.log(data);
         var defer = $q.defer();
-        // svc.getConfig("host")
-        //     .then(function(host) {
-        //         return $http({
-        //             url: host + "/consultancy",
-        //             method: "POST",
-        //             data: data
-        //         });
-        //     })
-        //     .then(function(data) {
-        //         defer.resolve(data.value);
-        //     })
-        //     .catch(function(error) {
-        //         defer.reject(error);
-        //     })
-        // ;
-        defer.resolve();
+        svc.getConfig("host")
+            .then(function(host) {
+                return $http({
+                    url: host + "/mobile/issues",
+                    method: "POST",
+                    data: data
+                });
+            })
+            .then(function(data) {
+                defer.resolve(data.value);
+            })
+            .catch(function(error) {
+                defer.reject(error);
+            })
+        ;
         return defer.promise;
     };
 }

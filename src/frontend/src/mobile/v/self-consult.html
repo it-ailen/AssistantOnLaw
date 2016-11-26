@@ -3,21 +3,21 @@
   <div ng-repeat="path in footprint.paths" class="path"></div>
   <form role="form" name="form" ng-submit="submit()" novalidate>
     <div class="form-group">
-      <input type="text" name="name" class="form-control" ng-model="problem.name"
+      <input type="text" name="name" class="form-control" ng-model="client.name"
              placeholder="请输入姓名" required>
     </div>
     <div class="form-group">
-      <input type="text" name="contact" class="form-control" ng-model="problem.contact"
+      <input type="text" name="contact" class="form-control" ng-model="client.contact"
              placeholder="请输入联系方式" required>
     </div>
     <div class="form-group">
-      <textarea class="form-control" ng-model="problem.description" required
+      <textarea class="form-control" ng-model="detail.description" required
                 placeholder="请描述您的问题">
       </textarea>
     </div>
     <div class="form-group">
       <span><a ng-click="add_attachment()">提供更多附件</a></span>
-      <div ng-repeat="attachment in problem.attachments track by $index">
+      <div ng-repeat="attachment in detail.attachments track by $index">
         <label>{{ attachment }}</label>
         <a ng-click="remove_attachment($index)">删除</a>
       </div>

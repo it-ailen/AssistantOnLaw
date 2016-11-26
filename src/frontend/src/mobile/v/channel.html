@@ -1,0 +1,18 @@
+<div id="page-mobile-channel">
+  <div title-bar>
+    <span>{{ channel.name }}</span>
+  </div>
+  <div class="poster">
+    <img ng-src="{{ channel.poster.image }}">
+    <div class="text">
+      <div class="title">{{ channel.poster.title }}</div>
+      <div class="description">{{ channel.poster.description }}</div>
+    </div>
+  </div>
+  <div class="entries">
+    <a ng-repeat="entry in channel.entries" href="#/entries/{{ entry.id }}" class="entry">
+      <img ng-src="{{ entry.icon }}">
+      <span class="text">{{ entry.text }}</span>
+    </a>
+  </div>
+</div>

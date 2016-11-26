@@ -26,3 +26,5 @@ _testmain.go
 .idea
 .DS_store
 node_modules
+.data
+.gitignore

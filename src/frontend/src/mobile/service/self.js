@@ -8,9 +8,16 @@ function service() {
     this.walk_back = function() {
         svc.paths = [];
     };
-    this.walk = function(path) {
-        svc.paths.push(path);
+    this.walk_backward = function() {
+        svc.paths.pop();
     };
+    this.walk_forward = function(type, data) {
+        svc.paths.push({
+            type: type,
+            data: data
+        });
+    };
+
     this.footprints = function() {
         return svc.paths;
     };

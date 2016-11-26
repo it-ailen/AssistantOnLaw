@@ -9,7 +9,8 @@ const cssnano = require('cssnano');
 var config = {
     entry: {
         mobile: "./src/mobile.js",
-        admin: "./src/admin.js"
+        admin: "./src/admin.js",
+        pc: "./src/pc.js"
     },
     output: {
         path: path.resolve(__dirname, "../entries/dist"),
