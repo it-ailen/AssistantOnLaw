@@ -343,3 +343,14 @@ func ParseJsonArgs(r *http.Request, dst interface{}) (*HTTPError) {
 	}
 	return nil
 }
+
+func WriteJson(w http.ResponseWriter, src interface{}) {
+	headers := w.Header()
+	headers["Content-Type"] = []string{"application/json;charset=utf-8"}
+	data, err := json.Marshal(src)
+	if err != nil {
+		panic(err)
+	}
+	log.Printf("write: %#v %s", src, string(data))
+	w.Write(data)
+}

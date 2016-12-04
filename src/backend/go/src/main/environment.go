@@ -21,6 +21,7 @@ type Option struct {
 
 var inst *Option
 var db *sql.DB
+var redisCli *redis.Client
 
 /**
 初始化运行环境
@@ -42,7 +43,8 @@ func EnvironmentInitialize(configFile string) (*Option, error) {
 	if err != nil {
 		return nil, err
 	}
-	content.InitManager(db)
+	redisCli = redis.NewClient(&inst.Redis)
+	content.InitManager(db, redisCli)
 	return inst, nil
 }
 
@@ -51,6 +53,7 @@ func EnvironmentInitialize(configFile string) (*Option, error) {
  */
 func EnvironmentFinish() {
 	db.Close()
+	redisCli.Close()
 }
 
 func EnvironmentGet() *Option {

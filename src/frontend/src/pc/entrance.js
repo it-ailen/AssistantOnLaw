@@ -4,47 +4,37 @@
 
 "use strict";
 
+require("./v/style/frame.less");
+require("./v/style/home.less");
+
 function register(mod) {
     mod
+        .service("AccountsService", require("./m/accounts"))
         .config(function ($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state("home", {
                     abstract: true,
-                    url: "/home",
-                    template: require("./v/home.html"),
-                    controller: require("./c/home")
+                    controller: require("./c/home"),
+                    template: require("./v/home.pug")
                 })
-                .state("home.guest", {
-                    url: "/guest",
+                .state("home.inst", {
+                    url: "/home",
                     views: {
-                        topBar: {
-                            template: require("./v/top_bar.html"),
-                            controller: require("./c/guest/top_bar")
+                        "topBar@": {
+                            template: require("./v/top_bar.pug"),
+                            controller: require("./c/top_bar")
                         },
-                        suSongWenShu: {
-                            template: require("./v/su_song_wen_shu.html"),
-                            controller: require("./c/su_song_wen_shu")
+                        "footer@": {
+                            template: require("./v/footer.pug")
                         },
-                        xieYiFanBen: {
-                            template: require("./v/xie_yi_fan_ben.html"),
-                            controller: require("./c/xie_yi_fan_ben")
-                        },
-                        faLvWenDa: {
-                            template: require("./v/su_song_wen_shu.html"),
-                            controller: require("./c/su_song_wen_shu")
-                        },
-                        faLvZiXun: {
-                            template: require("./v/su_song_wen_shu.html"),
-                            controller: require("./c/su_song_wen_shu")
-                        },
-                        renGongZiXun: {
-                            template: require("./v/su_song_wen_shu.html"),
-                            controller: require("./c/su_song_wen_shu")
+                        "xieYiFanBen": {
+                            template: require("./v/xieYiFanBen.pug"),
+                            controller: require("./c/xieYiFanBen")
                         }
                     }
                 })
             ;
-            $urlRouterProvider.when('/', '/home/guest');
+            $urlRouterProvider.when('/', '/home');
         })
     ;
 }

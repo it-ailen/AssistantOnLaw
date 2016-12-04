@@ -6,7 +6,7 @@
 
 require("./styles/home.less");
 
-function service($scope, $anchorScroll, $location) {
+function service($scope, $anchorScroll, $location, Configure) {
     console.log("home...");
     $scope.entries = [
         {
@@ -42,6 +42,7 @@ function service($scope, $anchorScroll, $location) {
             $anchorScroll();
         }
     };
+
 }
 
 module.exports = service;

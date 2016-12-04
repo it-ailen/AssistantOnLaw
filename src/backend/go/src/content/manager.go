@@ -10,10 +10,13 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"crypto/md5"
+	"gopkg.in/redis.v4"
 )
 
 type Manager struct {
 	conn *sql.DB
+	redisCli *redis.Client
 }
 
 var inst *Manager
@@ -23,10 +26,11 @@ func GetManager() *Manager {
 	return inst
 }
 
-func InitManager(conn *sql.DB) {
+func InitManager(conn *sql.DB, redisClient *redis.Client) {
 	once.Do(func() {
 		inst = new(Manager)
 		inst.conn = conn
+		inst.redisCli = redisClient
 	})
 }
 
@@ -865,3 +869,122 @@ func (self *Manager) IssueSolute(id, solution string, tags []string) (error) {
 	return nil
 }
 
+func (self *Manager) AccountsLogin(account, password string) (session string, err *DefinedError) {
+	uid, err := func() (string, *DefinedError) {
+		s := "SELECT `id`, `password` " +
+			"FROM `accounts` WHERE `account`=? "
+		stmt, e := self.conn.Prepare(s)
+		if e != nil {
+			panic(e)
+		}
+		defer stmt.Close()
+
+		var uid string
+		var passwd sql.NullString
+		e = stmt.QueryRow(account).Scan(&uid, &passwd)
+		switch {
+		case e == sql.ErrNoRows:
+			return "", BuildError(C_ERR_ACCOUNT_MISSING, "Account doesn't exist")
+		case e != nil:
+			return "", BuildUnknownError(e)
+		}
+		if passwd.Valid {
+			bs := md5.Sum([]byte(password))
+			encryptedPassword := string(bs[:])
+			if passwd.String != encryptedPassword {
+				return "", BuildError(C_ERR_PASSWORD_WRONG, "Password mismatch")
+			}
+		}
+		return uid, nil
+	}()
+	if err != nil {
+		return
+	}
+	session = self.AllocateId(true)
+	key := fmt.Sprintf("session:%s", session)
+	log.Printf("set %s=%s", key, uid)
+	e := self.redisCli.Set(key, uid, 10 * time.Minute).Err()
+	if e != nil {
+		panic(e)
+	}
+	k, e0 := self.redisCli.Get(key).Result()
+	//if e0 != nil {
+	//	panic(e0)
+	//}
+	log.Printf("Key: %s, %v", k, e0)
+	return
+}
+
+func (self *Manager) AccountsLogout(session string) {
+	self.redisCli.Del(fmt.Sprintf("session:%s", session))
+}
+
+func (self *Manager) AccountsAuthSession(session string) (*Account, *DefinedError) {
+	key := fmt.Sprintf("session:%s", session)
+	log.Printf("Get %s", key)
+	uid, e0 := self.redisCli.Get(key).Result()
+	switch {
+	case e0 == redis.Nil:
+		log.Printf("nil...")
+		return nil, nil
+	case e0 != nil:
+		panic(e0)
+	}
+	account, e1 := self.AccountsLoadUser(uid)
+	if e1 != nil {
+		return nil, e1
+	}
+	account.Session = session
+	return account, nil
+}
+
+func (self *Manager) AccountsLoadUser(uid string) (*Account, *DefinedError) {
+	cacheKey := fmt.Sprintf("cache:user:%s", uid)
+	cache, e0 := self.redisCli.Get(cacheKey).Result()
+	switch {
+	case e0 == redis.Nil:
+		return func() (*Account, *DefinedError) {
+			s := "SELECT `id`, `account`, `type`, `password`, `nick`, `contact`, `etc` " +
+				"FROM `accounts` " +
+				"WHERE `id`=? "
+			stmt, err := self.conn.Prepare(s)
+			if err != nil {
+				return nil, BuildUnknownError(err)
+			}
+			defer stmt.Close()
+			account := Account{}
+			var password sql.NullString
+			var nick sql.NullString
+			var contact sql.NullString
+			var etc sql.NullString
+			err = stmt.QueryRow(uid).Scan(&account.ID, &account.Account, &account.Type,
+				&password, &nick, &contact, &etc)
+			switch {
+			case err == redis.Nil:
+				return nil, nil
+			case err != nil:
+				return nil, BuildUnknownError(err)
+			}
+			if password.Valid {
+				account.Password = password.String
+			}
+			if nick.Valid {
+				account.Nick = nick.String
+			}
+			if contact.Valid {
+				account.Contact = contact.String
+			}
+			return &account, nil
+		}()
+	case e0 != nil:
+		return nil, BuildUnknownError(e0)
+	default:
+		account := Account{}
+		e1 := json.Unmarshal([]byte(cache), &account)
+		if e1 != nil {
+			return nil, BuildUnknownError(e1)
+		}
+		return &account, nil
+	}
+
+}

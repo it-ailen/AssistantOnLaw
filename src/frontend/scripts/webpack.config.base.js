@@ -19,7 +19,7 @@ var config = {
     },
     output: {
         path: path.resolve(__dirname, "../entries/dist"),
-        publicPath: "./dist/",
+        publicPath: "",
         filename: "[name]"
     },
     resolve: {
@@ -52,19 +52,13 @@ var config = {
                 loaders: ["html"]
             },
             {
-                test: /\.jade$/i,
+                test: /\.(jade|pug)$/i,
                 loaders: ["pug-html"]
             },
             {
-                test: /pc\.jade$/i,
-                // loader: "source!jade-static"
-                // loader: ExtractTextPlugin.extract("pug-html")
+                test: /pc\.(jade|pug)$/i,
                 loader: htmlExtractor.extract("html", "apply!pug?pretty=true")
-            },
-            // {
-            //     test: /\.jade$/i,
-            //     loaders: ["pug-loader"]
-            // }
+            }
         ]
     },
     postcss: function () {
@@ -79,7 +73,7 @@ var config = {
             $: "jquery",
             jQuery: "jquery"
         }),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.OccurenceOrderPlugin()
     ]
 };
 

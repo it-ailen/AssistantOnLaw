@@ -9,6 +9,7 @@ import (
 	"handlers/admin"
 	"handlers/utils"
 	"handlers/mobile"
+	"handlers/accounts"
 )
 
 type Base struct {
@@ -59,6 +60,7 @@ func main() {
 	admin.Register(router)
 	utils.Register(router, opt.UGC.Dir, opt.UGC.Prefix)
 	mobile.Register(router)
+	accounts.Register(router)
 
 	http.Handle("/", router)
 	log.Printf("Run on: %d\n", opt.Port)
