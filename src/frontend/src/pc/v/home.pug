@@ -1,0 +1,28 @@
+//
+   Created by hyku on 2016/12/3.
+div#home
+    div.title-area
+        div.row.title
+            div.col-md-10.col-md-offset-1
+                div.headline-1 律答家&middot;法律咨询专家
+                div.headline-2 专业、细致、用心为您服务
+        div.row
+            div.col-md-10.col-md-offset-1
+                div.top-entries
+                    div.entry(ng-repeat="entry in entries")
+                        div.fake
+                        div.body(ng-click="goto(entry.hash)")
+                            span.icon.iconfont(ng-class="entry.icon")
+                            span.name(ng-bind="entry.text")
+            div.col-md-1
+                div#aside-index.icon-index-table.affix
+                    div.entry.iconfont.icon-icon(ng-click="goto('top')")
+                    div.entry.iconfont(ng-repeat="entry in entries", ng-class="entry.icon", ng-click="goto(entry.hash)")
+    div.row.main
+        div.col-md-10.col-md-offset-1
+            div#xieYiFanBen.entry-title
+                span 协议范本
+            div.entry
+                div.fake
+                div.body
+                    div.xieYiFanBen(ui-view="xieYiFanBen")

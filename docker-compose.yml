@@ -9,11 +9,15 @@ services:
     volumes:
       - ./.data:/var/lib/mysql:rw
       - ./docs/mysql:/docker-entrypoint-initdb.d:ro
+  redis:
+    image: redis
+    container_name: aol.redis
   backend:
     build: ./src/backend
     container_name: aol.backend
     links:
       - mysql
+      - redis
     volumes:
       - ./config/config.yaml:/config/config.yaml
       - ./fake-cdn:/data/cdn:rw

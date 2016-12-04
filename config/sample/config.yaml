@@ -3,7 +3,10 @@ mysql:
   user: root
   dbname: assistant_on_law
   net: tcp
-  addr: localhost:3306
+  addr: mysql:3306
+
+redis:
+  addr: redis:6379
 
 ugc_files:
   dir: /Users/hyku/allen/AssistantOnLaw/fake-cdn

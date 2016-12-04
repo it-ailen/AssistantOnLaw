@@ -1,0 +1,42 @@
+//
+   Created by hyku on 2016/12/3.
+
+uib-tabset(active="xieYiFanBen.tab", justified="true")
+    uib-tab(heading="最热")
+        div(ng-if="data.hot && data.hot.length > 0")
+            table.table
+                thead
+                    tr
+                        th 序号
+                        th 文件名
+                        th 发布时间
+                        th 下载
+                tbody
+                    tr(ng-repeat="file in data.hot track by $index")
+                        td {{ $index + 1 }}
+                        td {{ file.name }}
+                        td {{ file.publish_time }}
+                        td
+                            a.btn.btn-default(ng-href="{{ file.url }}", target="_blank") 立即下载
+        div(ng-if="!data.hot || data.hot.length === 0")
+            div 暂时没有数据
+    uib-tab(heading="最新")
+        div(ng-if="data.newest && data.newest.length > 0")
+            table.table
+                thead
+                    tr
+                        th 序号
+                        th 文件名
+                        th 发布时间
+                        th 下载
+                tbody
+                    tr(ng-repeat="file in data.newest track by $index")
+                        td {{ $index + 1 }}
+                        td {{ file.name }}
+                        td {{ file.publish_time }}
+                        td
+                            a.btn.btn-default(ng-href="{{ file.url }}", target="_blank") 立即下载
+        div(ng-if="!data.hot || data.hot.length === 0")
+            div 暂时没有数据
+    uib-tab(heading="全部")
+        | TODO

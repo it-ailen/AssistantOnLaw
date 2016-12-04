@@ -1,0 +1,13 @@
+doctype html
+html(ng-app="LvDaJia.pc", lang="zh-CN")
+    head
+        title {{ global.title }}
+        meta(charset="utf-8")
+        script(src="//cdn.bootcss.com/angular.js/1.5.8/angular.js")
+        link(rel="stylesheet", href="//at.alicdn.com/t/font_y6xnsqentlxlayvi.css")
+        script(src="./pc.js")
+    body
+        div#pc-frame.container-fluid
+            div.top-bar.row(ui-view="topBar")
+            div#content.row(ui-view)
+            div#footer.row(ui-view="footer")
