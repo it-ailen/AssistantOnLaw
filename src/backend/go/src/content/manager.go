@@ -904,7 +904,7 @@ func (self *Manager) AccountsLogin(account, password string) (session string, er
 	session = self.AllocateId(true)
 	key := fmt.Sprintf("session:%s", session)
 	log.Printf("set %s=%s", key, uid)
-	e := self.redisCli.Set(key, uid, 10 * time.Minute).Err()
+	e := self.redisCli.Set(key, uid, 10 * time.Hour).Err()
 	if e != nil {
 		panic(e)
 	}

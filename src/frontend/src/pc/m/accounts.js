@@ -5,7 +5,7 @@
 "use strict";
 
 function service(Configure, $http, $rootScope) {
-    this.self = null;
+    this.current = {};
     var svc = this;
     this.login = function(data) {
         return Configure.getHost()
@@ -20,7 +20,7 @@ function service(Configure, $http, $rootScope) {
                 return res.data;
             })
             .then(function(me) {
-                svc.self = me;
+                svc.current.self = me;
                 $rootScope.$broadcast("login", me);
                 return me;
             })
@@ -35,11 +35,12 @@ function service(Configure, $http, $rootScope) {
                 });
             })
             .then(function(res) {
+                svc.current.self = null;
                 $rootScope.$broadcast("logout");
                 return res.data;
             })
         ;
-    }
+    };
 }
 
 module.exports = service;
