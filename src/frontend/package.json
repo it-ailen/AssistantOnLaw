@@ -44,6 +44,7 @@
     "webpack": "^1.13.2"
   },
   "devDependencies": {
+    "angular-bootstrap-contextmenu": "^0.9.9",
     "angular-sanitize": "^1.5.8",
     "apply-loader": "^0.1.0",
     "bootstrap": "^3.3.7",

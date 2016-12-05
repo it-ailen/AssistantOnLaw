@@ -10,6 +10,7 @@ require("./v/style/home.less");
 function register(mod) {
     mod
         .service("AccountsService", require("./m/accounts"))
+        .service("ResourceService", require("./m/resource"))
         .config(function ($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state("home", {

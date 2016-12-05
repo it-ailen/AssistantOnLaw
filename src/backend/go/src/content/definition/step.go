@@ -1,4 +1,4 @@
-package content
+package definition
 
 const (
 	C_ST_option = "option"

@@ -1,4 +1,4 @@
-package content
+package definition
 
 type Channel struct {
 	ID string `json:"id"`

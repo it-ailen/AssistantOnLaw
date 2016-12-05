@@ -21,6 +21,7 @@ const (
 	ErrorInvalidJson = "InvalidJson"
 	ErrorUnknown = "Unknown"
 	ErrorUnknownResource = "UnknownResource"
+	ErrorForbidden = "Forbidden"
 	ErrorThirdParty = "ThirdPartyError"
 )
 
@@ -58,12 +59,16 @@ func NewDefaultHTTPError() (*HTTPError) {
 	}
 }
 
-func NotFoundHTTPError(detail string) (*HTTPError) {
-	return NewHTTPError(404, ErrorNotFound, detail)
-}
-
 func BadArgHTTPError(detail string) (*HTTPError) {
 	return NewHTTPError(400, ErrorBadArgument, detail)
+}
+
+func ForbiddenHTTPError(detail string) (*HTTPError) {
+	return NewHTTPError(403, ErrorForbidden, detail)
+}
+
+func NotFoundHTTPError(detail string) (*HTTPError) {
+	return NewHTTPError(404, ErrorNotFound, detail)
 }
 
 func UnknownHTTPError(detail string) (*HTTPError) {
@@ -141,7 +146,13 @@ func serveHTTP(self interface{}, w http.ResponseWriter, r *http.Request) {
 	var err *HTTPError
 	defer func() {
 		if tmp := recover(); tmp != nil {
-			if e, ok := tmp.(error); ok {
+			if e, ok := tmp.(*HTTPError); ok {
+				log.Println(e.Error())
+				debug.PrintStack()
+				w.WriteHeader(e.StatusCode)
+				w.Write(e.JSON())
+				log.Printf("%s %d %s\n", r.Method, e.StatusCode, r.RequestURI)
+			} else if e, ok := tmp.(error); ok {
 				log.Println(e.Error())
 				debug.PrintStack()
 				fe := NewHTTPError(http.StatusInternalServerError, ErrorUnknown, e.Error())
@@ -149,7 +160,6 @@ func serveHTTP(self interface{}, w http.ResponseWriter, r *http.Request) {
 				w.Write(fe.JSON())
 				log.Printf("%s %d %s\n", r.Method, fe.StatusCode, r.RequestURI)
 			} else {
-				log.Println(e.Error())
 				debug.PrintStack()
 				e := NewHTTPError(http.StatusInternalServerError, ErrorUnknown, "")
 				w.WriteHeader(e.StatusCode)
@@ -193,6 +203,7 @@ func serveHTTP(self interface{}, w http.ResponseWriter, r *http.Request) {
 
 func routeArgumentWithDefault(r *http.Request, key string, defaults interface{}) interface{} {
 	vars := mux.Vars(r)
+	log.Printf("vars: %#v -- key: %s", vars, key)
 	if val, ok := vars[key]; ok {
 		return val
 	} else {
@@ -211,8 +222,9 @@ func RouteArgumentWithDefault(r *http.Request, key string, defaults string) stri
 
 func RouteArgument(r *http.Request, key string) string {
 	val := routeArgumentWithDefault(r, key, nil)
+	log.Printf("val:::: %v", val)
 	if val == nil {
-		panic(HTTPError{
+		panic(&HTTPError{
 			StatusCode: http.StatusNotFound,
 			ErrorCode: ErrorNotFound,
 		})
@@ -248,7 +260,7 @@ func QueryLongArgument(r *http.Request, key string) (int64) {
 	s := QueryArgument(r, key)
 	res, err := strconv.ParseInt(s, 10, 64)
 	if err != nil {
-		panic(HTTPError{
+		panic(&HTTPError{
 			StatusCode: http.StatusBadRequest,
 			ErrorCode: ErrorBadArgument,
 			Detail: fmt.Sprintf("Wrong value of long type: %s", s),
@@ -261,7 +273,7 @@ func QueryBoolArgument(r *http.Request, key string) (bool) {
 	s := QueryArgument(r, key)
 	res, err := strconv.ParseBool(s)
 	if err != nil {
-		panic(HTTPError{
+		panic(&HTTPError{
 			StatusCode: http.StatusBadRequest,
 			ErrorCode: ErrorBadArgument,
 			Detail: fmt.Sprintf("Wrong value of boolean type: %s", s),
@@ -280,7 +292,7 @@ func QueryLongArgumentWithDefault(r *http.Request, key string, defaults int64) (
 	s := QueryArgumentWithDefault(r, key, strconv.FormatInt(defaults, 10))
 	res, err := strconv.ParseInt(s, 10, 64)
 	if err != nil {
-		panic(HTTPError{
+		panic(&HTTPError{
 			StatusCode: http.StatusBadRequest,
 			ErrorCode: ErrorBadArgument,
 			Detail: fmt.Sprintf("Wrong value of long type: %s", s),
@@ -293,7 +305,7 @@ func QueryBoolArgumentWithDefault(r *http.Request, key string, defaults bool) (b
 	s := QueryArgumentWithDefault(r, key, strconv.FormatBool(defaults))
 	res, err := strconv.ParseBool(s)
 	if err != nil {
-		panic(HTTPError{
+		panic(&HTTPError{
 			StatusCode: http.StatusBadRequest,
 			ErrorCode: ErrorBadArgument,
 			Detail: fmt.Sprintf("Wrong value of boolean type: %s", s),

@@ -1,4 +1,4 @@
-package content
+package definition
 
 type Issue struct {
     ID string `json:"id"`

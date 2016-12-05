@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"content"
 	"encoding/json"
+	"content/definition"
 )
 
 type EntryHandler struct {}
@@ -46,7 +47,7 @@ func (self *EntryHandler) GET(w http.ResponseWriter, r *http.Request) *foolhttp.
 
 func (self *EntryHandler) POST(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	mgr := content.GetManager()
-	entry := content.Entry{
+	entry := definition.Entry{
 		ID: mgr.AllocateId(true),
 	}
 	err := foolhttp.ParseJsonArgs(r, &entry)
@@ -67,7 +68,7 @@ func (self *EntryHandler) POST(w http.ResponseWriter, r *http.Request) *foolhttp
 
 func (self *EntryHandler) PUT(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	mgr := content.GetManager()
-	entry := content.Entry{}
+	entry := definition.Entry{}
 	err := foolhttp.ParseJsonArgs(r, &entry)
 	if err != nil {
 		return err

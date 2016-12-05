@@ -4,6 +4,7 @@ import (
 	"content"
 	"foolhttp"
 	"net/http"
+	"content/definition"
 )
 
 type IssueHandler struct{}
@@ -28,7 +29,7 @@ func (self *IssueHandler) POST(w http.ResponseWriter, r *http.Request) *foolhttp
 	if e != nil {
 		return e
 	}
-	issue := content.Issue{}
+	issue := definition.Issue{}
 	issue.Detail.Desc = args.Detail.Desc
 	issue.Detail.Attachments = args.Detail.Attachments
 	issue.Client = args.Client

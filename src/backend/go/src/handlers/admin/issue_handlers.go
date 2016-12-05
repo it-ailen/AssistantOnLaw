@@ -5,6 +5,7 @@ import (
     "foolhttp"
     "content"
     "encoding/json"
+    "content/definition"
 )
 
 type IssueHandler struct {}
@@ -19,7 +20,7 @@ func (self *IssueHandler) GET(w http.ResponseWriter, r *http.Request) *foolhttp.
         return foolhttp.UnknownHTTPError(err.Error())
     }
     resp := struct {
-        List []*content.Issue `json:"list"`
+        List []*definition.Issue `json:"list"`
     }{
         List: issues,
     }

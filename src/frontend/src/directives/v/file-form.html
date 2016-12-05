@@ -1,0 +1,7 @@
+<form name="form" ng-submit="submit()">
+  <div><input type="file" name="file" required
+              onchange="angular.element(this).scope().fileNameChanged(this)">
+  <div>
+    <input type="button" class="btn btn-warn" ng-click="cancel()" value="取消">
+  </div>
+</form>

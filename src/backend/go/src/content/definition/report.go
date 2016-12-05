@@ -1,4 +1,4 @@
-package content
+package definition
 
 
 type decree struct {

@@ -1,16 +1,17 @@
 package accounts
 
 import (
-	"foolhttp"
-	"net/http"
 	"content"
+	"content/definition"
+	"encoding/json"
+	"foolhttp"
 	"github.com/xeipuuv/gojsonschema"
 	"io/ioutil"
 	"log"
-	"encoding/json"
+	"net/http"
 )
 
-type LoginHandler struct {}
+type LoginHandler struct{}
 
 func (self *LoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	foolhttp.DoServeHTTP(self, w, r)
@@ -18,7 +19,7 @@ func (self *LoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (self *LoginHandler) POST(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	type argsDefine struct {
-		Account string `json:"account"`
+		Account  string `json:"account"`
 		Password string `json:"password"`
 	}
 	schemaDefine := `{
@@ -57,15 +58,16 @@ func (self *LoginHandler) POST(w http.ResponseWriter, r *http.Request) *foolhttp
 	session, e1 := mgr.AccountsLogin(args.Account, args.Password)
 	if e1 != nil {
 		switch {
-		case e1.Err == content.C_ERR_ACCOUNT_MISSING || e1.Err == content.C_ERR_PASSWORD_WRONG:
+		case e1.Err == definition.C_ERR_ACCOUNT_MISSING || e1.Err == definition.C_ERR_PASSWORD_WRONG:
 			return foolhttp.NewHTTPError(401, e1.Err, e1.Detail)
 		default:
 			return foolhttp.UnknownHTTPError(e1.Error())
 		}
 	}
 	cookie := http.Cookie{
-		Name: "session",
+		Name:  "session",
 		Value: session,
+		Path: "/",
 	}
 	http.SetCookie(w, &cookie)
 	account, e2 := mgr.AccountsAuthSession(session)
@@ -81,17 +83,14 @@ func NewLoginHandler() *LoginHandler {
 	return handler
 }
 
-type LogoutHandler struct {}
+type LogoutHandler struct{}
 
 func (self *LogoutHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	foolhttp.DoServeHTTP(self, w, r)
 }
 
 func (self *LogoutHandler) POST(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
-	me, err := Authorize(r)
-	if err != nil {
-		return err
-	}
+	me := Authorize(r)
 	mgr := content.GetManager()
 	mgr.AccountsLogout(me.Session)
 	return nil

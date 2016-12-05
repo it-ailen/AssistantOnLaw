@@ -12,6 +12,7 @@ import (
 	"time"
 	"crypto/md5"
 	"gopkg.in/redis.v4"
+	"content/definition"
 )
 
 type Manager struct {
@@ -46,7 +47,7 @@ func (self *Manager) AllocateId(short bool) string {
 	return id
 }
 
-func (self *Manager) ChannelGet(id string) (*Channel, error) {
+func (self *Manager) ChannelGet(id string) (*definition.Channel, error) {
 	s := "SELECT `id`, `name`, `icon`, `deleted`, `created_time` FROM " +
 		"`channel` " +
 		"WHERE `id`=? "
@@ -61,7 +62,7 @@ func (self *Manager) ChannelGet(id string) (*Channel, error) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		channel := &Channel{}
+		channel := &definition.Channel{}
 		err = rows.Scan(&channel.ID, &channel.Name, &channel.Icon,
 			&channel.Deleted, &channel.CreatedTime)
 		if err != nil {
@@ -77,8 +78,8 @@ type ChannelFilter struct {
 	Count  uint
 }
 
-func (self *Manager) ChannelsGet(filter *ChannelFilter) ([]*Channel, error) {
-	channels := make([]*Channel, 0, 1024)
+func (self *Manager) ChannelsGet(filter *ChannelFilter) ([]*definition.Channel, error) {
+	channels := make([]*definition.Channel, 0, 1024)
 	s := "SELECT `id`, `name`, `icon`, `deleted`, `created_time` FROM " +
 		"`channel` "
 	args := make([]interface{}, 0, 20)
@@ -97,7 +98,7 @@ func (self *Manager) ChannelsGet(filter *ChannelFilter) ([]*Channel, error) {
 	}
 	defer rows.Close()
 	for rows.Next() {
-		channel := &Channel{}
+		channel := &definition.Channel{}
 		err = rows.Scan(&channel.ID, &channel.Name, &channel.Icon,
 			&channel.Deleted, &channel.CreatedTime)
 		log.Printf("channel: %#v", channel)
@@ -109,7 +110,7 @@ func (self *Manager) ChannelsGet(filter *ChannelFilter) ([]*Channel, error) {
 	return channels, nil
 }
 
-func (self *Manager) ChannelCreate(channel *Channel) error {
+func (self *Manager) ChannelCreate(channel *definition.Channel) error {
 	tx, err := self.conn.Begin()
 	if err != nil {
 		return err
@@ -136,7 +137,7 @@ func (self *Manager) ChannelCreate(channel *Channel) error {
 	return nil
 }
 
-func (self *Manager) ChannelUpdate(channel *Channel) error {
+func (self *Manager) ChannelUpdate(channel *definition.Channel) error {
 	s := "UPDATE `channel` SET `name`=?, `icon`=? WHERE `id`=? "
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {
@@ -147,7 +148,7 @@ func (self *Manager) ChannelUpdate(channel *Channel) error {
 	return err
 }
 
-func (self *Manager) ChannelDelete(channel *Channel) error {
+func (self *Manager) ChannelDelete(channel *definition.Channel) error {
 	s := "DELETE FROM `channel` WHERE `id`=? "
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {
@@ -159,12 +160,12 @@ func (self *Manager) ChannelDelete(channel *Channel) error {
 }
 
 type StepNode struct {
-	Option
+	definition.Option
 	Children []*StepNode `json:"children"`
 }
 
 type EntryTree struct {
-	Entry
+	definition.Entry
 	Children []*StepNode `json:"children"`
 }
 
@@ -185,7 +186,7 @@ func (self *Manager) loadChildrenNodes(parentId string) ([]*StepNode, error) {
 		nodes = append(nodes, &node)
 	}
 	for _, node := range nodes {
-		if node.Type == C_ST_option {
+		if node.Type == definition.C_ST_option {
 			node.Children, err = self.loadChildrenNodes(node.ID)
 			if err != nil {
 				return nodes, nil
@@ -228,7 +229,7 @@ func (self *Manager) EntryTreeGet(id string) (*EntryTree, error) {
 	return tree, err
 }
 
-func (self *Manager) EntryGet(id string) (*Entry, error) {
+func (self *Manager) EntryGet(id string) (*definition.Entry, error) {
 	s := "SELECT `id`, `channel_id`, `text`, `layout_type` FROM `entry` " +
 		"WHERE `id`=? "
 	stmt, err := self.conn.Prepare(s)
@@ -238,7 +239,7 @@ func (self *Manager) EntryGet(id string) (*Entry, error) {
 	defer stmt.Close()
 	rows, err := stmt.Query(id)
 	if rows.Next() {
-		entry := Entry{}
+		entry := definition.Entry{}
 		err = rows.Scan(&entry.ID, &entry.ChannelId, &entry.Text, &entry.LayoutType)
 		if err != nil {
 			return nil, err
@@ -249,7 +250,7 @@ func (self *Manager) EntryGet(id string) (*Entry, error) {
 	}
 }
 
-func (self *Manager) EntriesGet(channelId string) ([]*Entry, error) {
+func (self *Manager) EntriesGet(channelId string) ([]*definition.Entry, error) {
 	s := "SELECT `id`, `channel_id`, `text`, `layout_type` FROM `entry` " +
 		"WHERE `channel_id`=? "
 	stmt, err := self.conn.Prepare(s)
@@ -262,9 +263,9 @@ func (self *Manager) EntriesGet(channelId string) ([]*Entry, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	entries := make([]*Entry, 0, 100)
+	entries := make([]*definition.Entry, 0, 100)
 	for rows.Next() {
-		entry := &Entry{}
+		entry := &definition.Entry{}
 		err = rows.Scan(&entry.ID, &entry.ChannelId, &entry.Text, &entry.LayoutType)
 		if err != nil {
 			return entries, nil
@@ -274,7 +275,7 @@ func (self *Manager) EntriesGet(channelId string) ([]*Entry, error) {
 	return entries, nil
 }
 
-func (self *Manager) EntryCreate(entry *Entry) error {
+func (self *Manager) EntryCreate(entry *definition.Entry) error {
 	s := "INSERT INTO `entry`(`id`, `channel_id`, `text`, `layout_type`) " +
 		"VALUES(?, ?, ?, ?) "
 	stmt, err := self.conn.Prepare(s)
@@ -289,7 +290,7 @@ func (self *Manager) EntryCreate(entry *Entry) error {
 	return nil
 }
 
-func (self *Manager) EntryUpdate(entry *Entry) error {
+func (self *Manager) EntryUpdate(entry *definition.Entry) error {
 	s := "UPDATE `entry` SET " +
 		"`text`=?, `layout_type`=? " +
 		"WHERE `id`=? "
@@ -302,7 +303,7 @@ func (self *Manager) EntryUpdate(entry *Entry) error {
 	return err
 }
 
-func (self *Manager) EntryDelete(entry *Entry) error {
+func (self *Manager) EntryDelete(entry *definition.Entry) error {
 	s := "DELETE FROM `entry` " +
 		"WHERE `id`=? "
 	stmt, err := self.conn.Prepare(s)
@@ -318,169 +319,169 @@ type ReportFilter struct {
 	Ids []string
 }
 
-func (self *Manager) ReportsGet(filter *ReportFilter) ([]*Report, error) {
-	reports := make([]*Report, 0, 1000)
-	reportCasesMap := make(map[string][]string)
-	reportDecreesMap := make(map[string][]string)
-	err := func() error {
-		s := "SELECT  `id`, `title`, `conclusion`, `cases`, `decrees` " +
-			"FROM `report` "
-		if filter != nil {
-			whereClauses := make([]string, 0, 10)
-			if len(filter.Ids) > 0 {
-				wrappedIds := make([]string, len(filter.Ids))
-				for index, id := range filter.Ids {
-					wrappedIds[index] = fmt.Sprintf("'%s'", id)
-				}
-				whereClauses = append(whereClauses, "`id` IN ("+strings.Join(wrappedIds, ", ")+")")
-			}
-			if len(whereClauses) > 0 {
-				s += "WHERE " + strings.Join(whereClauses, " AND ")
-			}
-		}
-		log.Printf("SQL: %s", s)
-		stmt, err := self.conn.Prepare(s)
-		if err != nil {
-			return err
-		}
-		defer stmt.Close()
-		rows, err := stmt.Query()
-		if err != nil {
-			panic(err)
-		}
-		defer rows.Close()
-		for rows.Next() {
-			report := Report{}
-			var casesJson sql.NullString
-			var decreesJson sql.NullString
-			err = rows.Scan(&report.ID, &report.Title, &report.Conclusion,
-				&casesJson, &decreesJson)
-			if err != nil {
-				panic(err)
-			}
-			if casesJson.Valid && len(casesJson.String) > 0 {
-				var cases []string
-				err = json.Unmarshal([]byte(casesJson.String), &cases)
-				if err != nil {
-					panic(err)
-				}
-				reportCasesMap[report.ID] = cases
-			}
-			if decreesJson.Valid && len(decreesJson.String) > 0 {
-				var decrees []string
-				err = json.Unmarshal([]byte(decreesJson.String), &decrees)
-				if err != nil {
-					panic(err)
-				}
-				reportDecreesMap[report.ID] = decrees
-			}
-			reports = append(reports, &report)
-		}
-		return nil
-	}()
-	if err != nil {
-		return reports, err
-	}
-	err = func() error {
-		todoList := make([]string, 0, 1000)
-		for _, caseIds := range reportCasesMap {
-			for _, id := range caseIds {
-				todoList = append(todoList, fmt.Sprintf("'%s'", id))
-			}
-		}
-		if len(todoList) > 0 {
-			s := "SELECT `id`, `content`, `link` " +
-				"FROM `case` " +
-				"WHERE `id` IN (" + strings.Join(todoList, ", ") + ") "
-			stmt, e := self.conn.Prepare(s)
-			if e != nil {
-				panic(e)
-			}
-			defer stmt.Close()
-			rows, e := stmt.Query()
-			if e != nil {
-				panic(e)
-			}
-			defer rows.Close()
-			caseMap := make(map[string]*event)
-			for rows.Next() {
-				c := event{}
-				e = rows.Scan(&c.ID, &c.Content, &c.Link)
-				if e != nil {
-					panic(e)
-				}
-				caseMap[c.ID] = &c
-			}
-			for _, report := range reports {
-				if caseIds, ok := reportCasesMap[report.ID]; ok {
-					cases := make([]*event, len(caseIds))
-					for index, caseId := range caseIds {
-						cases[index] = caseMap[caseId]
-					}
-					report.Cases = cases
-				}
-			}
-		}
-		return nil
-	}()
-	if err != nil {
-		return reports, err
-	}
-	err = func() error {
-		todoList := make([]string, 0, 1000)
-		for _, decreeIds := range reportDecreesMap {
-			for _, id := range decreeIds {
-				todoList = append(todoList, fmt.Sprintf("'%s'", id))
-			}
-		}
-		if len(todoList) > 0 {
-			s := "SELECT `id`, `source`, `content`, `link` " +
-				"FROM `decree` " +
-				"WHERE `id` IN (" + strings.Join(todoList, ", ") + ") "
-			stmt, e := self.conn.Prepare(s)
-			if e != nil {
-				panic(e)
-			}
-			defer stmt.Close()
-			rows, e := stmt.Query()
-			if e != nil {
-				panic(e)
-			}
-			defer rows.Close()
-			decreeMap := make(map[string]*decree)
-			for rows.Next() {
-				d := decree{}
-				e = rows.Scan(&d.ID, &d.Source, &d.Content, &d.Link)
-				if e != nil {
-					panic(e)
-				}
-				decreeMap[d.ID] = &d
-			}
-			for _, report := range reports {
-				if decreeIds, ok := reportDecreesMap[report.ID]; ok {
-					decrees := make([]*decree, len(decreeIds))
-					for index, decreeId := range decreeIds {
-						decrees[index] = decreeMap[decreeId]
-					}
-					report.Decrees = decrees
-				}
-			}
-		}
-		return nil
-	}()
-	if err != nil {
-		return reports, err
-	}
-	return reports, nil
-}
+//func (self *Manager) ReportsGet(filter *ReportFilter) ([]*definition.Report, error) {
+//	reports := make([]*definition.Report, 0, 1000)
+//	reportCasesMap := make(map[string][]string)
+//	reportDecreesMap := make(map[string][]string)
+//	err := func() error {
+//		s := "SELECT  `id`, `title`, `conclusion`, `cases`, `decrees` " +
+//			"FROM `report` "
+//		if filter != nil {
+//			whereClauses := make([]string, 0, 10)
+//			if len(filter.Ids) > 0 {
+//				wrappedIds := make([]string, len(filter.Ids))
+//				for index, id := range filter.Ids {
+//					wrappedIds[index] = fmt.Sprintf("'%s'", id)
+//				}
+//				whereClauses = append(whereClauses, "`id` IN ("+strings.Join(wrappedIds, ", ")+")")
+//			}
+//			if len(whereClauses) > 0 {
+//				s += "WHERE " + strings.Join(whereClauses, " AND ")
+//			}
+//		}
+//		log.Printf("SQL: %s", s)
+//		stmt, err := self.conn.Prepare(s)
+//		if err != nil {
+//			return err
+//		}
+//		defer stmt.Close()
+//		rows, err := stmt.Query()
+//		if err != nil {
+//			panic(err)
+//		}
+//		defer rows.Close()
+//		for rows.Next() {
+//			report := definition.Report{}
+//			var casesJson sql.NullString
+//			var decreesJson sql.NullString
+//			err = rows.Scan(&report.ID, &report.Title, &report.Conclusion,
+//				&casesJson, &decreesJson)
+//			if err != nil {
+//				panic(err)
+//			}
+//			if casesJson.Valid && len(casesJson.String) > 0 {
+//				var cases []string
+//				err = json.Unmarshal([]byte(casesJson.String), &cases)
+//				if err != nil {
+//					panic(err)
+//				}
+//				reportCasesMap[report.ID] = cases
+//			}
+//			if decreesJson.Valid && len(decreesJson.String) > 0 {
+//				var decrees []string
+//				err = json.Unmarshal([]byte(decreesJson.String), &decrees)
+//				if err != nil {
+//					panic(err)
+//				}
+//				reportDecreesMap[report.ID] = decrees
+//			}
+//			reports = append(reports, &report)
+//		}
+//		return nil
+//	}()
+//	if err != nil {
+//		return reports, err
+//	}
+//	err = func() error {
+//		todoList := make([]string, 0, 1000)
+//		for _, caseIds := range reportCasesMap {
+//			for _, id := range caseIds {
+//				todoList = append(todoList, fmt.Sprintf("'%s'", id))
+//			}
+//		}
+//		if len(todoList) > 0 {
+//			s := "SELECT `id`, `content`, `link` " +
+//				"FROM `case` " +
+//				"WHERE `id` IN (" + strings.Join(todoList, ", ") + ") "
+//			stmt, e := self.conn.Prepare(s)
+//			if e != nil {
+//				panic(e)
+//			}
+//			defer stmt.Close()
+//			rows, e := stmt.Query()
+//			if e != nil {
+//				panic(e)
+//			}
+//			defer rows.Close()
+//			caseMap := make(map[string]*definition.event)
+//			for rows.Next() {
+//				c := event{}
+//				e = rows.Scan(&c.ID, &c.Content, &c.Link)
+//				if e != nil {
+//					panic(e)
+//				}
+//				caseMap[c.ID] = &c
+//			}
+//			for _, report := range reports {
+//				if caseIds, ok := reportCasesMap[report.ID]; ok {
+//					cases := make([]*event, len(caseIds))
+//					for index, caseId := range caseIds {
+//						cases[index] = caseMap[caseId]
+//					}
+//					report.Cases = cases
+//				}
+//			}
+//		}
+//		return nil
+//	}()
+//	if err != nil {
+//		return reports, err
+//	}
+//	err = func() error {
+//		todoList := make([]string, 0, 1000)
+//		for _, decreeIds := range reportDecreesMap {
+//			for _, id := range decreeIds {
+//				todoList = append(todoList, fmt.Sprintf("'%s'", id))
+//			}
+//		}
+//		if len(todoList) > 0 {
+//			s := "SELECT `id`, `source`, `content`, `link` " +
+//				"FROM `decree` " +
+//				"WHERE `id` IN (" + strings.Join(todoList, ", ") + ") "
+//			stmt, e := self.conn.Prepare(s)
+//			if e != nil {
+//				panic(e)
+//			}
+//			defer stmt.Close()
+//			rows, e := stmt.Query()
+//			if e != nil {
+//				panic(e)
+//			}
+//			defer rows.Close()
+//			decreeMap := make(map[string]*decree)
+//			for rows.Next() {
+//				d := decree{}
+//				e = rows.Scan(&d.ID, &d.Source, &d.Content, &d.Link)
+//				if e != nil {
+//					panic(e)
+//				}
+//				decreeMap[d.ID] = &d
+//			}
+//			for _, report := range reports {
+//				if decreeIds, ok := reportDecreesMap[report.ID]; ok {
+//					decrees := make([]*decree, len(decreeIds))
+//					for index, decreeId := range decreeIds {
+//						decrees[index] = decreeMap[decreeId]
+//					}
+//					report.Decrees = decrees
+//				}
+//			}
+//		}
+//		return nil
+//	}()
+//	if err != nil {
+//		return reports, err
+//	}
+//	return reports, nil
+//}
 
 type OptionsFilter struct {
 	Parents []string
 	Ids     []string
 }
 
-func (self *Manager) OptionsGet(filter *OptionsFilter) ([]*Option, error) {
-	options := make([]*Option, 0, 100)
+func (self *Manager) OptionsGet(filter *OptionsFilter) ([]*definition.Option, error) {
+	options := make([]*definition.Option, 0, 100)
 	optionReportMap := make(map[string]string)
 	toLoadReportIds := make([]string, 0, 100)
 	err := func() error {
@@ -518,14 +519,14 @@ func (self *Manager) OptionsGet(filter *OptionsFilter) ([]*Option, error) {
 		}
 		defer rows.Close()
 		for rows.Next() {
-			option := Option{}
+			option := definition.Option{}
 			var reportId sql.NullString
 			err = rows.Scan(&option.ID, &option.ParentId, &option.Text, &option.Type, &reportId)
 			if err != nil {
 				return err
 			}
 			log.Printf("%#v %#v", &option, reportId)
-			if option.Type == C_ST_report {
+			if option.Type == definition.C_ST_report {
 				optionReportMap[option.ID] = reportId.String
 				toLoadReportIds = append(toLoadReportIds, reportId.String)
 			}
@@ -536,28 +537,28 @@ func (self *Manager) OptionsGet(filter *OptionsFilter) ([]*Option, error) {
 	if err != nil {
 		return options, err
 	}
-	if len(toLoadReportIds) > 0 {
-		filter := ReportFilter{
-			Ids: toLoadReportIds,
-		}
-		reports, err := self.ReportsGet(&filter)
-		if err != nil {
-			return options, err
-		}
-		reportMap := make(map[string]*Report)
-		for _, report := range reports {
-			reportMap[report.ID] = report
-		}
-		for _, option := range options {
-			if option.Type == "report" {
-				option.Report = reportMap[optionReportMap[option.ID]]
-			}
-		}
-	}
+	//if len(toLoadReportIds) > 0 {
+	//	filter := ReportFilter{
+	//		Ids: toLoadReportIds,
+	//	}
+	//	reports, err := self.ReportsGet(&filter)
+	//	if err != nil {
+	//		return options, err
+	//	}
+	//	reportMap := make(map[string]*definition.Report)
+	//	for _, report := range reports {
+	//		reportMap[report.ID] = report
+	//	}
+	//	for _, option := range options {
+	//		if option.Type == "report" {
+	//			option.Report = reportMap[optionReportMap[option.ID]]
+	//		}
+	//	}
+	//}
 	return options, nil
 }
 
-func (self *Manager) OptionGet(id string) (*Option, error) {
+func (self *Manager) OptionGet(id string) (*definition.Option, error) {
 	filter := OptionsFilter{
 		Ids: []string{id},
 	}
@@ -571,7 +572,7 @@ func (self *Manager) OptionGet(id string) (*Option, error) {
 	return nil, nil
 }
 
-func (self *Manager) OptionCreate(option *Option) error {
+func (self *Manager) OptionCreate(option *definition.Option) error {
 	switch option.Type {
 	case "option":
 		s := "INSERT INTO `option`(`id`, `parent_id`, `text`, `type`) " +
@@ -660,7 +661,7 @@ func (self *Manager) OptionCreate(option *Option) error {
 	return nil
 }
 
-func (self *Manager) OptionDelete(option *Option) error {
+func (self *Manager) OptionDelete(option *definition.Option) error {
 	s := "DELETE FROM `option` " +
 		"WHERE `id`=? "
 	stmt, err := self.conn.Prepare(s)
@@ -672,7 +673,7 @@ func (self *Manager) OptionDelete(option *Option) error {
 	return err
 }
 
-func (self *Manager) IssueCreate(issue *Issue) error {
+func (self *Manager) IssueCreate(issue *definition.Issue) error {
 	issue.ID = self.AllocateId(true)
 	issue.CreatedTime = self.CurrentTimeMs()
 	s := "INSERT INTO `client_issue`(`id`, `created_time`, `client`, `description`, `attachments`) " +
@@ -697,7 +698,7 @@ func (self *Manager) IssueCreate(issue *Issue) error {
 	return nil
 }
 
-func (self *Manager) IssueGet(id string) (*Issue, error) {
+func (self *Manager) IssueGet(id string) (*definition.Issue, error) {
 	filter := IssuesFilter{
 		ID: id,
 	}
@@ -715,9 +716,9 @@ type IssuesFilter struct {
 	ID string
 }
 
-func (self *Manager) IssuesGet(filter *IssuesFilter) ([]*Issue, error) {
-	issues, err := func()([]*Issue, error) {
-		issues := make([]*Issue, 0, 100)
+func (self *Manager) IssuesGet(filter *IssuesFilter) ([]*definition.Issue, error) {
+	issues, err := func()([]*definition.Issue, error) {
+		issues := make([]*definition.Issue, 0, 100)
 		s := "SELECT `id`, `created_time`, `client`, `description`, `attachments`, `status`, `solution` " +
 			"FROM `client_issue` "
 		args := []interface{}{}
@@ -740,7 +741,7 @@ func (self *Manager) IssuesGet(filter *IssuesFilter) ([]*Issue, error) {
 		defer rows.Close()
 
 		for rows.Next() {
-			issue := Issue{}
+			issue := definition.Issue{}
 			var clientJson string
 			var attachmentsJson sql.NullString
 			var solution sql.NullString
@@ -869,8 +870,8 @@ func (self *Manager) IssueSolute(id, solution string, tags []string) (error) {
 	return nil
 }
 
-func (self *Manager) AccountsLogin(account, password string) (session string, err *DefinedError) {
-	uid, err := func() (string, *DefinedError) {
+func (self *Manager) AccountsLogin(account, password string) (session string, err *definition.DefinedError) {
+	uid, err := func() (string, *definition.DefinedError) {
 		s := "SELECT `id`, `password` " +
 			"FROM `accounts` WHERE `account`=? "
 		stmt, e := self.conn.Prepare(s)
@@ -884,15 +885,15 @@ func (self *Manager) AccountsLogin(account, password string) (session string, er
 		e = stmt.QueryRow(account).Scan(&uid, &passwd)
 		switch {
 		case e == sql.ErrNoRows:
-			return "", BuildError(C_ERR_ACCOUNT_MISSING, "Account doesn't exist")
+			return "", definition.BuildError(definition.C_ERR_ACCOUNT_MISSING, "Account doesn't exist")
 		case e != nil:
-			return "", BuildUnknownError(e)
+			return "", definition.BuildUnknownError(e)
 		}
 		if passwd.Valid {
 			bs := md5.Sum([]byte(password))
 			encryptedPassword := string(bs[:])
 			if passwd.String != encryptedPassword {
-				return "", BuildError(C_ERR_PASSWORD_WRONG, "Password mismatch")
+				return "", definition.BuildError(definition.C_ERR_PASSWORD_WRONG, "Password mismatch")
 			}
 		}
 		return uid, nil
@@ -919,7 +920,7 @@ func (self *Manager) AccountsLogout(session string) {
 	self.redisCli.Del(fmt.Sprintf("session:%s", session))
 }
 
-func (self *Manager) AccountsAuthSession(session string) (*Account, *DefinedError) {
+func (self *Manager) AccountsAuthSession(session string) (*definition.Account, *definition.DefinedError) {
 	key := fmt.Sprintf("session:%s", session)
 	log.Printf("Get %s", key)
 	uid, e0 := self.redisCli.Get(key).Result()
@@ -938,21 +939,21 @@ func (self *Manager) AccountsAuthSession(session string) (*Account, *DefinedErro
 	return account, nil
 }
 
-func (self *Manager) AccountsLoadUser(uid string) (*Account, *DefinedError) {
+func (self *Manager) AccountsLoadUser(uid string) (*definition.Account, *definition.DefinedError) {
 	cacheKey := fmt.Sprintf("cache:user:%s", uid)
 	cache, e0 := self.redisCli.Get(cacheKey).Result()
 	switch {
 	case e0 == redis.Nil:
-		return func() (*Account, *DefinedError) {
+		return func() (*definition.Account, *definition.DefinedError) {
 			s := "SELECT `id`, `account`, `type`, `password`, `nick`, `contact`, `etc` " +
 				"FROM `accounts` " +
 				"WHERE `id`=? "
 			stmt, err := self.conn.Prepare(s)
 			if err != nil {
-				return nil, BuildUnknownError(err)
+				return nil, definition.BuildUnknownError(err)
 			}
 			defer stmt.Close()
-			account := Account{}
+			account := definition.Account{}
 			var password sql.NullString
 			var nick sql.NullString
 			var contact sql.NullString
@@ -963,7 +964,7 @@ func (self *Manager) AccountsLoadUser(uid string) (*Account, *DefinedError) {
 			case err == redis.Nil:
 				return nil, nil
 			case err != nil:
-				return nil, BuildUnknownError(err)
+				return nil, definition.BuildUnknownError(err)
 			}
 			if password.Valid {
 				account.Password = password.String
@@ -977,12 +978,12 @@ func (self *Manager) AccountsLoadUser(uid string) (*Account, *DefinedError) {
 			return &account, nil
 		}()
 	case e0 != nil:
-		return nil, BuildUnknownError(e0)
+		return nil, definition.BuildUnknownError(e0)
 	default:
-		account := Account{}
+		account := definition.Account{}
 		e1 := json.Unmarshal([]byte(cache), &account)
 		if e1 != nil {
-			return nil, BuildUnknownError(e1)
+			return nil, definition.BuildUnknownError(e1)
 		}
 		return &account, nil
 	}

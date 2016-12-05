@@ -6,6 +6,7 @@ import (
 	"content"
 	"encoding/json"
 	"log"
+	"content/definition"
 )
 
 type OptionHandler struct {}
@@ -34,14 +35,14 @@ func (self *OptionHandler) GET(w http.ResponseWriter, r *http.Request) *foolhttp
 
 func (self *OptionHandler) POST(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	mgr := content.GetManager()
-	option := content.Option{
+	option := definition.Option{
 		ID: mgr.AllocateId(true),
 	}
 	err := foolhttp.ParseJsonArgs(r, &option)
 	if err != nil {
 		return err
 	}
-	if option.Type == content.C_ST_report {
+	if option.Type == definition.C_ST_report {
 		option.Report.ID = mgr.AllocateId(true)
 		for _, c := range option.Report.Cases {
 			c.ID = mgr.AllocateId(true)
@@ -65,14 +66,14 @@ func (self *OptionHandler) POST(w http.ResponseWriter, r *http.Request) *foolhtt
 
 func (self *OptionHandler) PUT(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	mgr := content.GetManager()
-	option := content.Option{
+	option := definition.Option{
 		ID: mgr.AllocateId(true),
 	}
 	err := foolhttp.ParseJsonArgs(r, &option)
 	if err != nil {
 		return err
 	}
-	if option.Type == content.C_ST_report {
+	if option.Type == definition.C_ST_report {
 		if len(option.Report.ID) == 0 {
 			option.Report.ID = mgr.AllocateId(true)
 		}

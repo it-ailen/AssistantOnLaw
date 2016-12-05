@@ -1,4 +1,4 @@
-package content
+package definition
 
 const (
     C_ACC_TYPE_CUSTOMER = "customer"

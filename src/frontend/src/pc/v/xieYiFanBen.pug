@@ -39,4 +39,16 @@ uib-tabset(active="xieYiFanBen.tab", justified="true")
         div(ng-if="!data.hot || data.hot.length === 0")
             div 暂时没有数据
     uib-tab(heading="全部")
-        | TODO
+        table.table
+            thead
+                tr
+                    th 文件名
+                    th 发布时间
+                    th 下载
+            tbody
+                tr(ng-repeat="item in current.expandedRows", context-menu="contextMenu")
+                    td.iconfont(ng-class="itemClass(item)", ng-click="toggle(item, $index)") {{ item.properties.name }}
+                    td {{ item.properties.created_time | date }}
+                    td
+                        a.btn.btn-default(ng-href="{{ item.properties.reference }}", ng-show="item.properties.type==='file'", target="_blank") 立即下载
+    //- div current: {{ current.expandedRows | json }}

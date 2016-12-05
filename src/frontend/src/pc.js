@@ -10,6 +10,8 @@ require("ng-dialog");
 require("ng-dialog/css/ngDialog.min.css");
 require("ng-dialog/css/ngDialog-theme-default.min.css");
 
+require("angular-bootstrap-contextmenu");
+
 
 require("angular-treeview");
 
@@ -20,7 +22,9 @@ var app = angular.module("LvDaJia.pc", [
     "angular.tree",
     "ngDialog",
     require("angular-messages"),
-    require("angular-ui-bootstrap")
+    require("angular-ui-bootstrap"),
+    "ui.bootstrap.contextMenu",
+    require("./directives/file-input")
 ]);
 
 app

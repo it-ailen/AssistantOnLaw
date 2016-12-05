@@ -4,8 +4,9 @@ import (
 	"foolhttp"
 	"net/http"
 	"log"
-	"content"
 	"encoding/json"
+	"content/definition"
+	"content"
 )
 
 type ChannelHandler struct {}
@@ -48,7 +49,7 @@ func (self *ChannelHandler) POST(w http.ResponseWriter, r *http.Request) *foolht
 	}
 	log.Printf("name: %#v", args)
 	mgr := content.GetManager()
-	channel := content.Channel{
+	channel := definition.Channel{
 		ID: mgr.AllocateId(true),
 		Name: args.Name,
 		Icon: args.Icon,
