@@ -1,0 +1,11 @@
+//
+   Created by hyku on 2016/12/3.
+
+div.row(style="height: 100%;")
+    div.col-md-3
+        uib-accordion(close-others="true")
+            div.panel-default(uib-accordion-group, ng-repeat="item in data.tree.children", heading="{{ item.properties.name }}", context-menu="dirContextMenu")
+                div.panel(ng-repeat="question in item.children", ng-click="openArticle(question)", context-menu="fileContextMenu").
+                    {{ question.properties.name }}
+    div.col-md-9(style="height: 100%;")
+        iframe#doc-perviewer(width="100%", height="100%", src="{{ current.question.properties.reference }}", style="border: none")

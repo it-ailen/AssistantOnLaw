@@ -31,6 +31,10 @@ function register(mod) {
                         "xieYiFanBen": {
                             template: require("./v/xieYiFanBen.pug"),
                             controller: require("./c/xieYiFanBen")
+                        },
+                        "faLvWenDa": {
+                            template: require("./v/faLvWenDa.pug"),
+                            controller: require("./c/faLvWenDa")
                         }
                     }
                 })
