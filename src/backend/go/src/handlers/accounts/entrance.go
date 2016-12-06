@@ -7,6 +7,7 @@ func Register(router *mux.Router) error {
 
 	accountsRouter.Handle("/login", NewLoginHandler())
 	accountsRouter.Handle("/logout", NewLogoutHandler())
+	accountsRouter.Handle("/auth", NewAuthHandler())
 
 	return nil
 }

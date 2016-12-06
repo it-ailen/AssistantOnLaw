@@ -5,16 +5,17 @@ div#top-bar
     div.col-md-10.col-md-offset-1
         span.logo 律答家logo
         span.user-area.pull-right
-            form.form-inline(novalidate, ng-submit="login(loginData)", ng-if="!current.self")
+            form.form-inline(novalidate, ng-submit="login(loginData)", ng-if="$state.is('home.base')", name="loginForm")
                 div.form-group
                     label.sr-only 账号
-                    input.form-control(type="text", required, placeholder="账号", ng-model="loginData.account")
+                    input.form-control(name="account", type="text", required, placeholder="账号", ng-model="loginData.account")
                 div.form-group
                     label.sr-only 密码
-                    input.form-control(type="password", required, placeholder="密码", ng-model="loginData.password")
-                a(href="javascript:;", ng-click="login(loginData)") 登陆
+                    input.form-control(name="password", type="password", required, placeholder="密码", ng-model="loginData.password")
+                a(href="javascript:;", ng-click="login(loginData)", ng-class="{disabled: loginForm.$invalid}") 登陆
                 span &nbsp;|&nbsp;
                 a(href="javascript:;", ng-click="register()") 注册
-            span(ng-if="current.self") 欢迎您,{{ current.self.account }}
+            span(ng-if="!$state.is('home.base')") 欢迎您,{{ self.account }}
                 a(href="javascript:;", ng-click="logout()") 登出
+
 div.top-bar-placeholder
