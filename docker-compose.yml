@@ -18,6 +18,9 @@ services:
     links:
       - mysql
       - redis
+    depends_on:
+      - mysql
+      - redis
     volumes:
       - ./config/config.yaml:/config/config.yaml
       - ./fake-cdn:/data/cdn:rw
@@ -31,10 +34,14 @@ services:
       - ./www:/data/www:ro
     links:
       - backend
+    depends_on:
+      - backend
   gateway.dev:
     container_name: aol.gateway.dev
     build: .
     links:
+      - backend
+    depends_on:
       - backend
     ports:
       - 80:80
