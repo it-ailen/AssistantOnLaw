@@ -3,8 +3,8 @@ CREATE TABLE `file` (
   `name` VARCHAR(200) NOT NULL,
   `type` CHAR(40) NOT NULL,
   `owner` CHAR(32) NOT NULL,
-  `created_time` BIGINT,
-  `updated_time` BIGINT,
+  `created_time` BIGINT DEFAULT 0,
+  `updated_time` BIGINT DEFAULT 0,
   `reference_uri` VARCHAR(400) NULL,
   `download_count` BIGINT DEFAULT 0,
   `etc` JSON
