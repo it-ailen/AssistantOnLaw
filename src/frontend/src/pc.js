@@ -3,8 +3,12 @@
  */
 "use strict";
 
-require("bootstrap/dist/css/bootstrap.css");
+require("angular");
 require("angular-ui-router");
+require("angular-bootstrap-npm");
+require("angular-ui-bootstrap");
+
+require("angular-summernote/dist/angular-summernote");
 
 require("ng-dialog");
 require("ng-dialog/css/ngDialog.min.css");
@@ -15,16 +19,22 @@ require("angular-bootstrap-contextmenu");
 
 require("angular-treeview");
 
+require("angular-toastr/dist/angular-toastr.css");
+
 
 var app = angular.module("LvDaJia.pc", [
     // "ngRoute",
     "ui.router",
     "angular.tree",
     "ngDialog",
+    "ui.bootstrap",
     require("angular-messages"),
-    require("angular-ui-bootstrap"),
     "ui.bootstrap.contextMenu",
-    require("./directives/file-input")
+    require("./directives/file-input"),
+    require("angular-animate"),
+    require("angular-toastr"),
+    "summernote"
+    // "ui.bootstrap"
 ]);
 
 app

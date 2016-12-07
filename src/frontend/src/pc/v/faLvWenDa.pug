@@ -1,11 +1,27 @@
 //
    Created by hyku on 2016/12/3.
 
-div.row(style="height: 100%;")
-    div.col-md-3
-        uib-accordion(close-others="true")
-            div.panel-default(uib-accordion-group, ng-repeat="item in data.tree.children", heading="{{ item.properties.name }}", context-menu="dirContextMenu")
-                div.panel(ng-repeat="question in item.children", ng-click="openArticle(question)", context-menu="fileContextMenu").
-                    {{ question.properties.name }}
-    div.col-md-9(style="height: 100%;")
-        iframe#doc-perviewer(width="100%", height="100%", src="{{ current.question.properties.reference }}", style="border: none")
+div.row(style="max-height: 100%;")
+    div.row(style="text-align: right", ng-if="$state.includes('home.base.super')")
+        span.glyphicon.glyphicon-plus(ng-click="updateClass()")
+    div.row
+        div.col-md-3
+            uib-accordion(close-others="true")
+                div.panel-default(ng-if="$state.includes('home.base.super')", uib-accordion-group, ng-repeat="c in data.classes", heading="{{ c.name }}", context-menu="classContextMenu")
+                    div.panel(ng-repeat="article in c.articles", ng-click="openArticle(article)", context-menu="articleContextMenu").
+                        {{ article.name }}
+                div.panel-default(ng-if="!$state.includes('home.base.super')", uib-accordion-group, ng-repeat="class in data.classes", heading="{{ class.name }}")
+                    div.panel(ng-repeat="article in class.articles", ng-click="openArticle(article)").
+                        {{ article.name }}
+        div.col-md-9(style="max-height: 100%;")
+            div.content(ng-show="!$state.includes('home.base.super')")
+                | {{ current.article.content }}
+            div(ng-show="$state.includes('home.base.super')")
+                form(name="faLvWenDa_content_form", ng-submit="updateArticleContent()")
+                    div.form-group
+                        summernote#article-summernote(config="summerNoteOptions", ng-model="current.editingArticle.content", name="content",
+                        on-image-upload="uploadImage(files)", editor, editable)
+                    div.form-group(style="text-align: center")
+                        input.btn.btn-default(value="保存", type="submit", ng-disabled="faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine")
+
+

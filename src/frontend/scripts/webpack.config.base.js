@@ -74,7 +74,10 @@ var config = {
             jQuery: "jquery"
         }),
         new webpack.optimize.OccurenceOrderPlugin()
-    ]
+    ],
+    externals: {
+        "jquery": "jQuery"
+    }
 };
 
 module.exports = config;

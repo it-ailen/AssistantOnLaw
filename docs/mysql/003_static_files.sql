@@ -24,12 +24,26 @@ INSERT INTO `file`(`id`, `name`, `type`, `owner`)
 
 INSERT INTO `file`(`id`, `name`, `type`, `owner`)
   VALUES
-  ('xie_yi_fan_ben', '协议范本', 'directory', 'builtin_root'),
-  ('fa_lv_wen_da', '法律问答', 'directory', 'builtin_root')
+  ('xie_yi_fan_ben', '协议范本', 'directory', 'builtin_root')
 ;
 
 INSERT INTO `directory`(`directory_id`, `child_id`)
   VALUES
-  ('root', 'xie_yi_fan_ben'),
-  ('root', 'fa_lv_wen_da')
+  ('root', 'xie_yi_fan_ben')
 ;
+
+CREATE TABLE `fa_lv_wen_da_class` (
+  `id` CHAR(32) PRIMARY KEY,
+  `name` VARCHAR (200) UNIQUE NOT NULL,
+  `created_time` LONG NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `fa_lv_wen_da_article` (
+  `id` CHAR(32) PRIMARY KEY,
+  `class_id` CHAR(32) NOT NULL,
+  `title` VARCHAR (200) NOT NULL,
+  `content` TEXT NOT NULL,
+  `created_time` LONG NOT NULL,
+  `updated_time` LONG NOT NULL,
+  INDEX `title_index`(`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

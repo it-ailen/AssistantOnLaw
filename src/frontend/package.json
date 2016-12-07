@@ -44,8 +44,12 @@
     "webpack": "^1.13.2"
   },
   "devDependencies": {
+    "angular-animate": "^1.5.9",
     "angular-bootstrap-contextmenu": "^0.9.9",
+    "angular-bootstrap-npm": "^0.14.3",
     "angular-sanitize": "^1.5.8",
+    "angular-summernote": "^0.8.1",
+    "angular-toastr": "^2.1.1",
     "apply-loader": "^0.1.0",
     "bootstrap": "^3.3.7",
     "codemirror": "^5.20.2",

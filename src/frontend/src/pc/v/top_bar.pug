@@ -15,7 +15,7 @@ div#top-bar
                 a(href="javascript:;", ng-click="login(loginData)", ng-class="{disabled: loginForm.$invalid}") 登陆
                 span &nbsp;|&nbsp;
                 a(href="javascript:;", ng-click="register()") 注册
-            span(ng-if="!$state.is('home.base')") 欢迎您,{{ self.account }}
+            span(ng-if="!$state.is('home.base')") 欢迎您,&nbsp;{{ self.account }}
                 a(href="javascript:;", ng-click="logout()") 登出
 
 div.top-bar-placeholder
