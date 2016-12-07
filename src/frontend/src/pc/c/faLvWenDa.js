@@ -47,7 +47,7 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
                         if (!$scope.data.classes) {
                             $scope.data.classes = [];
                         }
-                        $scope.data.classes.push(c);
+                        $scope.data.classes.push(newClass);
                     }
                 }
             })

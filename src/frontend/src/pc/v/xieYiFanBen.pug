@@ -42,7 +42,9 @@ uib-tabset(active="xieYiFanBen.tab", justified="true")
         table.table
             thead
                 tr
-                    th 文件名
+                    th
+                        span 文件名
+                        span.glyphicon.glyphicon-plus(ng-if="$state.includes('home.base.super')", ng-click="createRoot()")
                     th 发布时间
                     th 下载
             tbody

@@ -56,8 +56,8 @@
 	__webpack_require__(10);
 
 
+	__webpack_require__(13);
 	__webpack_require__(12);
-	__webpack_require__(11);
 
 	__webpack_require__(16);
 	__webpack_require__(40);
@@ -82,7 +82,7 @@
 	]);
 
 	app
-	    .service("tools", __webpack_require__(30))
+	    .service("tools", __webpack_require__(31))
 	;
 
 	var admin = __webpack_require__(100);
@@ -40665,7 +40665,8 @@
 
 
 /***/ },
-/* 11 */
+/* 11 */,
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -40691,7 +40692,7 @@
 	}
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -40717,7 +40718,6 @@
 	}
 
 /***/ },
-/* 13 */,
 /* 14 */
 /***/ function(module, exports) {
 
@@ -42546,7 +42546,8 @@
 
 /***/ },
 /* 29 */,
-/* 30 */
+/* 30 */,
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -42632,7 +42633,6 @@
 
 
 /***/ },
-/* 31 */,
 /* 32 */,
 /* 33 */,
 /* 34 */,

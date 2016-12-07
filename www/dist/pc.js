@@ -80,8 +80,8 @@
 	__webpack_require__(44);
 
 	__webpack_require__(10);
+	__webpack_require__(13);
 	__webpack_require__(12);
-	__webpack_require__(11);
 
 	__webpack_require__(37);
 
@@ -111,7 +111,7 @@
 	        $rootScope.$state = $state;
 	        $rootScope.$stateParams = $stateParams;
 	    })
-	    .service("tools", __webpack_require__(30))
+	    .service("tools", __webpack_require__(31))
 	    .provider("Configure", __webpack_require__(126))
 	    .config(function($urlRouterProvider, ConfigureProvider) {
 	        $urlRouterProvider.otherwise('/');
@@ -40693,6 +40693,12 @@
 
 /***/ },
 /* 11 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"novalidate\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"文件夹名称\" ng-model=\"item.name\" required=\"required\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid || form.$pristine\"/></div></form>";
+
+/***/ },
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -40718,7 +40724,7 @@
 	}
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -40742,12 +40748,6 @@
 		// When the module is disposed, remove the <style> tags
 		module.hot.dispose(function() { update(); });
 	}
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"novalidate\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"文件夹名称\" ng-model=\"item.name\" required=\"required\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid || form.$pristine\"/></div></form>";
 
 /***/ },
 /* 14 */,
@@ -41402,6 +41402,50 @@
 
 /***/ },
 /* 30 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by hyku on 2016/12/4.
+	 */
+
+	"use strict";
+
+	function func($scope, ResourceService) {
+	    $scope.item = {
+	        name: $scope.ngDialogData.item && $scope.ngDialogData.item.properties.name,
+	        parent: $scope.ngDialogData.parent,
+	        type: "directory"
+	    };
+	    console.log($scope.ngDialogData);
+	    console.log($scope.item);
+	    $scope.submit = function () {
+	        if ($scope.ngDialogData.item) {
+	            ResourceService.updateFile($scope.ngDialogData.item.properties.id, $scope.item)
+	                .then(function (data) {
+	                    $scope.closeThisDialog({
+	                        status: "ok",
+	                        data: data
+	                    });
+	                })
+	            ;
+	        } else {
+	            ResourceService.createFile($scope.item)
+	                .then(function (data) {
+	                    $scope.closeThisDialog({
+	                        status: "ok",
+	                        data: data
+	                    });
+	                })
+	            ;
+	        }
+	    };
+	}
+
+	module.exports = func;
+
+
+/***/ },
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41487,60 +41531,16 @@
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = jQuery;
 
 /***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"novalidate\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"文件名称\" ng-model=\"item.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><label>文件</label><input class=\"form-control\" type=\"text\" file-input=\"file-input\" name=\"uri\" ng-model=\"item.reference_uri\" required=\"required\" on-upload=\"upload(file)\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid || form.$pristine\"/></div></form>";
-
-/***/ },
 /* 33 */
 /***/ function(module, exports) {
 
-	/**
-	 * Created by hyku on 2016/12/4.
-	 */
-
-	"use strict";
-
-	function func($scope, ResourceService) {
-	    $scope.item = {
-	        name: $scope.ngDialogData.item && $scope.ngDialogData.item.properties.name,
-	        parent: $scope.ngDialogData.parent,
-	        type: "directory"
-	    };
-	    console.log($scope.ngDialogData);
-	    console.log($scope.item);
-	    $scope.submit = function () {
-	        if ($scope.ngDialogData.item) {
-	            ResourceService.updateFile($scope.ngDialogData.item.properties.id, $scope.item)
-	                .then(function (data) {
-	                    $scope.closeThisDialog({
-	                        status: "ok",
-	                        data: data
-	                    });
-	                })
-	            ;
-	        } else {
-	            ResourceService.createFile($scope.item)
-	                .then(function (data) {
-	                    $scope.closeThisDialog({
-	                        status: "ok",
-	                        data: data
-	                    });
-	                })
-	            ;
-	        }
-	    };
-	}
-
-	module.exports = func;
-
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"novalidate\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"文件名称\" ng-model=\"item.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><label>文件</label><input class=\"form-control\" type=\"text\" file-input=\"file-input\" name=\"uri\" ng-model=\"item.reference_uri\" required=\"required\" on-upload=\"upload(file)\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid || form.$pristine\"/></div></form>";
 
 /***/ },
 /* 34 */
@@ -46092,7 +46092,7 @@
 	    };
 	}]);
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
 /***/ },
 /* 38 */
@@ -55572,7 +55572,7 @@
 	    };
 	  }]);
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
 /***/ },
 /* 45 */
@@ -60814,7 +60814,7 @@
 /* 77 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\" style=\"text-align: right\" ng-if=\"$state.includes('home.base.super')\"><span class=\"glyphicon glyphicon-plus\" ng-click=\"updateClass()\"></span></div><div class=\"row\"><div class=\"col-md-3\"><uib-accordion close-others=\"true\"><div class=\"panel-default\" ng-if=\"$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\" context-menu=\"classContextMenu\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\" context-menu=\"articleContextMenu\">{{ article.name }}</div></div><div class=\"panel-default\" ng-if=\"!$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"class in data.classes\" heading=\"{{ class.name }}\"><div class=\"panel\" ng-repeat=\"article in class.articles\" ng-click=\"openArticle(article)\">{{ article.name }}</div></div></uib-accordion></div><div class=\"col-md-9\" style=\"max-height: 100%\"><div class=\"content\" ng-show=\"!$state.includes('home.base.super')\"><div ng-bind-html=\"trustedHtml(current.focusedArticle.content)\"></div></div><div ng-show=\"$state.includes('home.base.super')\"><form ng-show=\"current.focusedArticle\" name=\"faLvWenDa_content_form\" ng-submit=\"updateArticleContent(current.focusedArticle, editingCurrent.content)\"><div class=\"form-group\"><summernote id=\"article-summernote\" config=\"summerNoteOptions\" ng-model=\"editingCurrent.content\" name=\"content\" on-image-upload=\"uploadImage(files)\" editor=\"editor\" editable=\"editable\"></summernote></div><div class=\"form-group\" style=\"text-align: center\"><input class=\"btn btn-default\" value=\"保存\" type=\"submit\" ng-disabled=\"faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine\"/></div></form><div ng-show=\"!current.focusedArticle\">点击左侧选择</div></div></div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\" style=\"text-align: right\" ng-if=\"$state.includes('home.base.super')\"><span class=\"glyphicon glyphicon-plus\" ng-click=\"updateClass()\"></span></div><div class=\"row\"><div class=\"col-md-3\"><uib-accordion close-others=\"true\"><div class=\"panel-default\" ng-if=\"$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\" context-menu=\"classContextMenu\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\" context-menu=\"articleContextMenu\">{{ article.name }}</div></div><div class=\"panel-default\" ng-if=\"!$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\">{{ article.name }}</div></div></uib-accordion></div><div class=\"col-md-9\" style=\"max-height: 100%\"><div class=\"content\" ng-show=\"!$state.includes('home.base.super')\"><div ng-bind-html=\"trustedHtml(current.focusedArticle.content)\"></div></div><div ng-show=\"$state.includes('home.base.super')\"><form ng-show=\"current.focusedArticle\" name=\"faLvWenDa_content_form\" ng-submit=\"updateArticleContent(current.focusedArticle, editingCurrent.content)\"><div class=\"form-group\"><summernote id=\"article-summernote\" config=\"summerNoteOptions\" ng-model=\"editingCurrent.content\" name=\"content\" on-image-upload=\"uploadImage(files)\" editor=\"editor\" editable=\"editable\"></summernote></div><div class=\"form-group\" style=\"text-align: center\"><input class=\"btn btn-default\" value=\"保存\" type=\"submit\" ng-disabled=\"faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine\"/></div></form><div ng-show=\"!current.focusedArticle\">点击左侧选择</div></div></div></div></div>";
 
 /***/ },
 /* 78 */
@@ -60838,7 +60838,7 @@
 /* 81 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><uib-tabset active=\"xieYiFanBen.tab\" justified=\"true\"><uib-tab heading=\"最热\"><div ng-if=\"data.hot &amp;&amp; data.hot.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.hot track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"最新\"><div ng-if=\"data.newest &amp;&amp; data.newest.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.newest track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"全部\"><table class=\"table\"><thead><tr><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-if=\"$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\" context-menu=\"contextMenu\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr><tr ng-if=\"!$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr></tbody></table></uib-tab></uib-tabset>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><uib-tabset active=\"xieYiFanBen.tab\" justified=\"true\"><uib-tab heading=\"最热\"><div ng-if=\"data.hot &amp;&amp; data.hot.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.hot track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"最新\"><div ng-if=\"data.newest &amp;&amp; data.newest.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.newest track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"全部\"><table class=\"table\"><thead><tr><th><span>文件名</span><span class=\"glyphicon glyphicon-plus\" ng-if=\"$state.includes('home.base.super')\" ng-click=\"createRoot()\"></span></th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-if=\"$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\" context-menu=\"contextMenu\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr><tr ng-if=\"!$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr></tbody></table></uib-tab></uib-tabset>";
 
 /***/ },
 /* 82 */
@@ -61090,7 +61090,7 @@
 	function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
 	    function updateClass (c) {
 	        var promise = ngDialog.open({
-	            template: __webpack_require__(13),
+	            template: __webpack_require__(11),
 	            plain: true,
 	            controller: function ($scope, ResourceService) {
 	                $scope.item = {
@@ -61130,7 +61130,7 @@
 	                        if (!$scope.data.classes) {
 	                            $scope.data.classes = [];
 	                        }
-	                        $scope.data.classes.push(c);
+	                        $scope.data.classes.push(newClass);
 	                    }
 	                }
 	            })
@@ -61138,7 +61138,7 @@
 	    }
 	    function updateArticle (article, c) {
 	        var promise = ngDialog.open({
-	            template: __webpack_require__(13),
+	            template: __webpack_require__(11),
 	            plain: true,
 	            controller: function ($scope, ResourceService) {
 	                $scope.item = {
@@ -61271,7 +61271,7 @@
 
 	module.exports = func;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
 /***/ },
 /* 120 */
@@ -61404,13 +61404,31 @@
 
 	function func($scope, ResourceService, ngDialog) {
 	    $scope.current = {};
+	    $scope.createRoot = function () {
+	        ngDialog.open({
+	            template: __webpack_require__(11),
+	            plain: true,
+	            controller: __webpack_require__(30),
+	            data: {
+	                parent: "xie_yi_fan_ben"
+	            },
+	            closeByDocument: false
+	        }).closePromise
+	            .then(function (data) {
+	                return data.value;
+	            })
+	            .then(function (data) {
+	                reload();
+	            })
+	        ;
+	    };
 	    $scope.contextMenu = [
 	        ["新建文件夹", function ($itemScope, $event, modelValue, text, $li) {
 	            if ($itemScope.item.properties.type === 'directory') {
 	                ngDialog.open({
-	                    template: __webpack_require__(13),
+	                    template: __webpack_require__(11),
 	                    plain: true,
-	                    controller: __webpack_require__(33),
+	                    controller: __webpack_require__(30),
 	                    data: {
 	                        parent: $itemScope.item.properties.id
 	                    },
@@ -61428,7 +61446,7 @@
 	        }],
 	        ["添加文件", function ($itemScope, $event, modelValue, text, $li) {
 	            ngDialog.open({
-	                template: __webpack_require__(32),
+	                template: __webpack_require__(33),
 	                plain: true,
 	                controller: __webpack_require__(34),
 	                data: {
@@ -61451,9 +61469,9 @@
 	            var promise = null;
 	            if ($itemScope.item.properties.type === 'directory') {
 	                promise = ngDialog.open({
-	                    template: __webpack_require__(13),
+	                    template: __webpack_require__(11),
 	                    plain: true,
-	                    controller: __webpack_require__(33),
+	                    controller: __webpack_require__(30),
 	                    data: {
 	                        item: $itemScope.item
 	                    },
@@ -61461,7 +61479,7 @@
 	                }).closePromise;
 	            } else {
 	                promise = ngDialog.open({
-	                    template: __webpack_require__(32),
+	                    template: __webpack_require__(33),
 	                    plain: true,
 	                    controller: __webpack_require__(34),
 	                    data: {
@@ -61543,6 +61561,7 @@
 	            })
 	        ;
 	    }
+
 	    reload();
 	}
 

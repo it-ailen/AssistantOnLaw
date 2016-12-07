@@ -6,6 +6,24 @@
 
 function func($scope, ResourceService, ngDialog) {
     $scope.current = {};
+    $scope.createRoot = function () {
+        ngDialog.open({
+            template: require("./v/directory.pug"),
+            plain: true,
+            controller: require("./forms/directory"),
+            data: {
+                parent: "xie_yi_fan_ben"
+            },
+            closeByDocument: false
+        }).closePromise
+            .then(function (data) {
+                return data.value;
+            })
+            .then(function (data) {
+                reload();
+            })
+        ;
+    };
     $scope.contextMenu = [
         ["新建文件夹", function ($itemScope, $event, modelValue, text, $li) {
             if ($itemScope.item.properties.type === 'directory') {
@@ -145,6 +163,7 @@ function func($scope, ResourceService, ngDialog) {
             })
         ;
     }
+
     reload();
 }
 
