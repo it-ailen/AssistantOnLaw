@@ -15,13 +15,14 @@ div.row(style="max-height: 100%;")
                         {{ article.name }}
         div.col-md-9(style="max-height: 100%;")
             div.content(ng-show="!$state.includes('home.base.super')")
-                | {{ current.article.content }}
+                div(ng-bind-html="trustedHtml(current.focusedArticle.content)")
             div(ng-show="$state.includes('home.base.super')")
-                form(name="faLvWenDa_content_form", ng-submit="updateArticleContent()")
+                form(ng-show="current.focusedArticle", name="faLvWenDa_content_form", ng-submit="updateArticleContent(current.focusedArticle, editingCurrent.content)")
                     div.form-group
-                        summernote#article-summernote(config="summerNoteOptions", ng-model="current.editingArticle.content", name="content",
+                        summernote#article-summernote(config="summerNoteOptions", ng-model="editingCurrent.content", name="content",
                         on-image-upload="uploadImage(files)", editor, editable)
                     div.form-group(style="text-align: center")
                         input.btn.btn-default(value="保存", type="submit", ng-disabled="faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine")
-
+                div(ng-show="!current.focusedArticle")
+                    | 点击左侧选择
 

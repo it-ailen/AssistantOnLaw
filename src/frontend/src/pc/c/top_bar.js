@@ -8,9 +8,11 @@ function func($scope, AccountsService, Session, $state) {
     $scope.$on("session.login", function (event, data) {
         console.log("session.login");
         console.log(data);
+        $scope.self = data;
     });
     $scope.$on("session.logout", function (event) {
         console.log("session.logout");
+        $scope.self = null;
     });
     $scope.$on("session.auth_failed", function (event) {
         console.log("auth_failed....");

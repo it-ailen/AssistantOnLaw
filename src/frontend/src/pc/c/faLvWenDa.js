@@ -4,7 +4,7 @@
 
 "use strict";
 
-function func($scope, ResourceService, ngDialog, toastr, tools) {
+function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
     function updateClass (c) {
         var promise = ngDialog.open({
             template: require("./v/directory.pug"),
@@ -106,6 +106,22 @@ function func($scope, ResourceService, ngDialog, toastr, tools) {
             })
         ;
     }
+    $scope.updateArticleContent = function(article, content) {
+        ResourceService.updateFaLvWenDaArticle(article.id, {
+            content: content
+        })
+            .then(function() {
+                article.content = content;
+                toastr.success("成功");
+            })
+            .catch(function(error) {
+                toastr.error(error.message, "Error");
+            })
+        ;
+    };
+    $scope.trustedHtml = function(src) {
+        return $sce.trustAsHtml(src);
+    };
     $scope.summerNoteOptions = {
         height: 500
     };
@@ -150,9 +166,13 @@ function func($scope, ResourceService, ngDialog, toastr, tools) {
         }]
     ];
 
+    $scope.editingCurrent = {};
     $scope.updateClass = updateClass;
     $scope.openArticle = function (article) {
-        $scope.current.article = article;
+        if ($scope.current.focusedArticle !== article) {
+            $scope.current.focusedArticle = article;
+            $scope.editingCurrent.content = article.content;
+        }
     };
     $scope.data = {};
     function reload() {
