@@ -1,0 +1,39 @@
+//
+   Created by hyku on 2016/12/11.
+
+div.row
+    div.col-md-8.flowchart
+        div.title(style="text-align: center")
+            h3 民事诉讼流程图
+        div.content
+            svg#svg-minShiSuSong
+    div.col-md-4.detail
+        div(ng-show="status.current")
+            div.panel.panel-default(ng-show="!status.editing")
+                div.panel-heading {{ status.current.name || "尚未录入" }}
+                    a.pull-right.glyphicon.glyphicon-cog(ng-click="status.editing=true", ng-show="$state.includes('home.base.super') && !status.editing")
+                div.panel-body
+                    div.description {{ status.current.description }}
+            div.panel.panel-default(ng-show="status.editing")
+                form(ng-submit="submit(model)", name="form")
+                    div.form-group
+                        input.form-control(type="text", ng-model="model.name", required, name="name")
+                    div.form-group
+                        textarea.form-control(ng-model="model.description", required, name="description")
+                    div.form-group
+                        input.btn.btn-primary(type="submit", value="保存", ng-disabled="form.$invalid")
+        div(ng-show="status.current")
+            div.panel.panel-default
+                div.panel-heading 相关文件下载
+                    a.pull-right.glyphicon.glyphicon-plus(ng-click="modifyFile(status.current)", ng-show="$state.includes('home.base.super')")
+                div.panel-body
+                    table.table-hover.table.table-nonfluid
+                        tr(ng-repeat="file in status.current.files")
+                            td
+                                a(ng-href="{{ file.uri }}", target="_blank") {{ file.name }}
+                            td(ng-show="$state.includes('home.base.super')", align="right")
+                                button.btn.btn-link(type="button", ng-click="removeFile($index, file)") 删除
+                                button.btn.btn-link(type="button", ng-click="modifyFile(status.current, file)") 修改
+
+        div(ng-hide="status.current").
+            点击左边步骤查看详情

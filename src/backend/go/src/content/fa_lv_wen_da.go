@@ -122,6 +122,20 @@ func (self *Manager) LoadFaLvWenDaClasses(filter *FaLvWenDaClassesFilter) ([]*Fa
     return classes, nil
 }
 
+func (self *Manager) DeleteFaLvWenDaClasses(id string) {
+    s := "DELETE FROM `fa_lv_wen_da_class` WHERE `id`=? "
+    stmt, err := self.conn.Prepare(s)
+    if err != nil {
+        panic(err)
+    }
+    defer stmt.Close()
+
+    _, err = stmt.Exec(id)
+    if err != nil {
+        panic(err)
+    }
+}
+
 func (self *Manager) CreateFaLvWenDaArticle(name, classId, content string) (*FaLvWenDaArticle, *definition.DefinedError) {
     now := self.CurrentTimeMs()
     article := FaLvWenDaArticle{
@@ -254,3 +268,19 @@ func (self *Manager) LoadFaLvWenDaArticles(filter *FaLvWenDaArticlesFilter) ([]*
     }
     return articles, nil
 }
+
+func (self *Manager) DeleteFaLvWenDaArticle(id string) {
+    s := "DELETE FROM `fa_lv_wen_da_article` WHERE `id`=? "
+    stmt, err := self.conn.Prepare(s)
+    if err != nil {
+        panic(err)
+    }
+    defer stmt.Close()
+
+    _, err = stmt.Exec(id)
+    if err != nil {
+        panic(err)
+    }
+}
+
+

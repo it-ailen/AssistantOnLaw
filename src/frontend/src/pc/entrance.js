@@ -22,12 +22,7 @@ function register(mod) {
                     views: {
                         "topBar@": {
                             template: require("./v/top_bar.pug"),
-                            controller: require("./c/top_bar"),
-                            // resolve: {
-                            //     self: function (AccountsService) {
-                            //         return AccountsService.checkAuthentication();
-                            //     }
-                            // }
+                            controller: require("./c/top_bar")
                         },
                         "main@": {
                             template: require("./v/home.pug"),
@@ -41,14 +36,13 @@ function register(mod) {
                 .state("home.base", {
                     url: "",
                     views: {
+                        "suSongWenShu@home": {
+                            template: require("./v/suSongWenShu.pug"),
+                            controller: require("./c/suSongWenShu")
+                        },
                         "xieYiFanBen@home": {
                             template: require("./v/xieYiFanBen.pug"),
-                            controller: require("./c/xieYiFanBen"),
-                            // resolve: {
-                            //     self: function (AccountsService) {
-                            //         return AccountsService.checkAuthentication();
-                            //     }
-                            // }
+                            controller: require("./c/xieYiFanBen")
                         },
                         "faLvWenDa@home": {
                             template: require("./v/faLvWenDa.pug"),
@@ -68,15 +62,6 @@ function register(mod) {
         .run(function ($rootScope, $state, $stateParams) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
-            // $rootScope.$on("session.login", function(event, data) {
-            //     console.log("session.login comes...");
-            //     console.log(data);
-            //     if (data.type === 'super') {
-            //         $state.go("home.base.super");
-            //     } else if (data.type === 'customer') {
-            //         $state.go("home.base.customer");
-            //     }
-            // });
             $rootScope.$on("session.auth_failed", function () {
                 console.log($state.current);
                 console.log("session.auth_failed occurs");

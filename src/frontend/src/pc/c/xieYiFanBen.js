@@ -4,7 +4,7 @@
 
 "use strict";
 
-function func($scope, ResourceService, ngDialog) {
+function func($scope, ResourceService, ngDialog, toastr) {
     $scope.current = {};
     $scope.createRoot = function () {
         ngDialog.open({
@@ -103,7 +103,16 @@ function func($scope, ResourceService, ngDialog) {
             ;
         }],
         ["删除", function ($itemScope, $event, modelValue, text, $li) {
-            console.log(arguments);
+            console.log($itemScope.item);
+            ResourceService.deleteFile($itemScope.item.properties.id)
+                .then(function () {
+                    toastr.success("成功删除");
+                    reload();
+                })
+                .catch(function (error) {
+                    toastr.error(error.status + " - " + error.data.error);
+                })
+            ;
         }]
     ];
     $scope.itemClass = function (item) {

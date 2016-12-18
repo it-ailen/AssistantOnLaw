@@ -33,7 +33,8 @@ var app = angular.module("LvDaJia.pc", [
     require("./directives/file-input"),
     require("angular-animate"),
     require("angular-toastr"),
-    "summernote"
+    "summernote",
+    require("./directives/svg")
     // "ui.bootstrap"
 ]);
 

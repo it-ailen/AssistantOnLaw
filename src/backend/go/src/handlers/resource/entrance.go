@@ -19,5 +19,16 @@ func Register(router *mux.Router) error {
 	articleHandler := NewFaLvWenDaArticleHandler()
 	faLvWenDaRouter.Handle("/articles", articleHandler)
 	faLvWenDaRouter.Handle("/articles/{id:[^/]+}", articleHandler)
+
+	suSongWenShuRouter := resourceRouter.PathPrefix("/su_song_wen_shu").Subrouter()
+
+	wenShuFileHandler := NewSuSongFileHandler()
+	suSongWenShuRouter.Handle("/files", wenShuFileHandler)
+	suSongWenShuRouter.Handle("/files/{id:[^/]+}", wenShuFileHandler)
+
+	minShiSuSongHandler := NewMinShiSuSongHandler()
+	suSongWenShuRouter.Handle("/min_shi_su_song/{id:[^/]+}", minShiSuSongHandler)
+
+
 	return nil
 }

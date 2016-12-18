@@ -63,11 +63,11 @@
 	__webpack_require__(40);
 
 	__webpack_require__(27);
-	__webpack_require__(85);
+	__webpack_require__(88);
 
-	__webpack_require__(106);
+	__webpack_require__(109);
 
-	__webpack_require__(99);
+	__webpack_require__(102);
 
 
 	var app = angular.module("LA.admin", [
@@ -85,7 +85,7 @@
 	    .service("tools", __webpack_require__(31))
 	;
 
-	var admin = __webpack_require__(100);
+	var admin = __webpack_require__(103);
 	admin.register(app);
 
 	module.exports = app;
@@ -43515,7 +43515,10 @@
 /* 80 */,
 /* 81 */,
 /* 82 */,
-/* 83 */
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43541,7 +43544,7 @@
 	}
 
 /***/ },
-/* 84 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43567,7 +43570,7 @@
 	}
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43593,9 +43596,6 @@
 	}
 
 /***/ },
-/* 86 */,
-/* 87 */,
-/* 88 */,
 /* 89 */,
 /* 90 */,
 /* 91 */,
@@ -43604,7 +43604,10 @@
 /* 94 */,
 /* 95 */,
 /* 96 */,
-/* 97 */
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */
 /***/ function(module, exports) {
 
 	/**
@@ -43661,7 +43664,7 @@
 
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports) {
 
 	/**
@@ -43984,7 +43987,7 @@
 
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44032,7 +44035,7 @@
 
 
 /***/ },
-/* 100 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44041,10 +44044,10 @@
 
 	"use strict";
 
-	__webpack_require__(84);
+	__webpack_require__(87);
 
 	function register_controllers(app) {
-	    app.service("AdminDataService", __webpack_require__(98))
+	    app.service("AdminDataService", __webpack_require__(101))
 	    ;
 	    app.config(function($routeProvider) {
 	        route($routeProvider);
@@ -44054,11 +44057,11 @@
 	function route($routeProvider) {
 	    $routeProvider
 	        .when("/home", {
-	            controller: __webpack_require__(105),
+	            controller: __webpack_require__(108),
 	            template: __webpack_require__(69)
 	        })
 	        .when("/issues/todo", {
-	            controller: __webpack_require__(97),
+	            controller: __webpack_require__(100),
 	            template: __webpack_require__(70)
 	        })
 	        .when("/issues", {
@@ -44076,7 +44079,7 @@
 
 
 /***/ },
-/* 101 */
+/* 104 */
 /***/ function(module, exports) {
 
 	/**
@@ -44130,7 +44133,7 @@
 
 
 /***/ },
-/* 102 */
+/* 105 */
 /***/ function(module, exports) {
 
 	/**
@@ -44178,7 +44181,7 @@
 
 
 /***/ },
-/* 103 */
+/* 106 */
 /***/ function(module, exports) {
 
 	/**
@@ -44235,7 +44238,7 @@
 
 
 /***/ },
-/* 104 */
+/* 107 */
 /***/ function(module, exports) {
 
 	/**
@@ -44262,7 +44265,7 @@
 
 
 /***/ },
-/* 105 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44271,7 +44274,7 @@
 
 	"use strict";
 
-	__webpack_require__(83);
+	__webpack_require__(86);
 
 	function controller($scope, AdminDataService, $q, ngDialog, tools) {
 	    $scope.status = {};
@@ -44288,7 +44291,7 @@
 	        ngDialog.open({
 	            template: __webpack_require__(65),
 	            plain: true,
-	            controller: __webpack_require__(101),
+	            controller: __webpack_require__(104),
 	            data: {
 	                item: channel
 	            }
@@ -44347,7 +44350,7 @@
 	            var dialog = ngDialog.open({
 	                template: __webpack_require__(67),
 	                plain: true,
-	                controller: __webpack_require__(103),
+	                controller: __webpack_require__(106),
 	                data: {
 	                    parent: parent,
 	                    item: item
@@ -44363,7 +44366,7 @@
 	            ngDialog.open({
 	                template: __webpack_require__(66),
 	                plain: true,
-	                controller: __webpack_require__(102),
+	                controller: __webpack_require__(105),
 	                data: {
 	                    channel: channel,
 	                    item: item
@@ -44437,7 +44440,7 @@
 	        ngDialog.open({
 	            template: __webpack_require__(68),
 	            plain: true,
-	            controller: __webpack_require__(104),
+	            controller: __webpack_require__(107),
 	            data: {
 	                data: $scope.home
 	            },
@@ -44450,7 +44453,7 @@
 
 
 /***/ },
-/* 106 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**

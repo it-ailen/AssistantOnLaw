@@ -88,7 +88,7 @@
 
 	__webpack_require__(16);
 
-	__webpack_require__(82);
+	__webpack_require__(85);
 
 
 	var app = angular.module("LvDaJia.pc", [
@@ -99,10 +99,11 @@
 	    "ui.bootstrap",
 	    __webpack_require__(43),
 	    "ui.bootstrap.contextMenu",
-	    __webpack_require__(107),
+	    __webpack_require__(110),
 	    __webpack_require__(36),
 	    __webpack_require__(46),
-	    "summernote"
+	    "summernote",
+	    __webpack_require__(111)
 	    // "ui.bootstrap"
 	]);
 
@@ -112,13 +113,13 @@
 	        $rootScope.$stateParams = $stateParams;
 	    })
 	    .service("tools", __webpack_require__(31))
-	    .provider("Configure", __webpack_require__(126))
+	    .provider("Configure", __webpack_require__(132))
 	    .config(function($urlRouterProvider, ConfigureProvider) {
 	        $urlRouterProvider.otherwise('/');
 	    })
 	;
 
-	__webpack_require__(123).register(app);
+	__webpack_require__(128).register(app);
 
 	module.exports = app;
 
@@ -60814,34 +60815,52 @@
 /* 77 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\" style=\"text-align: right\" ng-if=\"$state.includes('home.base.super')\"><span class=\"glyphicon glyphicon-plus\" ng-click=\"updateClass()\"></span></div><div class=\"row\"><div class=\"col-md-3\"><uib-accordion close-others=\"true\"><div class=\"panel-default\" ng-if=\"$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\" context-menu=\"classContextMenu\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\" context-menu=\"articleContextMenu\">{{ article.name }}</div></div><div class=\"panel-default\" ng-if=\"!$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\">{{ article.name }}</div></div></uib-accordion></div><div class=\"col-md-9\" style=\"max-height: 100%\"><div class=\"content\" ng-show=\"!$state.includes('home.base.super')\"><div ng-bind-html=\"trustedHtml(current.focusedArticle.content)\"></div></div><div ng-show=\"$state.includes('home.base.super')\"><form ng-show=\"current.focusedArticle\" name=\"faLvWenDa_content_form\" ng-submit=\"updateArticleContent(current.focusedArticle, editingCurrent.content)\"><div class=\"form-group\"><summernote id=\"article-summernote\" config=\"summerNoteOptions\" ng-model=\"editingCurrent.content\" name=\"content\" on-image-upload=\"uploadImage(files)\" editor=\"editor\" editable=\"editable\"></summernote></div><div class=\"form-group\" style=\"text-align: center\"><input class=\"btn btn-default\" value=\"保存\" type=\"submit\" ng-disabled=\"faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine\"/></div></form><div ng-show=\"!current.focusedArticle\">点击左侧选择</div></div></div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/11.\n--><svg viewBox=\"0 0 100 20\"><rect x=\"0\" y=\"0\" width=\"100\" height=\"20\" fill=\"{{ background || 'white' }}\" stroke=\"{{ borderStroke || 'black' }}\"></rect><text x=\"50\" y=\"14\" font-family=\"{{ fontFamily || 'Verdana' }}\" font-size=\"{{ fontSize || '80%' }}\" fill=\"{{ textColor || 'black' }}\" text-anchor=\"middle\">{{ text }}</text></svg>";
 
 /***/ },
 /* 78 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"col-md-10 col-md-offset-1\"><div><span>CorpRight</span></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"novalidate\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"文件名称\" ng-model=\"item.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><label>文件</label><input class=\"form-control\" type=\"text\" file-input=\"file-input\" name=\"uri\" ng-model=\"item.uri\" required=\"required\" on-upload=\"upload(file)\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 79 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.--><div id=\"home\"><div class=\"title-area\"><div class=\"row title\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"headline-1\">律答家&middot;法律咨询专家</div><div class=\"headline-2\">专业、细致、用心为您服务</div></div></div><div class=\"row\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"top-entries\"><div class=\"entry\" ng-repeat=\"entry in entries\"><div class=\"fake\"></div><div class=\"body\" ng-click=\"goto(entry.hash)\"><span class=\"icon iconfont\" ng-class=\"entry.icon\"></span><span class=\"name\" ng-bind=\"entry.text\"></span></div></div></div></div><div class=\"col-md-1\"><div class=\"icon-index-table affix\" id=\"aside-index\"><div class=\"entry iconfont icon-icon\" ng-click=\"goto('top')\"></div><div class=\"entry iconfont\" ng-repeat=\"entry in entries\" ng-class=\"entry.icon\" ng-click=\"goto(entry.hash)\"></div></div></div></div></div><div class=\"row main\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"xieYiFanBen\"><span>协议范本</span></div><div class=\"entry\"><div class=\"fake\"></div><div class=\"body\"><div class=\"xieYiFanBen\" ui-view=\"xieYiFanBen\"></div></div></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"faLvWenDa\"><span>法律问答</span></div><div class=\"entry\"><div class=\"fake\"></div><div class=\"body\"><div class=\"xieYiFanBen\" ui-view=\"faLvWenDa\" style=\"height: 100%\"></div></div></div></div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\" style=\"text-align: right\" ng-if=\"$state.includes('home.base.super')\"><span class=\"glyphicon glyphicon-plus\" ng-click=\"updateClass()\"></span></div><div class=\"row\"><div class=\"col-md-3\"><uib-accordion close-others=\"true\"><div class=\"panel-default\" ng-if=\"$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\" context-menu=\"classContextMenu\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\" context-menu=\"articleContextMenu\">{{ article.name }}</div></div><div class=\"panel-default\" ng-if=\"!$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\">{{ article.name }}</div></div></uib-accordion></div><div class=\"col-md-9\" style=\"max-height: 100%\"><div class=\"content\" ng-show=\"!$state.includes('home.base.super')\"><div ng-bind-html=\"trustedHtml(current.focusedArticle.content)\"></div></div><div ng-show=\"$state.includes('home.base.super')\"><form ng-show=\"current.focusedArticle\" name=\"faLvWenDa_content_form\" ng-submit=\"updateArticleContent(current.focusedArticle, editingCurrent.content)\"><div class=\"form-group\"><summernote id=\"article-summernote\" config=\"summerNoteOptions\" ng-model=\"editingCurrent.content\" name=\"content\" on-image-upload=\"uploadImage(files)\" editor=\"editor\" editable=\"editable\"></summernote></div><div class=\"form-group\" style=\"text-align: center\"><input class=\"btn btn-default\" value=\"保存\" type=\"submit\" ng-disabled=\"faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine\"/></div></form><div ng-show=\"!current.focusedArticle\">点击左侧选择</div></div></div></div></div>";
 
 /***/ },
 /* 80 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div id=\"top-bar\"><div class=\"col-md-10 col-md-offset-1\"><span class=\"logo\">律答家logo</span><span class=\"user-area pull-right\"><form class=\"form-inline\" novalidate=\"novalidate\" ng-submit=\"login(loginData)\" ng-if=\"$state.is('home.base')\" name=\"loginForm\"><div class=\"form-group\"><label class=\"sr-only\">账号</label><input class=\"form-control\" name=\"account\" type=\"text\" required=\"required\" placeholder=\"账号\" ng-model=\"loginData.account\"/></div><div class=\"form-group\"><label class=\"sr-only\">密码</label><input class=\"form-control\" name=\"password\" type=\"password\" required=\"required\" placeholder=\"密码\" ng-model=\"loginData.password\"/></div><a href=\"javascript:;\" ng-click=\"login(loginData)\" ng-class=\"{disabled: loginForm.$invalid}\">登陆</a><span>&nbsp;|&nbsp;</span><a href=\"javascript:;\" ng-click=\"register()\">注册</a></form><span ng-if=\"!$state.is('home.base')\">欢迎您,&nbsp;{{ self.account }}<a href=\"javascript:;\" ng-click=\"logout()\">登出</a></span></span></div></div><div class=\"top-bar-placeholder\"></div>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"col-md-10 col-md-offset-1\"><div><span>CorpRight</span></div></div>";
 
 /***/ },
 /* 81 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><uib-tabset active=\"xieYiFanBen.tab\" justified=\"true\"><uib-tab heading=\"最热\"><div ng-if=\"data.hot &amp;&amp; data.hot.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.hot track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"最新\"><div ng-if=\"data.newest &amp;&amp; data.newest.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.newest track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"全部\"><table class=\"table\"><thead><tr><th><span>文件名</span><span class=\"glyphicon glyphicon-plus\" ng-if=\"$state.includes('home.base.super')\" ng-click=\"createRoot()\"></span></th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-if=\"$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\" context-menu=\"contextMenu\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr><tr ng-if=\"!$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr></tbody></table></uib-tab></uib-tabset>";
+	module.exports = "<!--Created by hyku on 2016/12/3.--><div id=\"home\"><div class=\"title-area\"><div class=\"row title\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"headline-1\">律答家&middot;法律咨询专家</div><div class=\"headline-2\">专业、细致、用心为您服务</div></div></div><div class=\"row\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"top-entries\"><div class=\"entry\" ng-repeat=\"entry in entries\"><div class=\"fake\"></div><div class=\"body\" ng-click=\"goto(entry.hash)\"><span class=\"icon iconfont\" ng-class=\"entry.icon\"></span><span class=\"name\" ng-bind=\"entry.text\"></span></div></div></div></div><div class=\"col-md-1\"><div class=\"icon-index-table affix\" id=\"aside-index\"><div class=\"entry iconfont icon-icon\" ng-click=\"goto('top')\"></div><div class=\"entry iconfont\" ng-repeat=\"entry in entries\" ng-class=\"entry.icon\" ng-click=\"goto(entry.hash)\"></div></div></div></div></div><div class=\"row main\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"suSongWenShu\"><span>诉讼文书</span></div><!--div.entry--><!--    div.fake--><!--    div.body--><div class=\"suSongWenShu\" ui-view=\"suSongWenShu\"></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"xieYiFanBen\"><span>协议范本</span></div><div class=\"entry\"><div class=\"fake\"></div><div class=\"body\"><div class=\"xieYiFanBen\" ui-view=\"xieYiFanBen\"></div></div></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"faLvWenDa\"><span>法律问答</span></div><div class=\"entry\"><div class=\"fake\"></div><div class=\"body\"><div class=\"xieYiFanBen\" ui-view=\"faLvWenDa\" style=\"height: 100%\"></div></div></div></div></div></div>";
 
 /***/ },
 /* 82 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/11.\n--><div class=\"row\"><div class=\"col-md-8 flowchart\"><div class=\"title\" style=\"text-align: center\"><h3>民事诉讼流程图</h3></div><div class=\"content\"><svg id=\"svg-minShiSuSong\"></svg></div></div><div class=\"col-md-4 detail\"><div ng-show=\"status.current\"><div class=\"panel panel-default\" ng-show=\"!status.editing\"><div class=\"panel-heading\">{{ status.current.name || \"尚未录入\" }}<a class=\"pull-right glyphicon glyphicon-cog\" ng-click=\"status.editing=true\" ng-show=\"$state.includes('home.base.super') &amp;&amp; !status.editing\"></a></div><div class=\"panel-body\"><div class=\"description\">{{ status.current.description }}</div></div></div><div class=\"panel panel-default\" ng-show=\"status.editing\"><form ng-submit=\"submit(model)\" name=\"form\"><div class=\"form-group\"><input class=\"form-control\" type=\"text\" ng-model=\"model.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><textarea class=\"form-control\" ng-model=\"model.description\" required=\"required\" name=\"description\"></textarea></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"保存\" ng-disabled=\"form.$invalid\"/></div></form></div></div><div ng-show=\"status.current\"><div class=\"panel panel-default\"><div class=\"panel-heading\">相关文件下载<a class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"modifyFile(status.current)\" ng-show=\"$state.includes('home.base.super')\"></a></div><div class=\"panel-body\"><table class=\"table-hover table table-nonfluid\"><tr ng-repeat=\"file in status.current.files\"><td><a ng-href=\"{{ file.uri }}\" target=\"_blank\">{{ file.name }}</a></td><td ng-show=\"$state.includes('home.base.super')\" align=\"right\"><button class=\"btn btn-link\" type=\"button\" ng-click=\"removeFile($index, file)\">删除</button><button class=\"btn btn-link\" type=\"button\" ng-click=\"modifyFile(status.current, file)\">修改</button></td></tr></table></div></div></div><div ng-hide=\"status.current\">点击左边步骤查看详情</div></div></div>";
+
+/***/ },
+/* 83 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div id=\"top-bar\"><div class=\"col-md-10 col-md-offset-1\"><span class=\"logo\">律答家logo</span><span class=\"user-area pull-right\"><form class=\"form-inline\" novalidate=\"novalidate\" ng-submit=\"login(loginData)\" ng-if=\"$state.is('home.base')\" name=\"loginForm\"><div class=\"form-group\"><label class=\"sr-only\">账号</label><input class=\"form-control\" name=\"account\" type=\"text\" required=\"required\" placeholder=\"账号\" ng-model=\"loginData.account\"/></div><div class=\"form-group\"><label class=\"sr-only\">密码</label><input class=\"form-control\" name=\"password\" type=\"password\" required=\"required\" placeholder=\"密码\" ng-model=\"loginData.password\"/></div><!--a(href=\"javascript:;\", ng-click=\"login(loginData)\", ng-class=\"{disabled: loginForm.$invalid}\") 登陆--><input class=\"btn btn-link\" type=\"submit\" value=\"登陆\" ng-disabled=\"loginForm.$invalid\"/><span>&nbsp;|&nbsp;</span><!--a(href=\"javascript:;\", ng-click=\"register()\") 注册--><input class=\"btn btn-link\" type=\"button\" value=\"注册\"/></form><span ng-if=\"!$state.is('home.base')\">欢迎您,&nbsp;{{ self.account }}<!--a(href=\"javascript:;\", ng-click=\"logout()\") 登出--><input class=\"btn btn-link\" type=\"button\" value=\"登出\" ng-click=\"logout()\"/></span></span></div></div><div class=\"top-bar-placeholder\"></div>";
+
+/***/ },
+/* 84 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><uib-tabset active=\"xieYiFanBen.tab\" justified=\"true\"><uib-tab heading=\"最热\"><div ng-if=\"data.hot &amp;&amp; data.hot.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.hot track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"最新\"><div ng-if=\"data.newest &amp;&amp; data.newest.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.newest track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"全部\"><table class=\"table\"><thead><tr><th><span>文件名</span><span class=\"glyphicon glyphicon-plus\" ng-if=\"$state.includes('home.base.super')\" ng-click=\"createRoot()\"></span></th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-if=\"$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\" context-menu=\"contextMenu\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr><tr ng-if=\"!$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr></tbody></table></uib-tab></uib-tabset>";
+
+/***/ },
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -60867,10 +60886,10 @@
 	}
 
 /***/ },
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -60896,14 +60915,14 @@
 	}
 
 /***/ },
-/* 87 */,
-/* 88 */,
-/* 89 */,
 /* 90 */,
 /* 91 */,
-/* 92 */
-[127, 60],
-/* 93 */
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */
+[133, 60],
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -60929,11 +60948,8 @@
 	}
 
 /***/ },
-/* 94 */
-[127, 62],
-/* 95 */,
-/* 96 */,
-/* 97 */,
+/* 97 */
+[133, 62],
 /* 98 */,
 /* 99 */,
 /* 100 */,
@@ -60943,7 +60959,10 @@
 /* 104 */,
 /* 105 */,
 /* 106 */,
-/* 107 */
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -60953,7 +60972,7 @@
 
 	"use strict";
 
-	__webpack_require__(86);
+	__webpack_require__(89);
 
 	angular.module("file-input", ["ngDialog"])
 	    .directive("fileInput", function($parse, $q, ngDialog) {
@@ -60998,7 +61017,7 @@
 	                    ngDialog.open({
 	                        template: __webpack_require__(71),
 	                        plain: true,
-	                        controller: __webpack_require__(108),
+	                        controller: __webpack_require__(112),
 	                        closeByDocument: false,
 	                        showClose: false
 	                    })
@@ -61036,7 +61055,65 @@
 
 
 /***/ },
-/* 108 */
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by hyku on 2016/12/11.
+	 */
+
+	"use strict";
+
+	angular.module("svg.flow", [])
+	    .directive("intermediateNode", function ($parse) {
+	        return {
+	            restrict: "A",
+	            type: "svg",
+	            scope: {
+	                text: "@",
+	                borderStroke: "@",
+	                background: "@",
+	                textColor: "@",
+	                fontFamily: "@",
+	                fontSize: "@",
+	                data: "=intermediateNode",
+	                onEvent: "&"
+	            },
+	            template: __webpack_require__(77),
+	            link: function ($scope, ele, iAttr) {
+	                angular.element(ele)
+	                    .on("click mouseover mouseleave", function(e) {
+	                        console.log("event occurs");
+	                        // console.log(iAttr.onEvent);
+	                        // if (iAttr.onEvent) {
+	                        //     var fn = $parse(iAttr.onEvent);
+	                        //     console.log(fn);
+	                        //     fn($scope, {
+	                        //         $event: e,
+	                        //         $element: ele,
+	                        //         $data: $scope.data
+	                        //     });
+	                        // }
+	                        console.log($scope.onEvent);
+	                        if ($scope.onEvent) {
+	                            $scope.onEvent({
+	                                $event: e,
+	                                // $element: ele,
+	                                // $data: $scope.data
+	                            });
+	                        }
+	                    })
+	                ;
+	            }
+	        };
+	    })
+	;
+
+	module.exports = "svg.flow";
+
+
+/***/ },
+/* 112 */
 /***/ function(module, exports) {
 
 	/**
@@ -61068,17 +61145,17 @@
 
 
 /***/ },
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
 /* 113 */,
 /* 114 */,
 /* 115 */,
 /* 116 */,
 /* 117 */,
 /* 118 */,
-/* 119 */
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -61237,6 +61314,15 @@
 	        }],
 	        ["删除", function ($itemScope, $event, modelValue, text, $li) {
 	            console.log(arguments);
+	            ResourceService.deleteFaLvWenDaClass($itemScope.c.id)
+	                .then(function() {
+	                    toastr.success("删除成功");
+	                    reload();
+	                })
+	                .catch(function(error) {
+	                    toastr.error(error.status + " - " + error.data.error);
+	                })
+	            ;
 	        }]
 	    ];
 	    $scope.articleContextMenu = [
@@ -61246,6 +61332,15 @@
 	        }],
 	        ["删除", function ($itemScope, $event, modelValue, text, $li) {
 	            console.log(arguments);
+	            ResourceService.deleteFaLvWenDaArticle($itemScope.article.id)
+	                .then(function() {
+	                    toastr.success("删除成功");
+	                    reload();
+	                })
+	                .catch(function(error) {
+	                    toastr.error(error.status + " - " + error.data.error);
+	                })
+	            ;
 	        }]
 	    ];
 
@@ -61274,7 +61369,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
 
 /***/ },
-/* 120 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61283,7 +61378,7 @@
 
 	"use strict";
 
-	__webpack_require__(92);
+	__webpack_require__(95);
 
 	function service($scope, $anchorScroll, $location, Configure) {
 	    console.log("home...");
@@ -61328,7 +61423,130 @@
 
 
 /***/ },
-/* 121 */
+/* 125 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Created by hyku on 2016/12/3.
+	 */
+
+	"use strict";
+
+	var minShiSuSong = __webpack_require__(129);
+
+	function func($scope, ResourceService, ngDialog, toastr, tools) {
+	    function initModel(detail) {
+	        $scope.model = {
+	            id: detail.id,
+	            name: detail.name,
+	            description: detail.description
+	        };
+	    }
+
+	    var status = {
+	        current: null,
+	        editing: false
+	    };
+	    $scope.status = status;
+	    minShiSuSong.$on("click", function (data) {
+	        console.log("clicked...");
+	        console.log(data);
+	        if (status.current && status.current.id === data.id) {
+	            return;
+	        }
+	        ResourceService.loadMinShiSuSongDetail(data.id)
+	            .then(function (detail) {
+	                status.current = detail;
+	                initModel(detail);
+	                $scope.model.id = data.id;
+	            })
+	            .catch(function (error) {
+	                console.log(error);
+	                toastr.error(error.status + " - " + error.data.error);
+	            })
+	        ;
+	    });
+	    minShiSuSong.draw("#svg-minShiSuSong");
+
+	    $scope.modifyFile = function (detail, file) {
+	        console.log("lalallalalal")
+	        console.log(detail);
+	        var promise = ngDialog.open({
+	            template: __webpack_require__(78),
+	            plain: true,
+	            controller: function ($scope) {
+	                $scope.item = {
+	                    name: file && file.name || undefined,
+	                    uri: file && file.uri || undefined,
+	                    flow: detail.flow,
+	                    step_id: detail.id
+	                };
+	                console.log("Modify File???")
+	                console.log($scope.item);
+	                $scope.upload = function (file) {
+	                    return tools.uploadImage(file, "static");
+	                };
+	                $scope.submit = function () {
+	                    var p = (file) ? ResourceService.updateSuSongWenShuFile(file.id, $scope.item) :
+	                        ResourceService.addSuSongWenShuFile($scope.item);
+	                    p
+	                        .then(function (f) {
+	                            $scope.closeThisDialog({
+	                                success: true,
+	                                data: f
+	                            });
+	                        })
+	                        .catch(function (error) {
+	                            toastr.error(error.status + " - " + error.data.error);
+	                        })
+	                    ;
+	                }
+	            }
+	        }).closePromise;
+	        promise
+	            .then(function (data) {
+	                console.log(data);
+	                return data.value;
+	            })
+	            .then(function (value) {
+	                if (value.success) {
+	                    detail.files.push(value.data);
+	                }
+	            })
+	        ;
+	    };
+
+	    $scope.removeFile = function (index, file) {
+	        ResourceService.deleteSuSongWenShuFile(file.id)
+	            .then(function () {
+	                status.current.files.splice(index, 1);
+	            })
+	            .catch(function (error) {
+	                toastr.error(error.status + " - " + error.data.error);
+	            })
+	        ;
+	    };
+
+	    $scope.submit = function (model) {
+	        console.log(model);
+	        ResourceService.saveMinShiSuSongDetail(model.id, model)
+	            .then(function (detail) {
+	                status.current = detail;
+	                status.editing = false;
+	                initModel(detail);
+	            })
+	            .catch(function (error) {
+	                toastr.error(error.status + " - " + error.data.error);
+	            })
+	        ;
+	    };
+	}
+
+	module.exports = func;
+
+
+/***/ },
+/* 126 */
 /***/ function(module, exports) {
 
 	/**
@@ -61393,7 +61611,7 @@
 
 
 /***/ },
-/* 122 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61402,7 +61620,7 @@
 
 	"use strict";
 
-	function func($scope, ResourceService, ngDialog) {
+	function func($scope, ResourceService, ngDialog, toastr) {
 	    $scope.current = {};
 	    $scope.createRoot = function () {
 	        ngDialog.open({
@@ -61501,7 +61719,16 @@
 	            ;
 	        }],
 	        ["删除", function ($itemScope, $event, modelValue, text, $li) {
-	            console.log(arguments);
+	            console.log($itemScope.item);
+	            ResourceService.deleteFile($itemScope.item.properties.id)
+	                .then(function () {
+	                    toastr.success("成功删除");
+	                    reload();
+	                })
+	                .catch(function (error) {
+	                    toastr.error(error.status + " - " + error.data.error);
+	                })
+	            ;
 	        }]
 	    ];
 	    $scope.itemClass = function (item) {
@@ -61569,7 +61796,7 @@
 
 
 /***/ },
-/* 123 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61578,13 +61805,13 @@
 
 	"use strict";
 
-	__webpack_require__(93);
-	__webpack_require__(94);
+	__webpack_require__(96);
+	__webpack_require__(97);
 
 	function register(mod) {
 	    mod
-	        .service("AccountsService", __webpack_require__(124))
-	        .service("ResourceService", __webpack_require__(125))
+	        .service("AccountsService", __webpack_require__(130))
+	        .service("ResourceService", __webpack_require__(131))
 	        .service("Session", function (AccountsService) {
 	            this.self = AccountsService.checkAuthentication;
 	        })
@@ -61595,38 +61822,32 @@
 	                    url: "/home",
 	                    views: {
 	                        "topBar@": {
-	                            template: __webpack_require__(80),
-	                            controller: __webpack_require__(121),
-	                            // resolve: {
-	                            //     self: function (AccountsService) {
-	                            //         return AccountsService.checkAuthentication();
-	                            //     }
-	                            // }
+	                            template: __webpack_require__(83),
+	                            controller: __webpack_require__(126)
 	                        },
 	                        "main@": {
-	                            template: __webpack_require__(79),
-	                            controller: __webpack_require__(120)
+	                            template: __webpack_require__(81),
+	                            controller: __webpack_require__(124)
 	                        },
 	                        "footer@": {
-	                            template: __webpack_require__(78)
+	                            template: __webpack_require__(80)
 	                        }
 	                    }
 	                })
 	                .state("home.base", {
 	                    url: "",
 	                    views: {
+	                        "suSongWenShu@home": {
+	                            template: __webpack_require__(82),
+	                            controller: __webpack_require__(125)
+	                        },
 	                        "xieYiFanBen@home": {
-	                            template: __webpack_require__(81),
-	                            controller: __webpack_require__(122),
-	                            // resolve: {
-	                            //     self: function (AccountsService) {
-	                            //         return AccountsService.checkAuthentication();
-	                            //     }
-	                            // }
+	                            template: __webpack_require__(84),
+	                            controller: __webpack_require__(127)
 	                        },
 	                        "faLvWenDa@home": {
-	                            template: __webpack_require__(77),
-	                            controller: __webpack_require__(119)
+	                            template: __webpack_require__(79),
+	                            controller: __webpack_require__(123)
 	                        }
 	                    }
 	                })
@@ -61642,15 +61863,6 @@
 	        .run(function ($rootScope, $state, $stateParams) {
 	            $rootScope.$state = $state;
 	            $rootScope.$stateParams = $stateParams;
-	            // $rootScope.$on("session.login", function(event, data) {
-	            //     console.log("session.login comes...");
-	            //     console.log(data);
-	            //     if (data.type === 'super') {
-	            //         $state.go("home.base.super");
-	            //     } else if (data.type === 'customer') {
-	            //         $state.go("home.base.customer");
-	            //     }
-	            // });
 	            $rootScope.$on("session.auth_failed", function () {
 	                console.log($state.current);
 	                console.log("session.auth_failed occurs");
@@ -61669,7 +61881,449 @@
 
 
 /***/ },
-/* 124 */
+/* 129 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by hyku on 2016/12/17.
+	 */
+
+	"use strict";
+
+	var eventHandlerMap = {};
+
+	function eventHandlerRegister(event, func) {
+	    eventHandlerMap[event] = func;
+	}
+
+	function triggerEvent(event, data) {
+	    eventHandlerMap[event] && eventHandlerMap[event](data);
+	}
+
+	function draw(selector, handlerMap) {
+	  var C_W = 100,
+	      C_H = 30,
+	      C_V_GAP = 40,
+	      C_H_GAP = 20;
+
+	  var s = Snap(selector).attr({
+	    viewBox: "0 0 1000 1200"
+	  });
+
+	  // 划分为10列(0~9)
+	  function coordinate(row, col) {
+	    var x = col * (C_W + C_H_GAP) + C_W / 2;
+	    var y = row * (C_H + C_V_GAP) + C_H / 2;
+	    return {
+	      x: x,
+	      y: y
+	    };
+	  }
+
+	  var arrow = s.paper.path("M0,0 L0,2 L3,1 z").attr({
+	    fill: "#000",
+	    strokeUnits: "strokeWidth"
+	  }).marker(0, 0, 3, 2, 0, 1);
+
+	  function newStep(text, point, w, h) {
+	    w = w || C_W;
+	    h = h || C_H;
+	    var x = point.x,
+	        y = point.y;
+	    var rect = s.paper.rect(x - w / 2, y - h / 2, w, h);
+	    var textEle = s.paper.text(x, y, text).attr({
+	      fontSize: (h / 2),
+	      textAnchor: "middle",
+	      alignmentBaseline: "middle"
+	    });
+	    return s.paper.group(rect, textEle).attr({
+	      fill: "white",
+	      stroke: "black"
+	    });
+	  }
+
+	  function stepBox(ele) {
+	    return ele.getBBox();
+	  }
+
+	  function pathTo(startEle, endEle) {
+	    var startBox = stepBox(startEle),
+	        endBox = stepBox(endEle);
+	    var arrowLength = 5;
+	    var startPoint = {
+	          /* 起始点初始化为上顶点 */
+	          x: startBox.x + startBox.width / 2,
+	          y: startBox.y
+	        },
+	        endPoint = {
+	          x: endBox.x + endBox.width / 2,
+	          y: endBox.y - arrowLength
+	        };
+	    var direction = null;
+	    if (startBox.y + startBox.height < endBox.y) {/* startEle在endEle上方 */
+	      startPoint.y = startBox.y + startBox.height;
+	      direction = "down";
+	    } else if (startBox.y > endBox.y + endBox.height) { /* startEle在endEle下方 */
+	      endPoint.y = endBox.y + endBox.height;
+	      direction = "up";
+	    } else if (startBox.x < endBox.x) {/* startEle在endEle左方 */
+	      startPoint.x = startBox.x + startBox.width;
+	      startPoint.y = startBox.y + startBox.height / 2;
+	      endPoint.x = endBox.x;
+	      endPoint.y = endPoint.y + endBox.height / 2;
+	      direction = "right";
+	    } else {/* startEle在endEle右方 */
+	      startPoint.x = startBox.x;
+	      startPoint.y = startBox.y + startBox.height / 2;
+	      endPoint.x = endBox.x + endBox.width + arrowLength;
+	      endPoint.y = endBox.y + endBox.height / 2;
+	      direction = "left";
+	    }
+	    var paths = ["M" + startPoint.x + "," + startPoint.y];
+	    switch (direction) {
+	      case "down":
+	      case "up":
+	        var midY = (endPoint.y + startPoint.y) / 2;
+	        paths.push("V" + midY);
+	        paths.push("H" + endPoint.x);
+	        break;
+	      case "left":
+	      case "right":
+	        var midX = (endPoint.x + startPoint.x) / 2;
+	        paths.push("H" + midX);
+	        paths.push("V" + endPoint.y);
+	        break;
+	    }
+	    paths.push("L" + endPoint.x + "," + endPoint.y);
+	    return s.paper.path(paths.join(" ")).attr({
+	      markerEnd: arrow,
+	      fill: "none",
+	      stroke: "#000",
+	      strokeWidth: 2
+	    });
+	  }
+
+	  var s1 = newStep("民事诉讼", coordinate(0, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s1"
+	    })
+	  });
+
+	  var s2 = newStep("起诉", coordinate(1, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s2"
+	    })
+	  });
+	  pathTo(s1, s2);
+
+	  var s3 = newStep("诉前财产保全", coordinate(1, 6)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s3"
+	    })
+	  });
+	  pathTo(s1, s3);
+
+	  var s4 = newStep("受理", coordinate(2, 4)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s4"
+	    })
+	  });
+	  pathTo(s2, s4);
+	  var s5 = newStep("不予受理", coordinate(2, 7)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s5"
+	    })
+	  });
+	  pathTo(s2, s5);
+
+	  var s6 = newStep("驳回起诉", coordinate(3, 1)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s6"
+	    })
+	  });
+	  var s7 = newStep("撤诉", coordinate(3, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s7"
+	    })
+	  });
+	  var s8 = newStep("审理", coordinate(3, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s8"
+	    })
+	  });
+
+	  pathTo(s4, s6);
+	  pathTo(s4, s7);
+	  pathTo(s4, s8);
+
+	  var s9 = newStep("对不予受理的裁定提起上诉", coordinate(3, 7), 200).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s9"
+	    })
+	  });
+	  pathTo(s5, s9);
+
+	  var s10 = newStep("回避", coordinate(4, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s10"
+	    })
+	  });
+	  var s11 = newStep("庭前准备", coordinate(4, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s11"
+	    });
+	  });
+	  pathTo(s11, s10);
+	  pathTo(s8, s11);
+
+	  var s12 = newStep("普通程序(6个月审结)", coordinate(5, 2), 200).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s12"
+	    })
+	  });
+	  var s13 = newStep("简易程序(3个月审结)", coordinate(5, 6), 200).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s13"
+	    })
+	  });
+
+	  pathTo(s11, s12);
+	  pathTo(s11, s13);
+
+	  var s14 = newStep("财产保全", coordinate(6, 1)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s4"
+	    })
+	  });
+	  var s15 = newStep("诉讼调解", coordinate(6, 2)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s15"
+	    })
+	  });
+	  var s16 = newStep("先予执行", coordinate(6, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s16"
+	    })
+	  });
+	  var s17 = newStep("缺席判决", coordinate(6, 4)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s17"
+	    })
+	  });
+
+	  var s18 = newStep("程序终结", coordinate(6, 7)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s18"
+	    })
+	  });
+	  pathTo(s12, s14);
+	  pathTo(s12, s15);
+	  pathTo(s12, s16);
+	  pathTo(s12, s17);
+	  pathTo(s13, s18);
+
+	  var s19 = newStep("达成协议", coordinate(7, 1)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s19"
+	    })
+	  });
+	  var s20 = newStep("未达成协议", coordinate(7, 4)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s20"
+	    })
+	  });
+	  pathTo(s15, s19);
+	  pathTo(s15, s20);
+
+	  var s21 = newStep("程序终结", coordinate(8, 1)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s21"
+	    })
+	  });
+	  var s22 = newStep("诉讼终结", coordinate(8, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s22"
+	    })
+	  });
+	  var s23 = newStep("延期审理", coordinate(8, 4)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s23"
+	    })
+	  });
+	  var s24 = newStep("诉讼中止", coordinate(8, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s24"
+	    })
+	  });
+	  var s25 = newStep("判决裁定", coordinate(8, 6)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s25"
+	    })
+	  });
+	  var s26 = newStep("撤诉", coordinate(8, 7)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s26"
+	    })
+	  });
+
+	  pathTo(s19, s21);
+	  pathTo(s20, s22);
+	  pathTo(s20, s23);
+	  pathTo(s20, s24);
+	  pathTo(s20, s25);
+	  pathTo(s20, s26);
+
+	  var s27 = newStep("程序终结", coordinate(9, 4)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s27"
+	    })
+	  });
+	  var s28 = newStep("上诉", coordinate(9, 6)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s28"
+	    })
+	  });
+
+	  pathTo(s25, s27);
+	  pathTo(s25, s28);
+	  var s29 = newStep("诉讼调解", coordinate(10, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s29"
+	    })
+	  });
+	  pathTo(s28, s29);
+
+	  var s30 = newStep("判决、裁定", coordinate(11, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s30"
+	    })
+	  });
+	  var s31 = newStep("达成协议", coordinate(11, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s31"
+	    })
+	  });
+
+	  pathTo(s29, s30);
+	  pathTo(s29, s31);
+
+	  var s32 = newStep("维持原判", coordinate(12, 2)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s32"
+	    })
+	  });
+	  var s33 = newStep("依法改判", coordinate(12, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s33"
+	    })
+	  });
+	  var s34 = newStep("发回重审", coordinate(12, 4)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s34"
+	    })
+	  });
+
+	  pathTo(s30, s32);
+	  pathTo(s30, s33);
+	  pathTo(s30, s34);
+
+	  var s35 = newStep("提审", coordinate(13, 1)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s35"
+	    })
+	  });
+	  var s36 = newStep("再审", coordinate(13, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s36"
+	    })
+	  });
+	  var s37 = newStep("抗诉", coordinate(13, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s37"
+	    })
+	  });
+	  var s38 = newStep("程序结束", coordinate(13, 7)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s38"
+	    })
+	  });
+
+	  pathTo(s33, s35);
+	  pathTo(s33, s36);
+	  pathTo(s33, s37);
+	  pathTo(s33, s38);
+
+	  var s39 = newStep("审理", coordinate(14, 2)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s39"
+	    })
+	  });
+	  var s40 = newStep("驳回申请", coordinate(14, 4)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s40"
+	    })
+	  });
+	  pathTo(s36, s39);
+	  pathTo(s36, s40);
+
+	  var s41 = newStep("一审程序", coordinate(15, 1)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s41"
+	    })
+	  });
+	  var s42 = newStep("二审程序", coordinate(15, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s42"
+	    })
+	  });
+	  var s43 = newStep("驳回起诉", coordinate(15, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s43"
+	    })
+	  });
+	  pathTo(s39, s41);
+	  pathTo(s39, s42);
+	  pathTo(s39, s43);
+
+	  var s44 = newStep("维持原判", coordinate(16, 1)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s44"
+	    })
+	  });
+	  var s45 = newStep("改判", coordinate(16, 3)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s45"
+	    })
+	  });
+	  var s46 = newStep("驳回起诉", coordinate(16, 5)).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s46"
+	    })
+	  });
+	  var s47 = newStep("撤销原判 发回重审", coordinate(16, 7), 200).click(function (e) {
+	    triggerEvent("click", {
+	        id: "s47"
+	    })
+	  });
+
+	  pathTo(s41, s44);
+	  pathTo(s41, s45);
+	  pathTo(s41, s46);
+	  pathTo(s41, s47);
+	  pathTo(s42, s44);
+	  pathTo(s42, s45);
+	  pathTo(s42, s46);
+	  pathTo(s42, s47);
+	}
+
+	module.exports = {
+	    draw: draw,
+	    $on: eventHandlerRegister
+	};
+
+
+/***/ },
+/* 130 */
 /***/ function(module, exports) {
 
 	/**
@@ -61760,7 +62414,7 @@
 
 
 /***/ },
-/* 125 */
+/* 131 */
 /***/ function(module, exports) {
 
 	/**
@@ -61810,6 +62464,19 @@
 	            })
 	            ;
 	    };
+	    this.deleteFile = function (id) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/" + id,
+	                    method: "DELETE"
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
 	    this.loadFaLvWenDaClasses = function () {
 	        return Configure.getHost()
 	            .then(function (host) {
@@ -61851,6 +62518,19 @@
 	            })
 	            ;
 	    };
+	    this.deleteFaLvWenDaClass = function (id) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/fa_lv_wen_da/classes/" + id,
+	                    method: "DELETE"
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
 	    this.createFaLvWenDaArticle = function (data) {
 	        return Configure.getHost()
 	            .then(function (host) {
@@ -61879,14 +62559,99 @@
 	            })
 	            ;
 	    };
+	    this.deleteFaLvWenDaArticle = function (id) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/fa_lv_wen_da/articles/" + id,
+	                    method: "DELETE"
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
 
+	    this.loadMinShiSuSongDetail = function (stepId) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/su_song_wen_shu/min_shi_su_song/" + stepId,
+	                    method: "GET"
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+
+	    this.saveMinShiSuSongDetail = function (id, data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/su_song_wen_shu/min_shi_su_song/" + id,
+	                    method: "PUT",
+	                    data: data
+	                });
+	            })
+	            .then(function (res) {
+	                return res.data;
+	            })
+	            ;
+	    };
+
+	    this.updateSuSongWenShuFile = function (id, data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/su_song_wen_shu/files/" + id,
+	                    method: "PUT",
+	                    data: data
+	                });
+	            })
+	            .then(function (res) {
+	                return res.data;
+	            })
+	            ;
+	    };
+
+	    this.addSuSongWenShuFile = function (data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/su_song_wen_shu/files",
+	                    method: "POST",
+	                    data: data
+	                });
+	            })
+	            .then(function (res) {
+	                return res.data;
+	            })
+	            ;
+	    };
+
+	    this.deleteSuSongWenShuFile = function (id) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/resources/su_song_wen_shu/files/" + id,
+	                    method: "DELETE"
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    }
 	}
 
 	module.exports = func;
 
 
 /***/ },
-/* 126 */
+/* 132 */
 /***/ function(module, exports) {
 
 	/**
@@ -61915,7 +62680,7 @@
 
 
 /***/ },
-/* 127 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag

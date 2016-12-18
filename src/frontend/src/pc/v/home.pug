@@ -20,6 +20,13 @@ div#home
                     div.entry.iconfont(ng-repeat="entry in entries", ng-class="entry.icon", ng-click="goto(entry.hash)")
     div.row.main
         div.col-md-10.col-md-offset-1
+            div#suSongWenShu.entry-title
+                span 诉讼文书
+            //div.entry
+            //    div.fake
+            //    div.body
+            div.suSongWenShu(ui-view="suSongWenShu")
+        div.col-md-10.col-md-offset-1
             div#xieYiFanBen.entry-title
                 span 协议范本
             div.entry

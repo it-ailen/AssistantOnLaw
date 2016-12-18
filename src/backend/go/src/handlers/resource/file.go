@@ -102,6 +102,29 @@ func (self *FileHandler) PUT(w http.ResponseWriter, r *http.Request) *foolhttp.H
     return nil
 }
 
+func (self *FileHandler) DELETE(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
+    accounts.CheckAccessibility(r, &accounts.AccessControl{
+        SuperOnly: true,
+    })
+    id := foolhttp.RouteArgument(r, "id")
+    mgr := content.GetManager()
+    file, err := mgr.LoadFile(id)
+    if err != nil {
+        panic(err)
+    }
+    if file == nil {
+        panic(foolhttp.NotFoundHTTPError("Unknown id"))
+    }
+    if dir, ok := file.(*definition.Directory); ok {
+        if len(dir.Children) > 0 {
+            panic(foolhttp.ForbiddenHTTPError("Delete an unempty directory"))
+        }
+    }
+    mgr.DeleteFile(id)
+    return nil
+}
+
+
 //func (self *FileHandler) GET(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 //    root := foolhttp.RouteArgumentWithDefault(r, "root", "/")
 //    mgr := content.GetManager()
