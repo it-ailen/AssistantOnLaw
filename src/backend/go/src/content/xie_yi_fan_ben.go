@@ -319,3 +319,17 @@ func (self *Manager) UpdateFile(file interface{}, args map[string]string) error 
 	_, err = stmt.Exec(values...)
 	return err
 }
+
+func (self *Manager) DeleteFile(id string) {
+	s := "DELETE FROM `file` WHERE `id`=? "
+	stmt, err := self.conn.Prepare(s)
+	if err != nil {
+		panic(err)
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
+	if err != nil {
+		panic(err)
+	}
+}

@@ -47,7 +47,7 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
                         if (!$scope.data.classes) {
                             $scope.data.classes = [];
                         }
-                        $scope.data.classes.push(c);
+                        $scope.data.classes.push(newClass);
                     }
                 }
             })
@@ -154,6 +154,15 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
         }],
         ["删除", function ($itemScope, $event, modelValue, text, $li) {
             console.log(arguments);
+            ResourceService.deleteFaLvWenDaClass($itemScope.c.id)
+                .then(function() {
+                    toastr.success("删除成功");
+                    reload();
+                })
+                .catch(function(error) {
+                    toastr.error(error.status + " - " + error.data.error);
+                })
+            ;
         }]
     ];
     $scope.articleContextMenu = [
@@ -163,6 +172,15 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
         }],
         ["删除", function ($itemScope, $event, modelValue, text, $li) {
             console.log(arguments);
+            ResourceService.deleteFaLvWenDaArticle($itemScope.article.id)
+                .then(function() {
+                    toastr.success("删除成功");
+                    reload();
+                })
+                .catch(function(error) {
+                    toastr.error(error.status + " - " + error.data.error);
+                })
+            ;
         }]
     ];
 

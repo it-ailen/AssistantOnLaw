@@ -45,6 +45,19 @@ function func(Configure, $http) {
             })
             ;
     };
+    this.deleteFile = function (id) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/" + id,
+                    method: "DELETE"
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
     this.loadFaLvWenDaClasses = function () {
         return Configure.getHost()
             .then(function (host) {
@@ -86,6 +99,19 @@ function func(Configure, $http) {
             })
             ;
     };
+    this.deleteFaLvWenDaClass = function (id) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/fa_lv_wen_da/classes/" + id,
+                    method: "DELETE"
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
     this.createFaLvWenDaArticle = function (data) {
         return Configure.getHost()
             .then(function (host) {
@@ -114,7 +140,92 @@ function func(Configure, $http) {
             })
             ;
     };
+    this.deleteFaLvWenDaArticle = function (id) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/fa_lv_wen_da/articles/" + id,
+                    method: "DELETE"
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
 
+    this.loadMinShiSuSongDetail = function (stepId) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/su_song_wen_shu/min_shi_su_song/" + stepId,
+                    method: "GET"
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+
+    this.saveMinShiSuSongDetail = function (id, data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/su_song_wen_shu/min_shi_su_song/" + id,
+                    method: "PUT",
+                    data: data
+                });
+            })
+            .then(function (res) {
+                return res.data;
+            })
+            ;
+    };
+
+    this.updateSuSongWenShuFile = function (id, data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/su_song_wen_shu/files/" + id,
+                    method: "PUT",
+                    data: data
+                });
+            })
+            .then(function (res) {
+                return res.data;
+            })
+            ;
+    };
+
+    this.addSuSongWenShuFile = function (data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/su_song_wen_shu/files",
+                    method: "POST",
+                    data: data
+                });
+            })
+            .then(function (res) {
+                return res.data;
+            })
+            ;
+    };
+
+    this.deleteSuSongWenShuFile = function (id) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/resources/su_song_wen_shu/files/" + id,
+                    method: "DELETE"
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    }
 }
 
 module.exports = func;

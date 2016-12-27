@@ -1,0 +1,8 @@
+//
+   Created by hyku on 2016/12/11.
+
+svg(viewBox="0 0 100 20")
+    rect(x="0", y="0", width="100", height="20",
+    fill="{{ background || 'white' }}", stroke="{{ borderStroke || 'black' }}")
+    text(x="50", y="14", font-family="{{ fontFamily || 'Verdana' }}", font-size="{{ fontSize || '80%' }}",
+    fill="{{ textColor || 'black' }}", text-anchor="middle") {{ text }}

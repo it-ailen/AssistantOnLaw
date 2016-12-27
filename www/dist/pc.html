@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="LvDaJia.pc" lang="zh-CN">
+  <head>
+    <title>{{ global.title }}</title>
+    <meta charset="utf-8">
+    <script src="../assets/snap.svg.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/summernote/0.8.2/summernote.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_c4x4e3l0ulibpgb9.css">
+    <script src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/summernote/0.8.2/summernote.min.js"></script>
+    <!--script(src="//cdn.bootcss.com/angular.js/1.5.8/angular.js")-->
+    <script src="./pc.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid" id="pc-frame">
+      <div class="top-bar row" ui-view="topBar"></div>
+      <div class="row" id="content" ui-view="main"></div>
+      <div class="row" id="footer" ui-view="footer"></div>
+    </div>
+  </body>
+</html>

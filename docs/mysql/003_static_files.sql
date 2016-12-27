@@ -1,12 +1,12 @@
 CREATE TABLE `file` (
   `id` CHAR(32) PRIMARY KEY,
   `name` VARCHAR(200) NOT NULL,
-  `type` CHAR(40) NOT NULL, /* file|directory */
+  `type` CHAR(40) NOT NULL,
   `owner` CHAR(32) NOT NULL,
-  `created_time` LONG DEFAULT 0,
-  `updated_time` LONG DEFAULT 0,
-  `reference_uri` VARCHAR(400) NULL,  /* 普通文件需要 */
-  `download_count` INT DEFAULT 0,
+  `created_time` BIGINT DEFAULT 0,
+  `updated_time` BIGINT DEFAULT 0,
+  `reference_uri` VARCHAR(400) NULL,
+  `download_count` BIGINT DEFAULT 0,
   `etc` JSON
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -24,7 +24,7 @@ INSERT INTO `file`(`id`, `name`, `type`, `owner`)
 
 INSERT INTO `file`(`id`, `name`, `type`, `owner`)
   VALUES
-  ('xie_yi_fan_ben', '协议范本', 'directory', 'builtin_root')
+  ('xie_yi_fan_ben', 'XieYi', 'directory', 'builtin_root')
 ;
 
 INSERT INTO `directory`(`directory_id`, `child_id`)
@@ -35,7 +35,7 @@ INSERT INTO `directory`(`directory_id`, `child_id`)
 CREATE TABLE `fa_lv_wen_da_class` (
   `id` CHAR(32) PRIMARY KEY,
   `name` VARCHAR (200) UNIQUE NOT NULL,
-  `created_time` LONG NOT NULL
+  `created_time` BIGINT NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `fa_lv_wen_da_article` (
@@ -43,7 +43,7 @@ CREATE TABLE `fa_lv_wen_da_article` (
   `class_id` CHAR(32) NOT NULL,
   `title` VARCHAR (200) NOT NULL,
   `content` TEXT NOT NULL,
-  `created_time` LONG NOT NULL,
-  `updated_time` LONG NOT NULL,
+  `created_time` BIGINT NOT NULL,
+  `updated_time` BIGINT NOT NULL,
   INDEX `title_index`(`title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

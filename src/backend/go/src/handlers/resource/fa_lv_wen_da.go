@@ -91,6 +91,24 @@ func (self *FaLvWenDaClassHandler) GET(w http.ResponseWriter, r *http.Request) *
     return nil
 }
 
+func (self *FaLvWenDaClassHandler) DELETE(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
+    id := foolhttp.RouteArgument(r, "id")
+    mgr := content.GetManager()
+
+    filter := content.FaLvWenDaClassesFilter{
+        ID: []string{id},
+    }
+    classes, err := mgr.LoadFaLvWenDaClasses(&filter)
+    if err != nil {
+        panic(err)
+    }
+    if len(classes) == 0 {
+        panic(foolhttp.UnknownHTTPError("Unknown id"))
+    }
+    mgr.DeleteFaLvWenDaClasses(id)
+    return nil
+}
+
 func NewFaLvWenDaClassHandler() *FaLvWenDaClassHandler {
     handler := new(FaLvWenDaClassHandler)
     return handler
@@ -169,6 +187,25 @@ func (self *FaLvWenDaArticleHandler) PUT(w http.ResponseWriter, r *http.Request)
         panic(err)
     }
     foolhttp.WriteJson(w, article)
+    return nil
+}
+
+
+func (self *FaLvWenDaArticleHandler) DELETE(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
+    id := foolhttp.RouteArgument(r, "id")
+    mgr := content.GetManager()
+
+    filter := content.FaLvWenDaArticlesFilter{
+        ID: []string{id},
+    }
+    articles, err := mgr.LoadFaLvWenDaArticles(&filter)
+    if err != nil {
+        panic(err)
+    }
+    if len(articles) == 0 {
+        panic(foolhttp.UnknownHTTPError("Unknown id"))
+    }
+    mgr.DeleteFaLvWenDaArticle(id)
     return nil
 }
 

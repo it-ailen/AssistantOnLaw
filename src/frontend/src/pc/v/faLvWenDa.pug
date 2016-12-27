@@ -10,8 +10,8 @@ div.row(style="max-height: 100%;")
                 div.panel-default(ng-if="$state.includes('home.base.super')", uib-accordion-group, ng-repeat="c in data.classes", heading="{{ c.name }}", context-menu="classContextMenu")
                     div.panel(ng-repeat="article in c.articles", ng-click="openArticle(article)", context-menu="articleContextMenu").
                         {{ article.name }}
-                div.panel-default(ng-if="!$state.includes('home.base.super')", uib-accordion-group, ng-repeat="class in data.classes", heading="{{ class.name }}")
-                    div.panel(ng-repeat="article in class.articles", ng-click="openArticle(article)").
+                div.panel-default(ng-if="!$state.includes('home.base.super')", uib-accordion-group, ng-repeat="c in data.classes", heading="{{ c.name }}")
+                    div.panel(ng-repeat="article in c.articles", ng-click="openArticle(article)").
                         {{ article.name }}
         div.col-md-9(style="max-height: 100%;")
             div.content(ng-show="!$state.includes('home.base.super')")
