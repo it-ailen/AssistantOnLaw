@@ -11,6 +11,7 @@ import (
 	"handlers/mobile"
 	"handlers/accounts"
 	"handlers/resource"
+	"handlers/counsel"
 )
 
 type Base struct {
@@ -35,14 +36,6 @@ func (self Derived) Print() {
 }
 
 func main() {
-	//log.SetFlags(log.Lshortfile | log.LstdFlags)
-	//a := Derived{
-	//}
-	//log.Printf("a: %#v", a)
-	//a.Print()
-	//a.Base.Print()
-	//a.Do()
-	//return
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 	defaultConfig := "/config/config.yaml"
 	if tmp, set := os.LookupEnv("CONFIG"); set {
@@ -63,6 +56,7 @@ func main() {
 	mobile.Register(router)
 	accounts.Register(router)
 	resource.Register(router)
+	counsel.Register(router)
 
 	http.Handle("/", router)
 	log.Printf("Run on: %d\n", opt.Port)

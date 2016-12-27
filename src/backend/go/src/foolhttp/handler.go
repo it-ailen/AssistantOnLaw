@@ -44,11 +44,11 @@ func (self *HTTPError) JSON() []byte {
 	return res
 }
 
-func NewHTTPError(code int, err string, detail string) (*HTTPError) {
+func NewHTTPError(code int, err, format string, args... interface{}) (*HTTPError) {
 	return &HTTPError{
 		StatusCode: code,
 		ErrorCode: err,
-		Detail: detail,
+		Detail: fmt.Sprintf(format, args...),
 	}
 }
 
@@ -59,20 +59,20 @@ func NewDefaultHTTPError() (*HTTPError) {
 	}
 }
 
-func BadArgHTTPError(detail string) (*HTTPError) {
-	return NewHTTPError(400, ErrorBadArgument, detail)
+func BadArgHTTPError(format string, args... interface{}) (*HTTPError) {
+	return NewHTTPError(400, ErrorBadArgument, format, args...)
 }
 
-func ForbiddenHTTPError(detail string) (*HTTPError) {
-	return NewHTTPError(403, ErrorForbidden, detail)
+func ForbiddenHTTPError(format string, args... interface{}) (*HTTPError) {
+	return NewHTTPError(403, ErrorForbidden, format, args...)
 }
 
-func NotFoundHTTPError(detail string) (*HTTPError) {
-	return NewHTTPError(404, ErrorNotFound, detail)
+func NotFoundHTTPError(format string, args... interface{}) (*HTTPError) {
+	return NewHTTPError(404, ErrorNotFound, format, args...)
 }
 
-func UnknownHTTPError(detail string) (*HTTPError) {
-	return NewHTTPError(500, ErrorUnknown, detail)
+func UnknownHTTPError(format string, args... interface{}) (*HTTPError) {
+	return NewHTTPError(500, ErrorUnknown, format, args...)
 }
 
 type HttpGetHandler interface {
