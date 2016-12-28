@@ -78,7 +78,7 @@ func (self *ClassHandler) DELETE(w http.ResponseWriter, r *http.Request) *foolht
 func (self *ClassHandler) GET(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	id := foolhttp.RouteArgumentWithDefault(r, "id", "nil")
 	mgr := content.GetManager()
-    if id != "nil" {
+    if id == "nil" {
         classes := mgr.SelectClasses(nil)
         foolhttp.WriteJson(w, classes)
     } else {

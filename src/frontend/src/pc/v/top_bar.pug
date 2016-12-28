@@ -5,7 +5,7 @@ div#top-bar
     div.col-md-10.col-md-offset-1
         span.logo 律答家logo
         span.user-area.pull-right
-            form.form-inline(novalidate, ng-submit="login(loginData)", ng-if="$state.is('home.base')", name="loginForm")
+            form.form-inline(novalidate, ng-submit="login(loginData)", ng-if="$state.is('frame.home.base')", name="loginForm")
                 div.form-group
                     label.sr-only 账号
                     input.form-control(name="account", type="text", required, placeholder="账号", ng-model="loginData.account")
@@ -17,7 +17,7 @@ div#top-bar
                 span &nbsp;|&nbsp;
                 //a(href="javascript:;", ng-click="register()") 注册
                 input.btn.btn-link(type="button", value="注册")
-            span(ng-if="!$state.is('home.base')") 欢迎您,&nbsp;{{ self.account }}
+            span(ng-if="!$state.is('frame.home.base')") 欢迎您,&nbsp;{{ self.account }}
                 //a(href="javascript:;", ng-click="logout()") 登出
                 input.btn.btn-link(type="button", value="登出", ng-click="logout()")
 

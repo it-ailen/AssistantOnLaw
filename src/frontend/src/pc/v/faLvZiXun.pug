@@ -1,0 +1,65 @@
+//
+   Created by hyku on 2016/12/3.
+
+div.row(style="max-height: 100%;")
+    div.row
+        div.col-md-3
+            div.panel-default
+                div.panel-heading
+                    h4.panel-title 问题类别
+                        span.pull-right.glyphicon.glyphicon-plus(ng-click="updateClass()")
+                div.panel-body
+                    div.panel.panel-default(ng-repeat="class in data.classes")
+                        div.panel-heading(ng-click="data.expandedClass=class.id; loadEntries(class.id)")
+                            h4.panel-title {{ class.name }}
+                        div.panel-body.collapse(uib-collapse="data.expandedClass!=class.id")
+                            table.table.table-hover
+                                tr
+                                    th 名称
+                                    td {{ class.name }}
+                                tr
+                                    th 描述
+                                    td {{ class.description }}
+                                tr
+                                    th 图标
+                                    td
+                                        img(width="40", height="40", ng-src="{{ class.logo }}")
+        div.col-md-3
+            div.panel-default
+                div.panel-heading
+                    h4.panel-title 入口
+                        span.pull-right.glyphicon.glyphicon-plus(ng-click="updateEntry(data.expandedClass)",
+                        ng-show="data.expandedClass")
+                div.panel-body
+                    div.panel.panel-default(ng-repeat="entry in data.entries")
+                        div.panel-heading(ng-click="data.expandedEntry=entry.id; loadQuestions(entry.id)")
+                            h4.panel-title {{ entry.name }}
+                        div.panel-body.collapse(uib-collapse="data.expandedEntry!=entry.id")
+                            table.table.table-hover
+                                tr
+                                    th 名称
+                                    td {{ entry.name }}
+        div.col-md-6
+            div.panel-default
+                div.panel-heading
+                    h4.panel-title 问题
+                        span.pull-right.glyphicon.glyphicon-plus(ng-click="updateQuestion(data.expandedEntry)",
+                        ng-show="data.expandedEntry")
+            div.panel-body
+                div {{ selectionMap | json }}
+                form(name="form", ng-submit="search(selectionMap)")
+                    fieldset.form-group(ng-repeat="question in data.questions")
+                        legend {{ question.question }}
+                        div.form-check-inline(ng-repeat="option in question.options track by $index")
+                            label.form-check-label(ng-switch="question.type")
+                                input.form-check-input(ng-switch-when="multiple", value="{{ $index }}",
+                                name="check_{{ question.id }}", ng-model="selectionMap[question.id][$index]",
+                                type="checkbox")
+                                input.form-check-input(ng-switch-when="single", value="{{ $index }}",
+                                name="radio_{{ question.id }}", required="", ng-model="selectionMap[question.id]",
+                                type="radio")
+                                | {{ option }}
+                    div.form-group
+                        input.btn.btn-primary(type="submit", value="咨询", ng-show="data.questions && data.questions.length>0",
+                        ng-disabled="form.$invalid")
+

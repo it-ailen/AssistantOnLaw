@@ -225,7 +225,176 @@ function func(Configure, $http) {
                 return resp.data;
             })
             ;
-    }
+    };
+
+    this.selectClasses = function (params) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/classes",
+                    method: "GET",
+                    params: params
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.insertClass = function (data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/classes",
+                    method: "POST",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.updateClass = function (id, data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/classes/" + id,
+                    method: "PUT",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.selectEntries = function (params) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/entries",
+                    method: "GET",
+                    params: params
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.insertEntry = function (data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/entries",
+                    method: "POST",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.updateEntry = function (id, data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/entries/" + id,
+                    method: "PUT",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.selectQuestions = function (params) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/questions",
+                    method: "GET",
+                    params: params
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.insertQuestion = function (data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/questions",
+                    method: "POST",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.updateQuestion = function (id, data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/questions/" + id,
+                    method: "PUT",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.selectConclusions = function (params) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/conclusions",
+                    method: "GET",
+                    params: params
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.insertConclusions = function (data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/conclusions",
+                    method: "POST",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.updateConclusions = function (id, data) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/conclusions/" + id,
+                    method: "PUT",
+                    data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
 }
 
 module.exports = func;

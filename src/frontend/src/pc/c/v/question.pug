@@ -1,0 +1,21 @@
+//
+   Created by hyku on 2016/12/4.
+
+form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
+    div.form-group
+        label 问题
+        input.form-control(type="text", ng-model="item.question", required, name="question")
+    div.form-group
+        label 选项类型
+        select.form-control(ng-model="item.type", required="", name="type")
+            option(value="single") 单选
+            option(value="multiple") 多选
+    div.form-group
+        label 选项数量
+        input.form-control(type="number", ng-model="optionCount", ng-init="optionCount=item.options && item.options.length || 2",
+        min="2", max="6")
+    div.form-group(ng-repeat="i in [] | range:optionCount")
+        label 选项 {{ $index + 1 }}
+        input.form-control(type="text", ng-model="item.options[$index]", required="")
+    div.form-group
+        input.btn.btn-default(type="submit", value="提交", ng-disabled="form.$invalid")

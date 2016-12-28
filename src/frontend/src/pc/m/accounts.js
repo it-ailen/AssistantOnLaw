@@ -24,9 +24,9 @@ function service(Configure, $http, $rootScope, $q, $state) {
                 status.self = me;
                 $rootScope.$broadcast("session.login", me);
                 if (me.type === 'super') {
-                    $state.go("home.base.super");
+                    $state.go("frame.home.base.super");
                 } else if (me.type === 'customer') {
-                    $state.go("home.base.customer");
+                    $state.go("frame.home.base.customer");
                 }
                 return me;
             })
@@ -43,7 +43,7 @@ function service(Configure, $http, $rootScope, $q, $state) {
             .then(function (res) {
                 status.self = null;
                 $rootScope.$broadcast("session.logout");
-                $state.go("home.base");
+                $state.go("frame.home.base");
                 // $rootScope.$emit("session.logout");
                 return res.data;
             })

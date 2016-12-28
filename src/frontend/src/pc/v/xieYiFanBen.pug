@@ -44,16 +44,16 @@ uib-tabset(active="xieYiFanBen.tab", justified="true")
                 tr
                     th
                         span 文件名
-                        span.glyphicon.glyphicon-plus(ng-if="$state.includes('home.base.super')", ng-click="createRoot()")
+                        span.glyphicon.glyphicon-plus(ng-if="$state.includes('frame.home.base.super')", ng-click="createRoot()")
                     th 发布时间
                     th 下载
             tbody
-                tr(ng-if="$state.is('home.base.super')", ng-repeat="item in current.expandedRows", context-menu="contextMenu")
+                tr(ng-if="$state.is('frame.home.base.super')", ng-repeat="item in current.expandedRows", context-menu="contextMenu")
                     td.iconfont(ng-class="itemClass(item)", ng-click="toggle(item, $index)") {{ item.properties.name }}
                     td {{ item.properties.created_time | date }}
                     td
                         a.btn.btn-default(ng-href="{{ item.properties.reference }}", ng-show="item.properties.type==='file'", target="_blank") 立即下载
-                tr(ng-if="!$state.is('home.base.super')", ng-repeat="item in current.expandedRows")
+                tr(ng-if="!$state.is('frame.home.base.super')", ng-repeat="item in current.expandedRows")
                     td.iconfont(ng-class="itemClass(item)", ng-click="toggle(item, $index)") {{ item.properties.name }}
                     td {{ item.properties.created_time | date }}
                     td

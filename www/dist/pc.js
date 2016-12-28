@@ -86,9 +86,9 @@
 	__webpack_require__(37);
 
 
-	__webpack_require__(16);
+	__webpack_require__(17);
 
-	__webpack_require__(85);
+	__webpack_require__(90);
 
 
 	var app = angular.module("LvDaJia.pc", [
@@ -99,11 +99,11 @@
 	    "ui.bootstrap",
 	    __webpack_require__(43),
 	    "ui.bootstrap.contextMenu",
-	    __webpack_require__(110),
+	    __webpack_require__(115),
 	    __webpack_require__(36),
 	    __webpack_require__(46),
 	    "summernote",
-	    __webpack_require__(111)
+	    __webpack_require__(116)
 	    // "ui.bootstrap"
 	]);
 
@@ -112,14 +112,23 @@
 	        $rootScope.$state = $state;
 	        $rootScope.$stateParams = $stateParams;
 	    })
-	    .service("tools", __webpack_require__(31))
-	    .provider("Configure", __webpack_require__(132))
+	    .filter("range", function () {
+	        return function(emptyArray, count) {
+	            count = count || 0;
+	            for (var i = 0; i < count; i++) {
+	                emptyArray.push(i);
+	            }
+	            return emptyArray;
+	        }
+	    })
+	    .service("tools", __webpack_require__(32))
+	    .provider("Configure", __webpack_require__(138))
 	    .config(function($urlRouterProvider, ConfigureProvider) {
 	        $urlRouterProvider.otherwise('/');
 	    })
 	;
 
-	__webpack_require__(128).register(app);
+	__webpack_require__(134).register(app);
 
 	module.exports = app;
 
@@ -40751,9 +40760,15 @@
 	}
 
 /***/ },
-/* 14 */,
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = jQuery;
+
+/***/ },
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -40761,12 +40776,12 @@
 	 */
 
 	"use strict";
-	__webpack_require__(17);
+	__webpack_require__(18);
 	module.exports = "angular.tree";
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	/******/ (function(modules) { // webpackBootstrap
@@ -41375,34 +41390,34 @@
 	/******/ ]);
 
 /***/ },
-/* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"alert\">\n\t<div class=\"message\">{{ ngDialogData.message }}</div>\n\t<div class=\"buttons\">\n\t\t<input type=\"button\" class=\"btn btn-default\"\n\t\t\t\t\t value=\"确定\"\n\t\t\t\t\t ng-click=\"closeThisDialog()\">\n\t</div>\n</div>";
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"alert\">\n\t<div class=\"message\">{{ ngDialogData.message }}</div>\n\t<div class=\"buttons\">\n\t\t<input type=\"button\" class=\"btn btn-default\"\n\t\t\t\t\t value=\"是\"\n\t\t\t\t\t ng-click=\"closeThisDialog(true)\">\n\t\t<input type=\"button\" class=\"btn btn-default\"\n\t\t\t\t\t value=\"否\"\n\t\t\t\t\t ng-click=\"closeThisDialog(false)\">\n\t</div>\n</div>";
 
 /***/ },
-/* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */
+/* 29 */,
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "images/headerimage_old_books.jpg";
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	/**
@@ -41446,7 +41461,7 @@
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41458,7 +41473,7 @@
 	    var svc = this;
 	    this.alert = function(message) {
 	        var dialog = ngDialog.open({
-	            template: __webpack_require__(24),
+	            template: __webpack_require__(25),
 	            plain: true,
 	            controller: function($scope) {},
 	            data: {
@@ -41472,7 +41487,7 @@
 	    this.confirm = function(message) {
 	        var defer = $q.defer();
 	        ngDialog.open({
-	            template: __webpack_require__(25),
+	            template: __webpack_require__(26),
 	            plain: true,
 	            controller: function($scope) {},
 	            data: {
@@ -41530,12 +41545,6 @@
 
 	module.exports = service;
 
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	module.exports = jQuery;
 
 /***/ },
 /* 33 */
@@ -46093,7 +46102,7 @@
 	    };
 	}]);
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ },
 /* 38 */
@@ -55573,7 +55582,7 @@
 	    };
 	  }]);
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ },
 /* 45 */
@@ -60759,7 +60768,7 @@
 
 
 	// module
-	exports.push([module.id, ".container-fluid {\n  padding-left: 0!important;\n  padding-right: 0!important;\n}\n.container-fluid .row {\n  margin-left: 0!important;\n  margin-right: 0!important;\n}\n#home .top-bar {\n  width: 100%;\n  height: 48px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 100;\n  padding-left: 15px;\n  padding-right: 15px;\n  background-color: #229ddd;\n  color: white;\n  line-height: 48px;\n}\n#home .top-bar .user-area a {\n  text-decoration: none;\n  color: inherit;\n}\n#home .top-bar-placeholder {\n  height: 48px;\n}\n#home .title-area {\n  color: white;\n  background-image: url(" + __webpack_require__(29) + ");\n  text-align: center;\n  padding-bottom: 16.82291667%;\n}\n#home .title-area .title {\n  padding-top: 6.92708333%;\n  padding-bottom: 7.13541667%;\n}\n#home .title-area .title .headline-1 {\n  font-size: 48px;\n  line-height: 48px;\n}\n#home .title-area .title .headline-2 {\n  margin-top: 26px;\n  font-size: 30px;\n  line-height: 30px;\n}\n#home .title-area .top-entries .entry {\n  color: black;\n  display: inline-block;\n  margin-left: 1%;\n  margin-right: 1%;\n  width: 12%;\n  position: relative;\n}\n#home .title-area .top-entries .entry:first-of-type {\n  margin-left: 0;\n}\n#home .title-area .top-entries .entry:last-of-type {\n  margin-right: 0;\n}\n#home .title-area .top-entries .entry .fake {\n  padding-bottom: 100%;\n}\n#home .title-area .top-entries .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  opacity: 0.8;\n  border-radius: 8px;\n  background-color: #ffffff;\n  border: solid 4px #dadbdb;\n}\n#home .title-area .top-entries .entry .body .icon {\n  display: block;\n  font-size: 40px;\n}\n#home .title-area .top-entries .entry .body .name {\n  line-height: 24px;\n  font-size: 20px;\n}\n#home #aside-index {\n  background-color: darkgray;\n  opacity: .7;\n  padding-left: 4px;\n  padding-right: 4px;\n}\n#home .main .entry-title {\n  padding-top: 48px;\n  font-size: 36px;\n  font-weight: 500;\n  color: #222222;\n  line-height: 2;\n}\n#home .main .entry {\n  width: 100%;\n  border: solid 1px #dcdddd;\n  position: relative;\n}\n#home .main .entry .fake {\n  padding-bottom: 57.10526316%;\n}\n#home .main .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}\n#home .footer {\n  text-align: center;\n  background: #303538;\n  color: white;\n  padding-top: 10px;\n  padding-bottom: 10px;\n}\n", ""]);
+	exports.push([module.id, ".container-fluid {\n  padding-left: 0!important;\n  padding-right: 0!important;\n}\n.container-fluid .row {\n  margin-left: 0!important;\n  margin-right: 0!important;\n}\n#home .top-bar {\n  width: 100%;\n  height: 48px;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 100;\n  padding-left: 15px;\n  padding-right: 15px;\n  background-color: #229ddd;\n  color: white;\n  line-height: 48px;\n}\n#home .top-bar .user-area a {\n  text-decoration: none;\n  color: inherit;\n}\n#home .top-bar-placeholder {\n  height: 48px;\n}\n#home .title-area {\n  color: white;\n  background-image: url(" + __webpack_require__(30) + ");\n  text-align: center;\n  padding-bottom: 16.82291667%;\n}\n#home .title-area .title {\n  padding-top: 6.92708333%;\n  padding-bottom: 7.13541667%;\n}\n#home .title-area .title .headline-1 {\n  font-size: 48px;\n  line-height: 48px;\n}\n#home .title-area .title .headline-2 {\n  margin-top: 26px;\n  font-size: 30px;\n  line-height: 30px;\n}\n#home .title-area .top-entries .entry {\n  color: black;\n  display: inline-block;\n  margin-left: 1%;\n  margin-right: 1%;\n  width: 12%;\n  position: relative;\n}\n#home .title-area .top-entries .entry:first-of-type {\n  margin-left: 0;\n}\n#home .title-area .top-entries .entry:last-of-type {\n  margin-right: 0;\n}\n#home .title-area .top-entries .entry .fake {\n  padding-bottom: 100%;\n}\n#home .title-area .top-entries .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  opacity: 0.8;\n  border-radius: 8px;\n  background-color: #ffffff;\n  border: solid 4px #dadbdb;\n}\n#home .title-area .top-entries .entry .body .icon {\n  display: block;\n  font-size: 40px;\n}\n#home .title-area .top-entries .entry .body .name {\n  line-height: 24px;\n  font-size: 20px;\n}\n#home #aside-index {\n  background-color: darkgray;\n  opacity: .7;\n  padding-left: 4px;\n  padding-right: 4px;\n}\n#home .main .entry-title {\n  padding-top: 48px;\n  font-size: 36px;\n  font-weight: 500;\n  color: #222222;\n  line-height: 2;\n}\n#home .main .entry {\n  width: 100%;\n  border: solid 1px #dcdddd;\n  position: relative;\n}\n#home .main .entry .fake {\n  padding-bottom: 57.10526316%;\n}\n#home .main .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}\n#home .footer {\n  text-align: center;\n  background: #303538;\n  color: white;\n  padding-top: 10px;\n  padding-bottom: 10px;\n}\n", ""]);
 
 	// exports
 
@@ -60773,7 +60782,7 @@
 
 
 	// module
-	exports.push([module.id, "#pc-frame.container-fluid {\n  padding-left: 0 !important;\n  padding-right: 0 !important;\n}\n#pc-frame.container-fluid .row {\n  margin-left: 0 !important;\n  margin-right: 0 !important;\n}\n#pc-frame .top-bar {\n  width: 100%;\n  height: 48px;\n  padding-left: 15px;\n  padding-right: 15px;\n}\n#pc-frame .top-bar #top-bar {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  height: 48px;\n  background-color: #229ddd;\n  color: white;\n  line-height: 48px;\n}\n#pc-frame .top-bar #top-bar .user-area a {\n  text-decoration: none;\n  color: inherit;\n}\n#pc-frame .top-bar .top-bar-placeholder {\n  height: 48px;\n}\n#pc-frame .title-area {\n  color: white;\n  background-image: url(" + __webpack_require__(29) + ");\n  text-align: center;\n  padding-bottom: 16.82291667%;\n}\n#pc-frame .title-area .title {\n  padding-top: 6.92708333%;\n  padding-bottom: 7.13541667%;\n}\n#pc-frame .title-area .title .headline-1 {\n  font-size: 48px;\n  line-height: 48px;\n}\n#pc-frame .title-area .title .headline-2 {\n  margin-top: 26px;\n  font-size: 30px;\n  line-height: 30px;\n}\n#pc-frame .title-area .top-entries .entry {\n  color: black;\n  display: inline-block;\n  margin-left: 1%;\n  margin-right: 1%;\n  width: 12%;\n  position: relative;\n}\n#pc-frame .title-area .top-entries .entry:first-of-type {\n  margin-left: 0;\n}\n#pc-frame .title-area .top-entries .entry:last-of-type {\n  margin-right: 0;\n}\n#pc-frame .title-area .top-entries .entry .fake {\n  padding-bottom: 100%;\n}\n#pc-frame .title-area .top-entries .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  opacity: 0.8;\n  border-radius: 8px;\n  background-color: #ffffff;\n  border: solid 4px #dadbdb;\n}\n#pc-frame .title-area .top-entries .entry .body .icon {\n  display: block;\n  font-size: 40px;\n}\n#pc-frame .title-area .top-entries .entry .body .name {\n  line-height: 24px;\n  font-size: 20px;\n}\n#pc-frame #aside-index {\n  background-color: darkgray;\n  opacity: .7;\n  padding-left: 4px;\n  padding-right: 4px;\n}\n#pc-frame .main .entry-title {\n  padding-top: 48px;\n  font-size: 36px;\n  font-weight: 500;\n  color: #222222;\n  line-height: 2;\n}\n#pc-frame .main .entry {\n  width: 100%;\n  border: solid 1px #dcdddd;\n  position: relative;\n}\n#pc-frame .main .entry .fake {\n  padding-bottom: 57.10526316%;\n}\n#pc-frame .main .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}\n#pc-frame .footer {\n  text-align: center;\n  background: #303538;\n  color: white;\n  padding-top: 10px;\n  padding-bottom: 10px;\n}\n.iconfont.directory:before {\n  content: \"\\E605\";\n}\n.iconfont.directory.open:before {\n  content: \"\\E604\";\n}\n.iconfont.file:before {\n  content: \"\\E67C\";\n}\n.indent-1 {\n  padding-left: 8px !important;\n}\n.indent-2 {\n  padding-left: 16px !important;\n}\n.indent-3 {\n  padding-left: 24px !important;\n}\n.indent-4 {\n  padding-left: 32px !important;\n}\n.indent-5 {\n  padding-left: 40px !important;\n}\n.indent-6 {\n  padding-left: 48px !important;\n}\n.indent-7 {\n  padding-left: 56px !important;\n}\n.indent-8 {\n  padding-left: 64px !important;\n}\n.indent-9 {\n  padding-left: 72px !important;\n}\n.indent-10 {\n  padding-left: 80px !important;\n}\n.indent-11 {\n  padding-left: 88px !important;\n}\n.indent-12 {\n  padding-left: 96px !important;\n}\n.indent-13 {\n  padding-left: 104px !important;\n}\n.indent-14 {\n  padding-left: 112px !important;\n}\n.indent-15 {\n  padding-left: 120px !important;\n}\n.indent-16 {\n  padding-left: 128px !important;\n}\n.indent-17 {\n  padding-left: 136px !important;\n}\n.indent-18 {\n  padding-left: 144px !important;\n}\n.indent-19 {\n  padding-left: 152px !important;\n}\n.indent-20 {\n  padding-left: 160px !important;\n}\na.disabled {\n  pointer-events: none;\n  cursor: not-allowed;\n}\n", ""]);
+	exports.push([module.id, "#pc-frame.container-fluid {\n  padding-left: 0 !important;\n  padding-right: 0 !important;\n}\n#pc-frame.container-fluid .row {\n  margin-left: 0 !important;\n  margin-right: 0 !important;\n}\n#pc-frame .top-bar {\n  width: 100%;\n  height: 48px;\n  padding-left: 15px;\n  padding-right: 15px;\n}\n#pc-frame .top-bar #top-bar {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 100;\n  width: 100%;\n  height: 48px;\n  background-color: #229ddd;\n  color: white;\n  line-height: 48px;\n}\n#pc-frame .top-bar #top-bar .user-area a {\n  text-decoration: none;\n  color: inherit;\n}\n#pc-frame .top-bar .top-bar-placeholder {\n  height: 48px;\n}\n#pc-frame .title-area {\n  color: white;\n  background-image: url(" + __webpack_require__(30) + ");\n  text-align: center;\n  padding-bottom: 16.82291667%;\n}\n#pc-frame .title-area .title {\n  padding-top: 6.92708333%;\n  padding-bottom: 7.13541667%;\n}\n#pc-frame .title-area .title .headline-1 {\n  font-size: 48px;\n  line-height: 48px;\n}\n#pc-frame .title-area .title .headline-2 {\n  margin-top: 26px;\n  font-size: 30px;\n  line-height: 30px;\n}\n#pc-frame .title-area .top-entries .entry {\n  color: black;\n  display: inline-block;\n  margin-left: 1%;\n  margin-right: 1%;\n  width: 12%;\n  position: relative;\n}\n#pc-frame .title-area .top-entries .entry:first-of-type {\n  margin-left: 0;\n}\n#pc-frame .title-area .top-entries .entry:last-of-type {\n  margin-right: 0;\n}\n#pc-frame .title-area .top-entries .entry .fake {\n  padding-bottom: 100%;\n}\n#pc-frame .title-area .top-entries .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  opacity: 0.8;\n  border-radius: 8px;\n  background-color: #ffffff;\n  border: solid 4px #dadbdb;\n}\n#pc-frame .title-area .top-entries .entry .body .icon {\n  display: block;\n  font-size: 40px;\n}\n#pc-frame .title-area .top-entries .entry .body .name {\n  line-height: 24px;\n  font-size: 20px;\n}\n#pc-frame #aside-index {\n  background-color: darkgray;\n  opacity: .7;\n  padding-left: 4px;\n  padding-right: 4px;\n}\n#pc-frame .main .entry-title {\n  padding-top: 48px;\n  font-size: 36px;\n  font-weight: 500;\n  color: #222222;\n  line-height: 2;\n}\n#pc-frame .main .entry {\n  width: 100%;\n  border: solid 1px #dcdddd;\n  position: relative;\n}\n#pc-frame .main .entry .fake {\n  padding-bottom: 57.10526316%;\n}\n#pc-frame .main .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}\n#pc-frame .footer {\n  text-align: center;\n  background: #303538;\n  color: white;\n  padding-top: 10px;\n  padding-bottom: 10px;\n}\n.iconfont.directory:before {\n  content: \"\\E605\";\n}\n.iconfont.directory.open:before {\n  content: \"\\E604\";\n}\n.iconfont.file:before {\n  content: \"\\E67C\";\n}\n.indent-1 {\n  padding-left: 8px !important;\n}\n.indent-2 {\n  padding-left: 16px !important;\n}\n.indent-3 {\n  padding-left: 24px !important;\n}\n.indent-4 {\n  padding-left: 32px !important;\n}\n.indent-5 {\n  padding-left: 40px !important;\n}\n.indent-6 {\n  padding-left: 48px !important;\n}\n.indent-7 {\n  padding-left: 56px !important;\n}\n.indent-8 {\n  padding-left: 64px !important;\n}\n.indent-9 {\n  padding-left: 72px !important;\n}\n.indent-10 {\n  padding-left: 80px !important;\n}\n.indent-11 {\n  padding-left: 88px !important;\n}\n.indent-12 {\n  padding-left: 96px !important;\n}\n.indent-13 {\n  padding-left: 104px !important;\n}\n.indent-14 {\n  padding-left: 112px !important;\n}\n.indent-15 {\n  padding-left: 120px !important;\n}\n.indent-16 {\n  padding-left: 128px !important;\n}\n.indent-17 {\n  padding-left: 136px !important;\n}\n.indent-18 {\n  padding-left: 144px !important;\n}\n.indent-19 {\n  padding-left: 152px !important;\n}\n.indent-20 {\n  padding-left: 160px !important;\n}\na.disabled {\n  pointer-events: none;\n  cursor: not-allowed;\n}\n", ""]);
 
 	// exports
 
@@ -60787,7 +60796,7 @@
 
 
 	// module
-	exports.push([module.id, "#home .title-area {\n  color: white;\n  background-image: url(" + __webpack_require__(29) + ");\n  text-align: center;\n  padding-bottom: 16.82291667%;\n}\n#home .title-area .title {\n  padding-top: 6.92708333%;\n  padding-bottom: 7.13541667%;\n}\n#home .title-area .title .headline-1 {\n  font-size: 48px;\n  line-height: 48px;\n}\n#home .title-area .title .headline-2 {\n  margin-top: 26px;\n  font-size: 30px;\n  line-height: 30px;\n}\n#home .title-area .top-entries .entry {\n  color: black;\n  display: inline-block;\n  margin-left: 1%;\n  margin-right: 1%;\n  width: 12%;\n  position: relative;\n}\n#home .title-area .top-entries .entry:first-of-type {\n  margin-left: 0;\n}\n#home .title-area .top-entries .entry:last-of-type {\n  margin-right: 0;\n}\n#home .title-area .top-entries .entry .fake {\n  padding-bottom: 100%;\n}\n#home .title-area .top-entries .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  opacity: 0.8;\n  border-radius: 8px;\n  background-color: #ffffff;\n  border: solid 4px #dadbdb;\n}\n#home .title-area .top-entries .entry .body .icon {\n  display: block;\n  font-size: 40px;\n}\n#home .title-area .top-entries .entry .body .name {\n  line-height: 24px;\n  font-size: 20px;\n}\n#home #aside-index {\n  background-color: darkgray;\n  opacity: .7;\n  padding-left: 4px;\n  padding-right: 4px;\n}\n#home .main .entry-title {\n  padding-top: 48px;\n  font-size: 36px;\n  font-weight: 500;\n  color: #222222;\n  line-height: 2;\n}\n#home .main .entry {\n  width: 100%;\n  border: solid 1px #dcdddd;\n  position: relative;\n}\n#home .main .entry .fake {\n  padding-bottom: 57.10526316%;\n}\n#home .main .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n}\n", ""]);
+	exports.push([module.id, "#home .title-area {\n  color: white;\n  background-image: url(" + __webpack_require__(30) + ");\n  text-align: center;\n  padding-bottom: 16.82291667%;\n}\n#home .title-area .title {\n  padding-top: 6.92708333%;\n  padding-bottom: 7.13541667%;\n}\n#home .title-area .title .headline-1 {\n  font-size: 48px;\n  line-height: 48px;\n}\n#home .title-area .title .headline-2 {\n  margin-top: 26px;\n  font-size: 30px;\n  line-height: 30px;\n}\n#home .title-area .top-entries .entry {\n  color: black;\n  display: inline-block;\n  margin-left: 1%;\n  margin-right: 1%;\n  width: 12%;\n  position: relative;\n}\n#home .title-area .top-entries .entry:first-of-type {\n  margin-left: 0;\n}\n#home .title-area .top-entries .entry:last-of-type {\n  margin-right: 0;\n}\n#home .title-area .top-entries .entry .fake {\n  padding-bottom: 100%;\n}\n#home .title-area .top-entries .entry .body {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  left: 0;\n  top: 0;\n  opacity: 0.8;\n  border-radius: 8px;\n  background-color: #ffffff;\n  border: solid 4px #dadbdb;\n}\n#home .title-area .top-entries .entry .body .icon {\n  display: block;\n  font-size: 40px;\n}\n#home .title-area .top-entries .entry .body .name {\n  line-height: 24px;\n  font-size: 20px;\n}\n#home #aside-index {\n  background-color: darkgray;\n  opacity: .7;\n  padding-left: 4px;\n  padding-right: 4px;\n}\n#home .main .entry-title {\n  padding-top: 48px;\n  font-size: 36px;\n  font-weight: 500;\n  color: #222222;\n  line-height: 2;\n}\n#home .main .entry {\n  min-height: 600px;\n  width: 100%;\n  border: solid 1px #dcdddd;\n}\n", ""]);
 
 	// exports
 
@@ -60821,46 +60830,76 @@
 /* 78 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"novalidate\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"文件名称\" ng-model=\"item.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><label>文件</label><input class=\"form-control\" type=\"text\" file-input=\"file-input\" name=\"uri\" ng-model=\"item.uri\" required=\"required\" on-upload=\"upload(file)\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"名称\" ng-model=\"item.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><label>说明</label><input class=\"form-control\" type=\"text\" placeholder=\"说明\" ng-model=\"item.description\" required=\"required\" name=\"description\"/></div><div class=\"form-group\"><label>图标</label><input class=\"form-control\" type=\"text\" file-input=\"file-input\" name=\"uri\" ng-model=\"item.logo\" required=\"required\" on-upload=\"upload(file)\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 79 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\" style=\"text-align: right\" ng-if=\"$state.includes('home.base.super')\"><span class=\"glyphicon glyphicon-plus\" ng-click=\"updateClass()\"></span></div><div class=\"row\"><div class=\"col-md-3\"><uib-accordion close-others=\"true\"><div class=\"panel-default\" ng-if=\"$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\" context-menu=\"classContextMenu\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\" context-menu=\"articleContextMenu\">{{ article.name }}</div></div><div class=\"panel-default\" ng-if=\"!$state.includes('home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\">{{ article.name }}</div></div></uib-accordion></div><div class=\"col-md-9\" style=\"max-height: 100%\"><div class=\"content\" ng-show=\"!$state.includes('home.base.super')\"><div ng-bind-html=\"trustedHtml(current.focusedArticle.content)\"></div></div><div ng-show=\"$state.includes('home.base.super')\"><form ng-show=\"current.focusedArticle\" name=\"faLvWenDa_content_form\" ng-submit=\"updateArticleContent(current.focusedArticle, editingCurrent.content)\"><div class=\"form-group\"><summernote id=\"article-summernote\" config=\"summerNoteOptions\" ng-model=\"editingCurrent.content\" name=\"content\" on-image-upload=\"uploadImage(files)\" editor=\"editor\" editable=\"editable\"></summernote></div><div class=\"form-group\" style=\"text-align: center\"><input class=\"btn btn-default\" value=\"保存\" type=\"submit\" ng-disabled=\"faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine\"/></div></form><div ng-show=\"!current.focusedArticle\">点击左侧选择</div></div></div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>标题</label><input class=\"form-control\" type=\"text\" ng-model=\"conclusion.title\" required=\"required\" name=\"title\"/></div><div class=\"form-group\"><label>正文</label><div ng-show=\"$state.includes('frame.home.base.super')\"><div class=\"form-group\"><summernote id=\"article-summernote\" config=\"summerNoteOptions\" ng-model=\"conclusion.context\" name=\"context\" on-image-upload=\"uploadImage(files)\" editor=\"\" editable=\"\" required=\"\"></summernote></div></div></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 80 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"col-md-10 col-md-offset-1\"><div><span>CorpRight</span></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"名称\" ng-model=\"item.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><label>图标</label><input class=\"form-control\" type=\"text\" file-input=\"file-input\" name=\"uri\" ng-model=\"item.logo\" required=\"required\" on-upload=\"upload(file)\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 81 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.--><div id=\"home\"><div class=\"title-area\"><div class=\"row title\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"headline-1\">律答家&middot;法律咨询专家</div><div class=\"headline-2\">专业、细致、用心为您服务</div></div></div><div class=\"row\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"top-entries\"><div class=\"entry\" ng-repeat=\"entry in entries\"><div class=\"fake\"></div><div class=\"body\" ng-click=\"goto(entry.hash)\"><span class=\"icon iconfont\" ng-class=\"entry.icon\"></span><span class=\"name\" ng-bind=\"entry.text\"></span></div></div></div></div><div class=\"col-md-1\"><div class=\"icon-index-table affix\" id=\"aside-index\"><div class=\"entry iconfont icon-icon\" ng-click=\"goto('top')\"></div><div class=\"entry iconfont\" ng-repeat=\"entry in entries\" ng-class=\"entry.icon\" ng-click=\"goto(entry.hash)\"></div></div></div></div></div><div class=\"row main\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"suSongWenShu\"><span>诉讼文书</span></div><!--div.entry--><!--    div.fake--><!--    div.body--><div class=\"suSongWenShu\" ui-view=\"suSongWenShu\"></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"xieYiFanBen\"><span>协议范本</span></div><div class=\"entry\"><div class=\"fake\"></div><div class=\"body\"><div class=\"xieYiFanBen\" ui-view=\"xieYiFanBen\"></div></div></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"faLvWenDa\"><span>法律问答</span></div><div class=\"entry\"><div class=\"fake\"></div><div class=\"body\"><div class=\"xieYiFanBen\" ui-view=\"faLvWenDa\" style=\"height: 100%\"></div></div></div></div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>问题</label><input class=\"form-control\" type=\"text\" ng-model=\"item.question\" required=\"required\" name=\"question\"/></div><div class=\"form-group\"><label>选项类型</label><select class=\"form-control\" ng-model=\"item.type\" required=\"\" name=\"type\"><option value=\"single\">单选</option><option value=\"multiple\">多选</option></select></div><div class=\"form-group\"><label>选项数量</label><input class=\"form-control\" type=\"number\" ng-model=\"optionCount\" ng-init=\"optionCount=item.options &amp;&amp; item.options.length || 2\" min=\"2\" max=\"6\"/></div><div class=\"form-group\" ng-repeat=\"i in [] | range:optionCount\"><label>选项 {{ $index + 1 }}</label><input class=\"form-control\" type=\"text\" ng-model=\"item.options[$index]\" required=\"\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 82 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/11.\n--><div class=\"row\"><div class=\"col-md-8 flowchart\"><div class=\"title\" style=\"text-align: center\"><h3>民事诉讼流程图</h3></div><div class=\"content\"><svg id=\"svg-minShiSuSong\"></svg></div></div><div class=\"col-md-4 detail\"><div ng-show=\"status.current\"><div class=\"panel panel-default\" ng-show=\"!status.editing\"><div class=\"panel-heading\">{{ status.current.name || \"尚未录入\" }}<a class=\"pull-right glyphicon glyphicon-cog\" ng-click=\"status.editing=true\" ng-show=\"$state.includes('home.base.super') &amp;&amp; !status.editing\"></a></div><div class=\"panel-body\"><div class=\"description\">{{ status.current.description }}</div></div></div><div class=\"panel panel-default\" ng-show=\"status.editing\"><form ng-submit=\"submit(model)\" name=\"form\"><div class=\"form-group\"><input class=\"form-control\" type=\"text\" ng-model=\"model.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><textarea class=\"form-control\" ng-model=\"model.description\" required=\"required\" name=\"description\"></textarea></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"保存\" ng-disabled=\"form.$invalid\"/></div></form></div></div><div ng-show=\"status.current\"><div class=\"panel panel-default\"><div class=\"panel-heading\">相关文件下载<a class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"modifyFile(status.current)\" ng-show=\"$state.includes('home.base.super')\"></a></div><div class=\"panel-body\"><table class=\"table-hover table table-nonfluid\"><tr ng-repeat=\"file in status.current.files\"><td><a ng-href=\"{{ file.uri }}\" target=\"_blank\">{{ file.name }}</a></td><td ng-show=\"$state.includes('home.base.super')\" align=\"right\"><button class=\"btn btn-link\" type=\"button\" ng-click=\"removeFile($index, file)\">删除</button><button class=\"btn btn-link\" type=\"button\" ng-click=\"modifyFile(status.current, file)\">修改</button></td></tr></table></div></div></div><div ng-hide=\"status.current\">点击左边步骤查看详情</div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/4.\n--><form class=\"form-horizontal\" name=\"form\" novalidate=\"novalidate\" ng-submit=\"submit()\"><div class=\"form-group\"><label>名称</label><input class=\"form-control\" type=\"text\" placeholder=\"文件名称\" ng-model=\"item.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><label>文件</label><input class=\"form-control\" type=\"text\" file-input=\"file-input\" name=\"uri\" ng-model=\"item.uri\" required=\"required\" on-upload=\"upload(file)\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 83 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div id=\"top-bar\"><div class=\"col-md-10 col-md-offset-1\"><span class=\"logo\">律答家logo</span><span class=\"user-area pull-right\"><form class=\"form-inline\" novalidate=\"novalidate\" ng-submit=\"login(loginData)\" ng-if=\"$state.is('home.base')\" name=\"loginForm\"><div class=\"form-group\"><label class=\"sr-only\">账号</label><input class=\"form-control\" name=\"account\" type=\"text\" required=\"required\" placeholder=\"账号\" ng-model=\"loginData.account\"/></div><div class=\"form-group\"><label class=\"sr-only\">密码</label><input class=\"form-control\" name=\"password\" type=\"password\" required=\"required\" placeholder=\"密码\" ng-model=\"loginData.password\"/></div><!--a(href=\"javascript:;\", ng-click=\"login(loginData)\", ng-class=\"{disabled: loginForm.$invalid}\") 登陆--><input class=\"btn btn-link\" type=\"submit\" value=\"登陆\" ng-disabled=\"loginForm.$invalid\"/><span>&nbsp;|&nbsp;</span><!--a(href=\"javascript:;\", ng-click=\"register()\") 注册--><input class=\"btn btn-link\" type=\"button\" value=\"注册\"/></form><span ng-if=\"!$state.is('home.base')\">欢迎您,&nbsp;{{ self.account }}<!--a(href=\"javascript:;\", ng-click=\"logout()\") 登出--><input class=\"btn btn-link\" type=\"button\" value=\"登出\" ng-click=\"logout()\"/></span></span></div></div><div class=\"top-bar-placeholder\"></div>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\" style=\"text-align: right\" ng-if=\"$state.includes('frame.home.base.super')\"><span class=\"glyphicon glyphicon-plus\" ng-click=\"updateClass()\"></span></div><div class=\"row\"><div class=\"col-md-3\"><uib-accordion close-others=\"true\"><div class=\"panel-default\" ng-if=\"$state.includes('frame.home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\" context-menu=\"classContextMenu\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\" context-menu=\"articleContextMenu\">{{ article.name }}</div></div><div class=\"panel-default\" ng-if=\"!$state.includes('frame.home.base.super')\" uib-accordion-group=\"uib-accordion-group\" ng-repeat=\"c in data.classes\" heading=\"{{ c.name }}\"><div class=\"panel\" ng-repeat=\"article in c.articles\" ng-click=\"openArticle(article)\">{{ article.name }}</div></div></uib-accordion></div><div class=\"col-md-9\" style=\"max-height: 100%\"><div class=\"content\" ng-show=\"!$state.includes('frame.home.base.super')\"><div ng-bind-html=\"trustedHtml(current.focusedArticle.content)\"></div></div><div ng-show=\"$state.includes('frame.home.base.super')\"><form ng-show=\"current.focusedArticle\" name=\"faLvWenDa_content_form\" ng-submit=\"updateArticleContent(current.focusedArticle, editingCurrent.content)\"><div class=\"form-group\"><summernote id=\"article-summernote\" config=\"summerNoteOptions\" ng-model=\"editingCurrent.content\" name=\"content\" on-image-upload=\"uploadImage(files)\" editor=\"editor\" editable=\"editable\"></summernote></div><div class=\"form-group\" style=\"text-align: center\"><input class=\"btn btn-default\" value=\"保存\" type=\"submit\" ng-disabled=\"faLvWenDa_content_form.$invalid || faLvWenDa_content_form.$pristine\"/></div></form><div ng-show=\"!current.focusedArticle\">点击左侧选择</div></div></div></div></div>";
 
 /***/ },
 /* 84 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><uib-tabset active=\"xieYiFanBen.tab\" justified=\"true\"><uib-tab heading=\"最热\"><div ng-if=\"data.hot &amp;&amp; data.hot.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.hot track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"最新\"><div ng-if=\"data.newest &amp;&amp; data.newest.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.newest track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"全部\"><table class=\"table\"><thead><tr><th><span>文件名</span><span class=\"glyphicon glyphicon-plus\" ng-if=\"$state.includes('home.base.super')\" ng-click=\"createRoot()\"></span></th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-if=\"$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\" context-menu=\"contextMenu\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr><tr ng-if=\"!$state.is('home.base.super')\" ng-repeat=\"item in current.expandedRows\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr></tbody></table></uib-tab></uib-tabset>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\"><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题类别<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateClass()\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"class in data.classes\"><div class=\"panel-heading\" ng-click=\"data.expandedClass=class.id; loadEntries(class.id)\"><h4 class=\"panel-title\">{{ class.name }}</h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedClass!=class.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ class.name }}</td></tr><tr><th>描述</th><td>{{ class.description }}</td></tr><tr><th>图标</th><td><img width=\"40\" height=\"40\" ng-src=\"{{ class.logo }}\"/></td></tr></table></div></div></div></div></div><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">入口<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateEntry(data.expandedClass)\" ng-show=\"data.expandedClass\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"entry in data.entries\"><div class=\"panel-heading\" ng-click=\"data.expandedEntry=entry.id; loadQuestions(entry.id)\"><h4 class=\"panel-title\">{{ entry.name }}</h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedEntry!=entry.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ entry.name }}</td></tr></table></div></div></div></div></div><div class=\"col-md-6\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateQuestion(data.expandedEntry)\" ng-show=\"data.expandedEntry\"></span></h4></div></div><div class=\"panel-body\"><div>{{ selectionMap | json }}</div><form name=\"form\" ng-submit=\"search(selectionMap)\"><fieldset class=\"form-group\" ng-repeat=\"question in data.questions\"><legend>{{ question.question }}</legend><div class=\"form-check-inline\" ng-repeat=\"option in question.options track by $index\"><label class=\"form-check-label\" ng-switch=\"question.type\"><input class=\"form-check-input\" ng-switch-when=\"multiple\" value=\"{{ $index }}\" name=\"check_{{ question.id }}\" ng-model=\"selectionMap[question.id][$index]\" type=\"checkbox\"/><input class=\"form-check-input\" ng-switch-when=\"single\" value=\"{{ $index }}\" name=\"radio_{{ question.id }}\" required=\"\" ng-model=\"selectionMap[question.id]\" type=\"radio\"/>{{ option }}</label></div></fieldset><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"咨询\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\" ng-disabled=\"form.$invalid\"/></div></form></div></div></div></div>";
 
 /***/ },
 /* 85 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"col-md-10 col-md-offset-1\"><div><span>CorpRight</span></div></div>";
+
+/***/ },
+/* 86 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/3.--><div id=\"home\"><div class=\"title-area\"><div class=\"row title\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"headline-1\">律答家&middot;法律咨询专家</div><div class=\"headline-2\">专业、细致、用心为您服务</div></div></div><div class=\"row\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"top-entries\"><div class=\"entry\" ng-repeat=\"entry in entries\"><div class=\"fake\"></div><div class=\"body\" ng-click=\"goto(entry.hash)\"><span class=\"icon iconfont\" ng-class=\"entry.icon\"></span><span class=\"name\" ng-bind=\"entry.text\"></span></div></div></div></div><div class=\"col-md-1\"><div class=\"icon-index-table affix\" id=\"aside-index\"><div class=\"entry iconfont icon-icon\" ng-click=\"goto('')\"></div><div class=\"entry iconfont\" ng-repeat=\"entry in entries\" ng-class=\"entry.icon\" ng-click=\"goto(entry.hash)\"></div></div></div></div></div><div class=\"row main\"><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"suSongWenShu\"><span>诉讼文书</span></div><div class=\"entry suSongWenShu\" ui-view=\"suSongWenShu\"></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"xieYiFanBen\"><span>协议范本</span></div><div class=\"entry xieYiFanBen\" ui-view=\"xieYiFanBen\"></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"faLvWenDa\"><span>法律问答</span></div><div class=\"entry xieYiFanBen\" ui-view=\"faLvWenDa\"></div></div><div class=\"col-md-10 col-md-offset-1\"><div class=\"entry-title\" id=\"faLvZiXun\"><span>自助咨询</span></div><div class=\"entry faLvZiXun\" ui-view=\"faLvZiXun\"></div></div></div></div>";
+
+/***/ },
+/* 87 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/11.\n--><div class=\"row\"><div class=\"col-md-8 flowchart\"><div class=\"title\" style=\"text-align: center\"><h3>民事诉讼流程图</h3></div><div class=\"content\"><svg id=\"svg-minShiSuSong\"></svg></div></div><div class=\"col-md-4 detail\"><div ng-show=\"status.current\"><div class=\"panel panel-default\" ng-show=\"!status.editing\"><div class=\"panel-heading\">{{ status.current.name || \"尚未录入\" }}<a class=\"pull-right glyphicon glyphicon-cog\" ng-click=\"status.editing=true\" ng-show=\"$state.includes('frame.home.base.super') &amp;&amp; !status.editing\"></a></div><div class=\"panel-body\"><div class=\"description\">{{ status.current.description }}</div></div></div><div class=\"panel panel-default\" ng-show=\"status.editing\"><form ng-submit=\"submit(model)\" name=\"form\"><div class=\"form-group\"><input class=\"form-control\" type=\"text\" ng-model=\"model.name\" required=\"required\" name=\"name\"/></div><div class=\"form-group\"><textarea class=\"form-control\" ng-model=\"model.description\" required=\"required\" name=\"description\"></textarea></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"保存\" ng-disabled=\"form.$invalid\"/></div></form></div></div><div ng-show=\"status.current\"><div class=\"panel panel-default\"><div class=\"panel-heading\">相关文件下载<a class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"modifyFile(status.current)\" ng-show=\"$state.includes('frame.home.base.super')\"></a></div><div class=\"panel-body\"><table class=\"table-hover table table-nonfluid\"><tr ng-repeat=\"file in status.current.files\"><td><a ng-href=\"{{ file.uri }}\" target=\"_blank\">{{ file.name }}</a></td><td ng-show=\"$state.includes('frame.home.base.super')\" align=\"right\"><button class=\"btn btn-link\" type=\"button\" ng-click=\"removeFile($index, file)\">删除</button><button class=\"btn btn-link\" type=\"button\" ng-click=\"modifyFile(status.current, file)\">修改</button></td></tr></table></div></div></div><div ng-hide=\"status.current\">点击左边步骤查看详情</div></div></div>";
+
+/***/ },
+/* 88 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div id=\"top-bar\"><div class=\"col-md-10 col-md-offset-1\"><span class=\"logo\">律答家logo</span><span class=\"user-area pull-right\"><form class=\"form-inline\" novalidate=\"novalidate\" ng-submit=\"login(loginData)\" ng-if=\"$state.is('frame.home.base')\" name=\"loginForm\"><div class=\"form-group\"><label class=\"sr-only\">账号</label><input class=\"form-control\" name=\"account\" type=\"text\" required=\"required\" placeholder=\"账号\" ng-model=\"loginData.account\"/></div><div class=\"form-group\"><label class=\"sr-only\">密码</label><input class=\"form-control\" name=\"password\" type=\"password\" required=\"required\" placeholder=\"密码\" ng-model=\"loginData.password\"/></div><!--a(href=\"javascript:;\", ng-click=\"login(loginData)\", ng-class=\"{disabled: loginForm.$invalid}\") 登陆--><input class=\"btn btn-link\" type=\"submit\" value=\"登陆\" ng-disabled=\"loginForm.$invalid\"/><span>&nbsp;|&nbsp;</span><!--a(href=\"javascript:;\", ng-click=\"register()\") 注册--><input class=\"btn btn-link\" type=\"button\" value=\"注册\"/></form><span ng-if=\"!$state.is('frame.home.base')\">欢迎您,&nbsp;{{ self.account }}<!--a(href=\"javascript:;\", ng-click=\"logout()\") 登出--><input class=\"btn btn-link\" type=\"button\" value=\"登出\" ng-click=\"logout()\"/></span></span></div></div><div class=\"top-bar-placeholder\"></div>";
+
+/***/ },
+/* 89 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><uib-tabset active=\"xieYiFanBen.tab\" justified=\"true\"><uib-tab heading=\"最热\"><div ng-if=\"data.hot &amp;&amp; data.hot.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.hot track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"最新\"><div ng-if=\"data.newest &amp;&amp; data.newest.length &gt; 0\"><table class=\"table\"><thead><tr><th>序号</th><th>文件名</th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-repeat=\"file in data.newest track by $index\"><td>{{ $index + 1 }}</td><td>{{ file.name }}</td><td>{{ file.publish_time }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ file.url }}\" target=\"_blank\">立即下载</a></td></tr></tbody></table></div><div ng-if=\"!data.hot || data.hot.length === 0\"><div>暂时没有数据</div></div></uib-tab><uib-tab heading=\"全部\"><table class=\"table\"><thead><tr><th><span>文件名</span><span class=\"glyphicon glyphicon-plus\" ng-if=\"$state.includes('frame.home.base.super')\" ng-click=\"createRoot()\"></span></th><th>发布时间</th><th>下载</th></tr></thead><tbody><tr ng-if=\"$state.is('frame.home.base.super')\" ng-repeat=\"item in current.expandedRows\" context-menu=\"contextMenu\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr><tr ng-if=\"!$state.is('frame.home.base.super')\" ng-repeat=\"item in current.expandedRows\"><td class=\"iconfont\" ng-class=\"itemClass(item)\" ng-click=\"toggle(item, $index)\">{{ item.properties.name }}</td><td>{{ item.properties.created_time | date }}</td><td><a class=\"btn btn-default\" ng-href=\"{{ item.properties.reference }}\" ng-show=\"item.properties.type==='file'\" target=\"_blank\">立即下载</a></td></tr></tbody></table></uib-tab></uib-tabset>";
+
+/***/ },
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -60886,10 +60925,10 @@
 	}
 
 /***/ },
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -60915,14 +60954,14 @@
 	}
 
 /***/ },
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */
-[133, 60],
-/* 96 */
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */
+[139, 60],
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -60948,13 +60987,8 @@
 	}
 
 /***/ },
-/* 97 */
-[133, 62],
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
+/* 102 */
+[139, 62],
 /* 103 */,
 /* 104 */,
 /* 105 */,
@@ -60962,7 +60996,12 @@
 /* 107 */,
 /* 108 */,
 /* 109 */,
-/* 110 */
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -60972,7 +61011,7 @@
 
 	"use strict";
 
-	__webpack_require__(89);
+	__webpack_require__(94);
 
 	angular.module("file-input", ["ngDialog"])
 	    .directive("fileInput", function($parse, $q, ngDialog) {
@@ -61017,7 +61056,7 @@
 	                    ngDialog.open({
 	                        template: __webpack_require__(71),
 	                        plain: true,
-	                        controller: __webpack_require__(112),
+	                        controller: __webpack_require__(117),
 	                        closeByDocument: false,
 	                        showClose: false
 	                    })
@@ -61055,7 +61094,7 @@
 
 
 /***/ },
-/* 111 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61113,7 +61152,7 @@
 
 
 /***/ },
-/* 112 */
+/* 117 */
 /***/ function(module, exports) {
 
 	/**
@@ -61145,17 +61184,17 @@
 
 
 /***/ },
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
 /* 118 */,
 /* 119 */,
 /* 120 */,
 /* 121 */,
 /* 122 */,
-/* 123 */
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -61366,10 +61405,313 @@
 
 	module.exports = func;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(32)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ },
-/* 124 */
+/* 129 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Created by hyku on 2016/12/3.
+	 */
+
+	"use strict";
+
+	function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
+	    $scope.data = {};
+	    function reload() {
+	        ResourceService.selectClasses()
+	            .then(function (classes) {
+	                $scope.data.classes = classes;
+	            })
+	            .catch(function (error) {
+	                toastr.error(error);
+	            })
+	        ;
+	    }
+
+	    $scope.loadEntries = function (classId) {
+	        ResourceService.selectEntries({
+	            "class_id": classId
+	        })
+	            .then(function (entries) {
+	                $scope.data.entries = entries;
+	            })
+	            .catch(function (error) {
+	                toastr.error(error);
+	            })
+	        ;
+	    };
+
+	    $scope.loadQuestions = function (entryId) {
+	        ResourceService.selectQuestions({
+	            "entry_id": entryId
+	        })
+	            .then(function (questions) {
+	                $scope.data.questions = questions;
+	            })
+	            .catch(function (error) {
+	                toastr.error(error);
+	            })
+	        ;
+	    };
+
+	    $scope.updateClass = function (cls) {
+	        var promise = ngDialog.open({
+	            template: __webpack_require__(78),
+	            plain: true,
+	            controller: function ($scope) {
+	                $scope.item = {
+	                    name: cls && cls.name || undefined,
+	                    description: cls && cls.description || undefined,
+	                    logo: cls && cls.logo || undefined
+	                };
+	                $scope.upload = function (file) {
+	                    return tools.uploadImage(file, "static");
+	                };
+	                $scope.submit = function () {
+	                    var promise = null;
+	                    if (cls) {
+	                        promise = ResourceService.updateClass(cls.id, $scope.item);
+	                    } else {
+	                        promise = ResourceService.insertClass($scope.item);
+	                    }
+	                    promise
+	                        .then(function (newClass) {
+	                            $scope.closeThisDialog({
+	                                success: true,
+	                                data: newClass
+	                            });
+	                        })
+	                        .catch(function (error) {
+	                            toastr.error(error);
+	                        })
+	                    ;
+	                }
+	            }
+	        }).closePromise;
+	        promise
+	            .then(function (data) {
+	                return data.value;
+	            })
+	            .then(function (value) {
+	                if (value.success) {
+	                    var newClass = value.data;
+	                    if (cls) {
+	                        cls.name = newClass.name;
+	                        cls.description = newClass.description;
+	                        cls.logo = newClass.logo;
+	                    } else {
+	                        $scope.data.classes.push(newClass);
+	                    }
+	                }
+	            })
+	        ;
+	    };
+	    $scope.updateEntry = function (classId, entry) {
+	        console.log("updateEntry????")
+	        var promise = ngDialog.open({
+	            template: __webpack_require__(80),
+	            plain: true,
+	            controller: function ($scope) {
+	                $scope.item = {
+	                    name: entry && entry.name || undefined,
+	                    logo: entry && entry.logo || undefined,
+	                    class_id: classId,
+	                    layout_type: "single"
+	                };
+	                $scope.upload = function (file) {
+	                    return tools.uploadImage(file, "static");
+	                };
+	                $scope.submit = function () {
+	                    var promise = null;
+	                    if (entry) {
+	                        promise = ResourceService.updateEntry(entry.id, $scope.item);
+	                    } else {
+	                        promise = ResourceService.insertEntry($scope.item);
+	                    }
+	                    promise
+	                        .then(function (newEntry) {
+	                            $scope.closeThisDialog({
+	                                success: true,
+	                                data: newEntry
+	                            });
+	                        })
+	                        .catch(function (error) {
+	                            toastr.error(error);
+	                        })
+	                    ;
+	                }
+	            }
+	        }).closePromise;
+	        promise
+	            .then(function (data) {
+	                return data.value;
+	            })
+	            .then(function (value) {
+	                if (value.success) {
+	                    var newEntry = value.data;
+	                    if (entry) {
+	                        entry.name = newEntry.name;
+	                        entry.description = newEntry.description;
+	                        entry.logo = newEntry.logo;
+	                    } else {
+	                        $scope.data.entries.push(newEntry);
+	                    }
+	                }
+	            })
+	        ;
+	    };
+	    $scope.updateQuestion = function (entryId, question) {
+	        var promise = ngDialog.open({
+	            template: __webpack_require__(81),
+	            plain: true,
+	            controller: function ($scope) {
+	                $scope.item = {
+	                    question: question && question.question || undefined,
+	                    type: question && question.type || undefined,
+	                    options: question && question.options || [],
+	                    entry_id: question && question.entry_id || entryId
+	                };
+	                $scope.upload = function (file) {
+	                    return tools.uploadImage(file, "static");
+	                };
+	                $scope.submit = function () {
+	                    var promise = null;
+	                    if (question) {
+	                        promise = ResourceService.updateQuestion(question.id, $scope.item);
+	                    } else {
+	                        promise = ResourceService.insertQuestion($scope.item);
+	                    }
+	                    promise
+	                        .then(function (item) {
+	                            $scope.closeThisDialog({
+	                                success: true,
+	                                data: item
+	                            });
+	                        })
+	                        .catch(function (error) {
+	                            toastr.error(error);
+	                        })
+	                    ;
+	                }
+	            }
+	        }).closePromise;
+	        promise
+	            .then(function (data) {
+	                return data.value;
+	            })
+	            .then(function (value) {
+	                if (value.success) {
+	                    var item = value.data;
+	                    if (question) {
+	                        question.question = item.question;
+	                        question.type = item.type;
+	                        question.options = item.options;
+	                    } else {
+	                        $scope.data.questions.push(item);
+	                    }
+	                }
+	            })
+	        ;
+	    };
+	    $scope.selectionMap = {};
+	    $scope.search = function (selections) {
+	        console.log(selections)
+	        var data = [];
+	        for (var k in selections) {
+	            var value = selections[k];
+	            console.log(k + " -- " + value);
+	            console.log(typeof value)
+	            var item = {
+	                question_id: k,
+	                selections: []
+	            };
+	            if (typeof value === 'object') {
+	                for (var option in value) {
+	                    item.selections.push(parseInt(option));
+	                }
+	            } else {
+	                item.selections.push(parseInt(value));
+	            }
+	            data.push(item);
+	        }
+	        var promise = ngDialog.open({
+	            template: __webpack_require__(79),
+	            plain: true,
+	            controller: function ($scope) {
+	                var put = false;
+	                $scope.conclusion = null;
+	                ResourceService.selectConclusions({
+	                    selections: JSON.stringify(data)
+	                })
+	                    .then(function (conclusions) {
+	                        if (conclusions && conclusions.length > 0) {
+	                            put = true;
+	                            $scope.conclusion = conclusions[0];
+	                        } else {
+	                            $scope.conclusion = {
+	                                selections: data
+	                            };
+	                        }
+	                    })
+	                    .catch(function (error) {
+	                        toastr.error(error);
+	                    })
+	                ;
+	                $scope.summerNoteOptions = {
+	                    height: 500
+	                };
+	                $scope.uploadImage = function (files) {
+	                    console.log("files");
+	                    console.log(files);
+	                    for (var i = 0; i < files.length; i++) {
+	                        var file = files[i];
+	                        tools.uploadImage(file, "conclusion")
+	                            .then(function (path) {
+	                                console.log($("#article-summernote"));
+	                                console.log($(".summernote").summernote);
+	                                $(".summernote")
+	                                    .summernote('editor.insertImage', path, function ($image) {
+	                                        console.log($image);
+	                                    })
+	                                ;
+	                            })
+	                    }
+	                };
+	                $scope.submit = function () {
+	                    var promise = null;
+	                    if (put) {
+	                        promise = ResourceService.updateConclusions($scope.conclusion.id, $scope.conclusion);
+	                    } else {
+	                        promise = ResourceService.insertConclusions($scope.conclusion);
+	                    }
+	                    promise
+	                        .then(function (item) {
+	                            $scope.closeThisDialog({
+	                                success: true,
+	                                data: item
+	                            });
+	                        })
+	                        .catch(function (error) {
+	                            toastr.error(error);
+	                        })
+	                    ;
+	                }
+	            }
+	        }).closePromise;
+
+	    };
+
+	    reload();
+	}
+
+	module.exports = func;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
+
+/***/ },
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61378,7 +61720,7 @@
 
 	"use strict";
 
-	__webpack_require__(95);
+	__webpack_require__(100);
 
 	function service($scope, $anchorScroll, $location, Configure) {
 	    console.log("home...");
@@ -61423,7 +61765,7 @@
 
 
 /***/ },
-/* 125 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61432,7 +61774,7 @@
 
 	"use strict";
 
-	var minShiSuSong = __webpack_require__(129);
+	var minShiSuSong = __webpack_require__(135);
 
 	function func($scope, ResourceService, ngDialog, toastr, tools) {
 	    function initModel(detail) {
@@ -61472,7 +61814,7 @@
 	        console.log("lalallalalal")
 	        console.log(detail);
 	        var promise = ngDialog.open({
-	            template: __webpack_require__(78),
+	            template: __webpack_require__(82),
 	            plain: true,
 	            controller: function ($scope) {
 	                $scope.item = {
@@ -61546,7 +61888,7 @@
 
 
 /***/ },
-/* 126 */
+/* 132 */
 /***/ function(module, exports) {
 
 	/**
@@ -61567,7 +61909,7 @@
 	    });
 	    $scope.$on("session.auth_failed", function (event) {
 	        console.log("auth_failed....");
-	        $state.go("home.base");
+	        $state.go("frame.home.base");
 	    });
 	    console.log($state.current);
 	    $scope.session = Session;
@@ -61590,17 +61932,17 @@
 	    Session.self()
 	        .then(function(self) {
 	            if (self && self.type) {
-	                if (self.type === 'customer' && !$state.is("home.base.customer")) {
-	                    $state.go("home.base.customer");
+	                if (self.type === 'customer' && !$state.is("frame.home.base.customer")) {
+	                    $state.go("frame.home.base.customer");
 	                }
-	                if (self.type === 'super' && !$state.is("home.base.super")) {
-	                    $state.go("home.base.super");
+	                if (self.type === 'super' && !$state.is("frame.home.base.super")) {
+	                    $state.go("frame.home.base.super");
 	                }
 	                $scope.self = self;
 	            }
 	            else {
-	                if (!$state.is("home.base")) {
-	                    $state.go("home.base");
+	                if (!$state.is("frame.home.base")) {
+	                    $state.go("frame.home.base");
 	                }
 	            }
 	        })
@@ -61611,7 +61953,7 @@
 
 
 /***/ },
-/* 127 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61626,7 +61968,7 @@
 	        ngDialog.open({
 	            template: __webpack_require__(11),
 	            plain: true,
-	            controller: __webpack_require__(30),
+	            controller: __webpack_require__(31),
 	            data: {
 	                parent: "xie_yi_fan_ben"
 	            },
@@ -61646,7 +61988,7 @@
 	                ngDialog.open({
 	                    template: __webpack_require__(11),
 	                    plain: true,
-	                    controller: __webpack_require__(30),
+	                    controller: __webpack_require__(31),
 	                    data: {
 	                        parent: $itemScope.item.properties.id
 	                    },
@@ -61689,7 +62031,7 @@
 	                promise = ngDialog.open({
 	                    template: __webpack_require__(11),
 	                    plain: true,
-	                    controller: __webpack_require__(30),
+	                    controller: __webpack_require__(31),
 	                    data: {
 	                        item: $itemScope.item
 	                    },
@@ -61796,7 +62138,7 @@
 
 
 /***/ },
-/* 128 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -61805,56 +62147,66 @@
 
 	"use strict";
 
-	__webpack_require__(96);
-	__webpack_require__(97);
+	__webpack_require__(101);
+	__webpack_require__(102);
 
 	function register(mod) {
 	    mod
-	        .service("AccountsService", __webpack_require__(130))
-	        .service("ResourceService", __webpack_require__(131))
+	        .service("AccountsService", __webpack_require__(136))
+	        .service("ResourceService", __webpack_require__(137))
 	        .service("Session", function (AccountsService) {
 	            this.self = AccountsService.checkAuthentication;
 	        })
 	        .config(function ($stateProvider, $urlRouterProvider) {
 	            $stateProvider
-	                .state("home", {
+	                .state("frame", {
+	                    abstract: true,
+	                    url: "",
+	                    views: {
+	                        "topBar@": {
+	                            template: __webpack_require__(88),
+	                            controller: __webpack_require__(132)
+	                        },
+	                        "footer@": {
+	                            template: __webpack_require__(85)
+	                        }
+	                    }
+	                })
+	                .state("frame.home", {
 	                    abstract: true,
 	                    url: "/home",
 	                    views: {
-	                        "topBar@": {
-	                            template: __webpack_require__(83),
-	                            controller: __webpack_require__(126)
-	                        },
 	                        "main@": {
-	                            template: __webpack_require__(81),
-	                            controller: __webpack_require__(124)
-	                        },
-	                        "footer@": {
-	                            template: __webpack_require__(80)
+	                            template: __webpack_require__(86),
+	                            controller: __webpack_require__(130)
 	                        }
 	                    }
 	                })
-	                .state("home.base", {
+	                .state("frame.home.base", {
 	                    url: "",
 	                    views: {
-	                        "suSongWenShu@home": {
-	                            template: __webpack_require__(82),
-	                            controller: __webpack_require__(125)
+	                        "suSongWenShu@frame.home": {
+	                            template: __webpack_require__(87),
+	                            controller: __webpack_require__(131)
 	                        },
-	                        "xieYiFanBen@home": {
+	                        "xieYiFanBen@frame.home": {
+	                            template: __webpack_require__(89),
+	                            controller: __webpack_require__(133)
+	                        },
+	                        "faLvWenDa@frame.home": {
+	                            template: __webpack_require__(83),
+	                            controller: __webpack_require__(128)
+	                        },
+	                        "faLvZiXun@frame.home": {
 	                            template: __webpack_require__(84),
-	                            controller: __webpack_require__(127)
-	                        },
-	                        "faLvWenDa@home": {
-	                            template: __webpack_require__(79),
-	                            controller: __webpack_require__(123)
+	                            controller: __webpack_require__(129)
 	                        }
 	                    }
 	                })
-	                .state("home.base.customer", {
+	                .state("frame.home.base.customer", {
 	                    url: "/customer"
 	                })
-	                .state("home.base.super", {
+	                .state("frame.home.base.super", {
 	                    url: "/super"
 	                })
 	            ;
@@ -61866,7 +62218,7 @@
 	            $rootScope.$on("session.auth_failed", function () {
 	                console.log($state.current);
 	                console.log("session.auth_failed occurs");
-	                if ($state.is("home.base.super") || $state.is("home.base.customer")) {
+	                if ($state.is("frame.home.base.super") || $state.is("frame.home.base.customer")) {
 	                    console.log("auth_failed occurs");
 	                    $state.go("^", $stateParams, {reload: true, notify: false});
 	                }
@@ -61881,7 +62233,7 @@
 
 
 /***/ },
-/* 129 */
+/* 135 */
 /***/ function(module, exports) {
 
 	/**
@@ -62323,7 +62675,7 @@
 
 
 /***/ },
-/* 130 */
+/* 136 */
 /***/ function(module, exports) {
 
 	/**
@@ -62352,9 +62704,9 @@
 	                status.self = me;
 	                $rootScope.$broadcast("session.login", me);
 	                if (me.type === 'super') {
-	                    $state.go("home.base.super");
+	                    $state.go("frame.home.base.super");
 	                } else if (me.type === 'customer') {
-	                    $state.go("home.base.customer");
+	                    $state.go("frame.home.base.customer");
 	                }
 	                return me;
 	            })
@@ -62371,7 +62723,7 @@
 	            .then(function (res) {
 	                status.self = null;
 	                $rootScope.$broadcast("session.logout");
-	                $state.go("home.base");
+	                $state.go("frame.home.base");
 	                // $rootScope.$emit("session.logout");
 	                return res.data;
 	            })
@@ -62414,7 +62766,7 @@
 
 
 /***/ },
-/* 131 */
+/* 137 */
 /***/ function(module, exports) {
 
 	/**
@@ -62644,14 +62996,183 @@
 	                return resp.data;
 	            })
 	            ;
-	    }
+	    };
+
+	    this.selectClasses = function (params) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/classes",
+	                    method: "GET",
+	                    params: params
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.insertClass = function (data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/classes",
+	                    method: "POST",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.updateClass = function (id, data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/classes/" + id,
+	                    method: "PUT",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.selectEntries = function (params) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/entries",
+	                    method: "GET",
+	                    params: params
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.insertEntry = function (data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/entries",
+	                    method: "POST",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.updateEntry = function (id, data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/entries/" + id,
+	                    method: "PUT",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.selectQuestions = function (params) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/questions",
+	                    method: "GET",
+	                    params: params
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.insertQuestion = function (data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/questions",
+	                    method: "POST",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.updateQuestion = function (id, data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/questions/" + id,
+	                    method: "PUT",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.selectConclusions = function (params) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/conclusions",
+	                    method: "GET",
+	                    params: params
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.insertConclusions = function (data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/conclusions",
+	                    method: "POST",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.updateConclusions = function (id, data) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/conclusions/" + id,
+	                    method: "PUT",
+	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
 	}
 
 	module.exports = func;
 
 
 /***/ },
-/* 132 */
+/* 138 */
 /***/ function(module, exports) {
 
 	/**
@@ -62680,7 +63201,7 @@
 
 
 /***/ },
-/* 133 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag

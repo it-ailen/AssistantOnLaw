@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"log"
 )
 
 func (self *Manager) CreateQuestion(entry *Question) string {
@@ -87,7 +88,7 @@ func (self *Manager) SelectQuestions(filter *QuestionFilter) []*Question {
 		}
 		if len(filter.EntryIds) > 0 {
 			placeholders := make([]string, 0, 1000)
-			for _, id := range filter.IDs {
+			for _, id := range filter.EntryIds {
 				placeholders = append(placeholders, "?")
 				args = append(args, id)
 			}
@@ -95,9 +96,10 @@ func (self *Manager) SelectQuestions(filter *QuestionFilter) []*Question {
 				strings.Join(placeholders, ", ")))
 		}
 		if len(cols) > 0 {
-			s += fmt.Sprint("WHERE %s ", strings.Join(cols, " AND "))
+			s += fmt.Sprintf("WHERE %s ", strings.Join(cols, " AND "))
 		}
 	}
+	log.Printf("sql: %s", s)
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {
 		panic(err)
@@ -122,6 +124,10 @@ func (self *Manager) SelectQuestions(filter *QuestionFilter) []*Question {
 		}
 		if triggerBy.Valid {
 			question.TriggerBy = triggerBy.String
+		}
+		err = json.Unmarshal([]byte(optionsJson), &question.Options)
+		if err != nil {
+			panic(err)
 		}
 		res = append(res, &question)
 	}

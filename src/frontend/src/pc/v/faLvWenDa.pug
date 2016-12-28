@@ -2,21 +2,21 @@
    Created by hyku on 2016/12/3.
 
 div.row(style="max-height: 100%;")
-    div.row(style="text-align: right", ng-if="$state.includes('home.base.super')")
+    div.row(style="text-align: right", ng-if="$state.includes('frame.home.base.super')")
         span.glyphicon.glyphicon-plus(ng-click="updateClass()")
     div.row
         div.col-md-3
             uib-accordion(close-others="true")
-                div.panel-default(ng-if="$state.includes('home.base.super')", uib-accordion-group, ng-repeat="c in data.classes", heading="{{ c.name }}", context-menu="classContextMenu")
+                div.panel-default(ng-if="$state.includes('frame.home.base.super')", uib-accordion-group, ng-repeat="c in data.classes", heading="{{ c.name }}", context-menu="classContextMenu")
                     div.panel(ng-repeat="article in c.articles", ng-click="openArticle(article)", context-menu="articleContextMenu").
                         {{ article.name }}
-                div.panel-default(ng-if="!$state.includes('home.base.super')", uib-accordion-group, ng-repeat="c in data.classes", heading="{{ c.name }}")
+                div.panel-default(ng-if="!$state.includes('frame.home.base.super')", uib-accordion-group, ng-repeat="c in data.classes", heading="{{ c.name }}")
                     div.panel(ng-repeat="article in c.articles", ng-click="openArticle(article)").
                         {{ article.name }}
         div.col-md-9(style="max-height: 100%;")
-            div.content(ng-show="!$state.includes('home.base.super')")
+            div.content(ng-show="!$state.includes('frame.home.base.super')")
                 div(ng-bind-html="trustedHtml(current.focusedArticle.content)")
-            div(ng-show="$state.includes('home.base.super')")
+            div(ng-show="$state.includes('frame.home.base.super')")
                 form(ng-show="current.focusedArticle", name="faLvWenDa_content_form", ng-submit="updateArticleContent(current.focusedArticle, editingCurrent.content)")
                     div.form-group
                         summernote#article-summernote(config="summerNoteOptions", ng-model="editingCurrent.content", name="content",

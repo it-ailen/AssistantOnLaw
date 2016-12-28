@@ -16,44 +16,54 @@ function register(mod) {
         })
         .config(function ($stateProvider, $urlRouterProvider) {
             $stateProvider
-                .state("home", {
+                .state("frame", {
                     abstract: true,
-                    url: "/home",
+                    url: "",
                     views: {
                         "topBar@": {
                             template: require("./v/top_bar.pug"),
                             controller: require("./c/top_bar")
-                        },
-                        "main@": {
-                            template: require("./v/home.pug"),
-                            controller: require("./c/home")
                         },
                         "footer@": {
                             template: require("./v/footer.pug")
                         }
                     }
                 })
-                .state("home.base", {
-                    url: "",
+                .state("frame.home", {
+                    abstract: true,
+                    url: "/home",
                     views: {
-                        "suSongWenShu@home": {
-                            template: require("./v/suSongWenShu.pug"),
-                            controller: require("./c/suSongWenShu")
-                        },
-                        "xieYiFanBen@home": {
-                            template: require("./v/xieYiFanBen.pug"),
-                            controller: require("./c/xieYiFanBen")
-                        },
-                        "faLvWenDa@home": {
-                            template: require("./v/faLvWenDa.pug"),
-                            controller: require("./c/faLvWenDa")
+                        "main@": {
+                            template: require("./v/home.pug"),
+                            controller: require("./c/home")
                         }
                     }
                 })
-                .state("home.base.customer", {
+                .state("frame.home.base", {
+                    url: "",
+                    views: {
+                        "suSongWenShu@frame.home": {
+                            template: require("./v/suSongWenShu.pug"),
+                            controller: require("./c/suSongWenShu")
+                        },
+                        "xieYiFanBen@frame.home": {
+                            template: require("./v/xieYiFanBen.pug"),
+                            controller: require("./c/xieYiFanBen")
+                        },
+                        "faLvWenDa@frame.home": {
+                            template: require("./v/faLvWenDa.pug"),
+                            controller: require("./c/faLvWenDa")
+                        },
+                        "faLvZiXun@frame.home": {
+                            template: require("./v/faLvZiXun.pug"),
+                            controller: require("./c/faLvZiXun")
+                        }
+                    }
+                })
+                .state("frame.home.base.customer", {
                     url: "/customer"
                 })
-                .state("home.base.super", {
+                .state("frame.home.base.super", {
                     url: "/super"
                 })
             ;
@@ -65,7 +75,7 @@ function register(mod) {
             $rootScope.$on("session.auth_failed", function () {
                 console.log($state.current);
                 console.log("session.auth_failed occurs");
-                if ($state.is("home.base.super") || $state.is("home.base.customer")) {
+                if ($state.is("frame.home.base.super") || $state.is("frame.home.base.customer")) {
                     console.log("auth_failed occurs");
                     $state.go("^", $stateParams, {reload: true, notify: false});
                 }

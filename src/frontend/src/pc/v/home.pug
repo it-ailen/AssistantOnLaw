@@ -16,27 +16,22 @@ div#home
                             span.name(ng-bind="entry.text")
             div.col-md-1
                 div#aside-index.icon-index-table.affix
-                    div.entry.iconfont.icon-icon(ng-click="goto('top')")
+                    div.entry.iconfont.icon-icon(ng-click="goto('')")
                     div.entry.iconfont(ng-repeat="entry in entries", ng-class="entry.icon", ng-click="goto(entry.hash)")
     div.row.main
         div.col-md-10.col-md-offset-1
             div#suSongWenShu.entry-title
                 span 诉讼文书
-            //div.entry
-            //    div.fake
-            //    div.body
-            div.suSongWenShu(ui-view="suSongWenShu")
+            div.entry.suSongWenShu(ui-view="suSongWenShu")
         div.col-md-10.col-md-offset-1
             div#xieYiFanBen.entry-title
                 span 协议范本
-            div.entry
-                div.fake
-                div.body
-                    div.xieYiFanBen(ui-view="xieYiFanBen")
+            div.entry.xieYiFanBen(ui-view="xieYiFanBen")
         div.col-md-10.col-md-offset-1
             div#faLvWenDa.entry-title
                 span 法律问答
-            div.entry
-                div.fake
-                div.body
-                    div.xieYiFanBen(ui-view="faLvWenDa", style="height: 100%;")
+            div.entry.xieYiFanBen(ui-view="faLvWenDa")
+        div.col-md-10.col-md-offset-1
+            div#faLvZiXun.entry-title
+                span 自助咨询
+            div.entry.faLvZiXun(ui-view="faLvZiXun")

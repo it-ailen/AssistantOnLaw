@@ -10,25 +10,56 @@ import (
 	"strings"
 )
 
-func (self *Manager) CreateConclusion(con *Conclusion) string {
-	id := self.AllocateId(true)
-	kv := make(SqlKV)
-	kv["id"] = id
-	kv["title"] = con.Title
-	kv["context"] = con.Context
-
-	cols, placeholders, args := kv.Insert()
-	s := fmt.Sprintf("INSERT INTO `conclusion`(%s) VALUES(%s)",
-		cols, placeholders)
-	stmt, err := self.conn.Prepare(s)
+func (self *Manager) CreateConclusion(con *Conclusion, selections Selections) string {
+	tx, err := self.conn.Begin()
 	if err != nil {
 		panic(err)
 	}
-	defer stmt.Close()
+	defer func() {
+		if err != nil {
+			log.Println("rollback")
+			tx.Rollback()
+		} else {
+			tx.Commit()
+		}
+	}()
 
-	_, err = stmt.Exec(args...)
-	if err != nil {
-		panic(err)
+	id := self.AllocateId(true)
+	func() {
+		kv := make(SqlKV)
+		kv["id"] = id
+		kv["title"] = con.Title
+		kv["context"] = con.Context
+
+		cols, placeholders, args := kv.Insert()
+		s := fmt.Sprintf("INSERT INTO `conclusion`(%s) VALUES(%s)",
+			cols, placeholders)
+		stmt, err := tx.Prepare(s)
+		if err != nil {
+			panic(err)
+		}
+		defer stmt.Close()
+
+		_, err = stmt.Exec(args...)
+		if err != nil {
+			panic(err)
+		}
+	}()
+	if selections.Len() > 0 {
+		func() {
+			hashKey := self.CalculateSelectionHash(selections)
+			s := "INSERT INTO `question_conclusion_map`(`hash`, `conclusion_id`) " +
+				"VALUES(?, ?) "
+			stmt, err := tx.Prepare(s)
+			if err != nil {
+				panic(err)
+			}
+			defer stmt.Close()
+			_, err = stmt.Exec(hashKey, id)
+			if err != nil {
+				panic(err)
+			}
+		}()
 	}
 	return id
 }
@@ -82,7 +113,7 @@ func (self *Manager) SelectConclusions(filter *ConclusionFilter) []*Conclusion {
 				strings.Join(placeholders, ", ")))
 		}
 		if len(cols) > 0 {
-			s += fmt.Sprint("WHERE %s ", strings.Join(cols, " AND "))
+			s += fmt.Sprintf("WHERE %s ", strings.Join(cols, " AND "))
 		}
 	}
 	stmt, err := self.conn.Prepare(s)
@@ -120,8 +151,8 @@ func (self *Manager) SelectConclusion(id string) *Conclusion {
 }
 
 type Selection struct {
-	Ques       *Question
-	Selections []int
+	QuestionId string `json:"question_id"`
+	Selections []int  `json:"selections"`
 }
 
 type Selections []Selection
@@ -131,7 +162,7 @@ func (slice Selections) Len() int {
 }
 
 func (slice Selections) Less(i, j int) bool {
-	return slice[i].Ques.ID < slice[j].Ques.ID
+	return slice[i].QuestionId < slice[j].QuestionId
 }
 
 func (slice Selections) Swap(i, j int) {
@@ -150,12 +181,10 @@ func (self *Manager) CalculateSelectionHash(selections Selections) string {
 				indexes = append(indexes, strconv.Itoa(selection))
 			}
 			selectionsString = strings.Join(indexes, ":")
-		}
-		if len(selectionsString) > 0 {
-			rows = append(rows, fmt.Sprintf("[%s:%s]", each.Ques.ID, selectionsString))
 		} else {
-			rows = append(rows, fmt.Sprintf("[%s]", each.Ques.ID))
+			continue
 		}
+		rows = append(rows, fmt.Sprintf("[%s:%s]", each.QuestionId, selectionsString))
 	}
 	hash := strings.Join(rows, "")
 	log.Printf("raw: %s", hash)
@@ -166,7 +195,7 @@ func (self *Manager) CalculateConclusion(selections Selections) *Conclusion {
 	hashKey := self.CalculateSelectionHash(selections)
 	s := "SELECT `id`, `title`, `context` " +
 		"FROM `question_conclusion_map` AS `a` " +
-		"JOIN `conclusion` AS `b` ON `a`.`conclusion`=`b`.`id` " +
+		"JOIN `conclusion` AS `b` ON `a`.`conclusion_id`=`b`.`id` " +
 		"WHERE `hash`=? "
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {
@@ -183,4 +212,19 @@ func (self *Manager) CalculateConclusion(selections Selections) *Conclusion {
 		panic(err)
 	}
 	return &conclusion
+}
+
+func (self *Manager) BindConclusion(conclusionId string, selections Selections) {
+	hashKey := self.CalculateSelectionHash(selections)
+	s := "INSERT INTO `question_conclusion_map`(`hash`, `conclusion_id`) " +
+		"VALUES(?, ?) "
+	stmt, err := self.conn.Prepare(s)
+	if err != nil {
+		panic(err)
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(hashKey, conclusionId)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -16,7 +16,7 @@ function func($scope, AccountsService, Session, $state) {
     });
     $scope.$on("session.auth_failed", function (event) {
         console.log("auth_failed....");
-        $state.go("home.base");
+        $state.go("frame.home.base");
     });
     console.log($state.current);
     $scope.session = Session;
@@ -39,17 +39,17 @@ function func($scope, AccountsService, Session, $state) {
     Session.self()
         .then(function(self) {
             if (self && self.type) {
-                if (self.type === 'customer' && !$state.is("home.base.customer")) {
-                    $state.go("home.base.customer");
+                if (self.type === 'customer' && !$state.is("frame.home.base.customer")) {
+                    $state.go("frame.home.base.customer");
                 }
-                if (self.type === 'super' && !$state.is("home.base.super")) {
-                    $state.go("home.base.super");
+                if (self.type === 'super' && !$state.is("frame.home.base.super")) {
+                    $state.go("frame.home.base.super");
                 }
                 $scope.self = self;
             }
             else {
-                if (!$state.is("home.base")) {
-                    $state.go("home.base");
+                if (!$state.is("frame.home.base")) {
+                    $state.go("frame.home.base");
                 }
             }
         })

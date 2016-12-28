@@ -1,0 +1,12 @@
+//
+   Created by hyku on 2016/12/4.
+
+form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
+    div.form-group
+        label 名称
+        input.form-control(type="text", placeholder="名称", ng-model="item.name", required, name="name")
+    div.form-group
+        label 图标
+        input.form-control(type="text", file-input, name="uri", ng-model="item.logo", required, on-upload="upload(file)")
+    div.form-group
+        input.btn.btn-default(type="submit", value="提交", ng-disabled="form.$invalid")

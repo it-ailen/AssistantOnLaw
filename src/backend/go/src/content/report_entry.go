@@ -89,7 +89,7 @@ func (self *Manager) SelectEntries(filter *EntryFilter) []*Entry {
 				strings.Join(placeholders, ", ")))
 		}
 		if len(cols) > 0 {
-			s += fmt.Sprint("WHERE %s ", strings.Join(cols, " AND "))
+			s += fmt.Sprintf("WHERE %s ", strings.Join(cols, " AND "))
 		}
 	}
     stmt, err := self.conn.Prepare(s)

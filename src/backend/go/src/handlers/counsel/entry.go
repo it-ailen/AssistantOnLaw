@@ -88,7 +88,7 @@ func (self *EntryHandler) DELETE(w http.ResponseWriter, r *http.Request) *foolht
 func (self *EntryHandler) GET(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	id := foolhttp.RouteArgumentWithDefault(r, "id", "nil")
 	mgr := content.GetManager()
-    if id != "nil" {
+    if id == "nil" {
         filter := content.EntryFilter{}
         class_id := foolhttp.QueryArgumentWithDefault(r, "class_id", "nil")
         if class_id != "nil" {

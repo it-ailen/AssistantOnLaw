@@ -103,7 +103,7 @@ func (self *QuestionHandler) DELETE(w http.ResponseWriter, r *http.Request) *foo
 func (self *QuestionHandler) GET(w http.ResponseWriter, r *http.Request) *foolhttp.HTTPError {
 	id := foolhttp.RouteArgumentWithDefault(r, "id", "nil")
 	mgr := content.GetManager()
-	if id != "nil" {
+	if id == "nil" {
 		filter := content.QuestionFilter{}
 		entryId := foolhttp.QueryArgumentWithDefault(r, "entry_id", "nil")
 		if entryId != "nil" {

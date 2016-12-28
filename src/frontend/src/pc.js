@@ -43,6 +43,15 @@ app
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
     })
+    .filter("range", function () {
+        return function(emptyArray, count) {
+            count = count || 0;
+            for (var i = 0; i < count; i++) {
+                emptyArray.push(i);
+            }
+            return emptyArray;
+        }
+    })
     .service("tools", require("./service/tools"))
     .provider("Configure", require("./service/configure"))
     .config(function($urlRouterProvider, ConfigureProvider) {
