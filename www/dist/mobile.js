@@ -62,7 +62,7 @@
 	__webpack_require__(27);
 
 	__webpack_require__(28);
-	__webpack_require__(123);
+	__webpack_require__(125);
 
 
 	var app = angular.module("LA.mobile", [
@@ -73,7 +73,7 @@
 	    "etc"
 	]);
 
-	__webpack_require__(124).register(app);
+	__webpack_require__(126).register(app);
 
 	module.exports = app;
 
@@ -44828,7 +44828,7 @@
 
 
 	// module
-	exports.push([module.id, ".title-bar {\n  position: relative;\n  text-align: center;\n  height: 10vw;\n  line-height: 10vw;\n  border-bottom: solid 1px #6f6f6f;\n}\n.title-bar .back {\n  position: absolute;\n  width: 10vw;\n  height: 10vw;\n  left: 0;\n  top: 0;\n  background-image: url(" + __webpack_require__(103) + ");\n  -webkit-background-size: cover;\n  background-size: cover;\n}\n", ""]);
+	exports.push([module.id, ".title-bar {\n  position: relative;\n  text-align: center;\n  height: 10vw;\n  line-height: 10vw;\n  border-bottom: solid 1px #6f6f6f;\n}\n.title-bar .back {\n  position: absolute;\n  width: 10vw;\n  height: 10vw;\n  left: 0;\n  top: 0;\n  background-image: url(" + __webpack_require__(105) + ");\n  -webkit-background-size: cover;\n  background-size: cover;\n}\n", ""]);
 
 	// exports
 
@@ -44842,7 +44842,7 @@
 
 
 	// module
-	exports.push([module.id, "#page-mobile-home .carousel {\n  width: 100vw;\n  height: 30vw;\n}\n#page-mobile-home .carousel .slide img {\n  width: 100%;\n  height: 100%;\n}\n#page-mobile-home .channels .channel {\n  display: inline-block;\n  width: 25vw;\n  height: 25vw;\n  line-height: 8vw;\n  text-align: center;\n}\n#page-mobile-home .channels .channel img {\n  width: 14vw;\n  height: 14vw;\n}\n#page-mobile-home .channels .self-consult {\n  background-image: url(" + __webpack_require__(104) + ");\n  -webkit-background-size: 80% 80%;\n  background-size: 80% 80%;\n  background-position: center center;\n}\n", ""]);
+	exports.push([module.id, "#page-mobile-home .carousel {\n  width: 100vw;\n  height: 30vw;\n}\n#page-mobile-home .carousel .slide img {\n  width: 100%;\n  height: 100%;\n}\n#page-mobile-home .channels .channel {\n  display: inline-block;\n  width: 25vw;\n  height: 25vw;\n  line-height: 8vw;\n  text-align: center;\n}\n#page-mobile-home .channels .channel img {\n  width: 14vw;\n  height: 14vw;\n}\n#page-mobile-home .channels .self-consult {\n  background-image: url(" + __webpack_require__(106) + ");\n  -webkit-background-size: 80% 80%;\n  background-size: 80% 80%;\n  background-position: center center;\n}\n", ""]);
 
 	// exports
 
@@ -44860,37 +44860,37 @@
 /* 69 */,
 /* 70 */,
 /* 71 */,
-/* 72 */
+/* 72 */,
+/* 73 */
 /***/ function(module, exports) {
 
 	module.exports = "<form role=\"form\" name=\"form\" ng-submit=\"submit()\" novalidate>\n  <div class=\"form-group\">\n    <input type=\"file\" name=\"file\" class=\"form-control\" on-upload=\"upload(file)\"\n           ng-model=\"attachment.file\" required etc-file-uploader>\n  </div>\n  <div class=\"controls\">\n    <input type=\"submit\" value=\"确定\" ng-disabled=\"form.$invalid\"\n           class=\"btn btn-default\">\n  </div>\n</form>";
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"title-bar\">\n  <div ng-click=\"back()\" class=\"back\"></div>\n  <div ng-transclude></div>\n</div>";
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"page-mobile-channel\">\n  <div title-bar>\n    <span>{{ channel.name }}</span>\n  </div>\n  <div class=\"poster\">\n    <img ng-src=\"{{ channel.poster.image }}\">\n    <div class=\"text\">\n      <div class=\"title\">{{ channel.poster.title }}</div>\n      <div class=\"description\">{{ channel.poster.description }}</div>\n    </div>\n  </div>\n  <div class=\"entries\">\n    <a ng-repeat=\"entry in channel.entries\" href=\"#/entries/{{ entry.id }}\" class=\"entry\">\n      <img ng-src=\"{{ entry.icon }}\">\n      <span class=\"text\">{{ entry.text }}</span>\n    </a>\n  </div>\n</div>";
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"page-mobile-entry\">\n  <div title-bar>\n    <span>{{ entry.text }}</span>\n  </div>\n  <div class=\"single-page\" ng-if=\"entry.layout==='single'\">\n    <div ng-repeat=\"option in entry.children track by $index\" ng-class=\"option_class(option)\">\n      <div class=\"question\">{{  }}</div>\n      <div class=\"title\">{{ option.title }}</div>\n      <div class=\"choices\">\n        <div class=\"choice\" ng-repeat=\"action in step.actions\">\n          <input type=\"radio\" name=\"{{ step.id }}\"\n                 ng-click=\"action_click(action)\">{{ action.text }}\n        </div>\n      </div>\n    </div>\n  </div>\n</div>";
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports) {
 
 	module.exports = "<div title-bar>自助咨询</div>\n<div id=\"page-self-consult\">\n  <div ng-repeat=\"path in footprint.paths\" class=\"path\"></div>\n  <form role=\"form\" name=\"form\" ng-submit=\"submit()\" novalidate>\n    <div class=\"form-group\">\n      <input type=\"text\" name=\"name\" class=\"form-control\" ng-model=\"client.name\"\n             placeholder=\"请输入姓名\" required>\n    </div>\n    <div class=\"form-group\">\n      <input type=\"text\" name=\"contact\" class=\"form-control\" ng-model=\"client.contact\"\n             placeholder=\"请输入联系方式\" required>\n    </div>\n    <div class=\"form-group\">\n      <textarea class=\"form-control\" ng-model=\"detail.description\" required\n                placeholder=\"请描述您的问题\">\n      </textarea>\n    </div>\n    <div class=\"form-group\">\n      <span><a ng-click=\"add_attachment()\">提供更多附件</a></span>\n      <div ng-repeat=\"attachment in detail.attachments track by $index\">\n        <label>{{ attachment }}</label>\n        <a ng-click=\"remove_attachment($index)\">删除</a>\n      </div>\n    </div>\n    <div class=\"submit form-group\">\n      <input type=\"submit\" value=\"提交\" class=\"btn btn-default\" ng-disabled=\"form.$invalid\">\n    </div>\n  </form>\n</div>";
 
 /***/ },
-/* 77 */,
 /* 78 */,
 /* 79 */,
 /* 80 */,
@@ -44908,7 +44908,8 @@
 /* 92 */,
 /* 93 */,
 /* 94 */,
-/* 95 */
+/* 95 */,
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -44934,7 +44935,7 @@
 	}
 
 /***/ },
-/* 96 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -44960,7 +44961,7 @@
 	}
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -44986,7 +44987,7 @@
 	}
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -45012,7 +45013,7 @@
 	}
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -45038,23 +45039,22 @@
 	}
 
 /***/ },
-/* 100 */,
 /* 101 */,
 /* 102 */,
-/* 103 */
+/* 103 */,
+/* 104 */,
+/* 105 */
 /***/ function(module, exports) {
 
 	module.exports = "data:image/png;base64,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"
 
 /***/ },
-/* 104 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "images/free-consul.jpg";
 
 /***/ },
-/* 105 */,
-/* 106 */,
 /* 107 */,
 /* 108 */,
 /* 109 */,
@@ -45066,7 +45066,9 @@
 /* 115 */,
 /* 116 */,
 /* 117 */,
-/* 118 */
+/* 118 */,
+/* 119 */,
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45075,7 +45077,7 @@
 
 	"use strict";
 
-	__webpack_require__(95);
+	__webpack_require__(96);
 
 	function routine($routeParams, MobileDataService, $scope, $location, self, tools) {
 	    var channelId = $routeParams.id;
@@ -45097,7 +45099,7 @@
 
 
 /***/ },
-/* 119 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45106,7 +45108,7 @@
 
 	"use strict";
 
-	__webpack_require__(96);
+	__webpack_require__(97);
 
 	function routine($routeParams, MobileDataService, $scope, tools) {
 	    $scope.status = {};
@@ -45140,7 +45142,7 @@
 
 
 /***/ },
-/* 120 */
+/* 122 */
 /***/ function(module, exports) {
 
 	/**
@@ -45169,7 +45171,7 @@
 
 
 /***/ },
-/* 121 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45178,7 +45180,7 @@
 
 	"use strict";
 
-	__webpack_require__(99);
+	__webpack_require__(100);
 
 	function routine($scope, MobileDataService, self) {
 	    $scope.layout = {};
@@ -45196,7 +45198,7 @@
 
 
 /***/ },
-/* 122 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45205,7 +45207,7 @@
 
 	"use strict";
 
-	__webpack_require__(97);
+	__webpack_require__(98);
 
 	function routine($scope, ngDialog, $log, MobileDataService, tools, $window, self) {
 	    $scope.client = {};
@@ -45214,9 +45216,9 @@
 	    };
 	    $scope.add_attachment = function() {
 	        var dialog = ngDialog.open({
-	            template: __webpack_require__(72),
+	            template: __webpack_require__(73),
 	            plain: true,
-	            controller: __webpack_require__(120),
+	            controller: __webpack_require__(122),
 	            closeByDocument: true,
 	            showClose: true,
 	            width: "80%"
@@ -45263,7 +45265,7 @@
 
 
 /***/ },
-/* 123 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45272,7 +45274,7 @@
 
 	"use strict";
 
-	__webpack_require__(98);
+	__webpack_require__(99);
 
 	angular.module("etc", [])
 	    .directive("etcFileUploader", function($parse, $log, $q) {
@@ -45309,7 +45311,7 @@
 	    .directive("titleBar", function($window) {
 	        return {
 	            restict: "A",
-	            template: __webpack_require__(73),
+	            template: __webpack_require__(74),
 	            transclude: true,
 	            link: function($scope, element, attr) {
 	                $scope.back = function() {
@@ -45325,7 +45327,7 @@
 
 
 /***/ },
-/* 124 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45336,9 +45338,9 @@
 
 
 	function register_controllers(app) {
-	    app.service("MobileDataService", __webpack_require__(125))
-	        .service("self", __webpack_require__(126))
-	        .service("tools", __webpack_require__(127))
+	    app.service("MobileDataService", __webpack_require__(127))
+	        .service("self", __webpack_require__(128))
+	        .service("tools", __webpack_require__(129))
 	        .config(function($routeProvider) {
 	            route($routeProvider);
 	        })
@@ -45348,20 +45350,20 @@
 	function route($routeProvider) {
 	    $routeProvider
 	        .when("/home", {
-	            controller: __webpack_require__(121),
+	            controller: __webpack_require__(123),
 	            template: __webpack_require__(24)
 	        })
 	        .when("/self-consult", {
-	            controller: __webpack_require__(122),
-	            template: __webpack_require__(76)
+	            controller: __webpack_require__(124),
+	            template: __webpack_require__(77)
 	        })
 	        .when("/channels/:id", {
-	            controller: __webpack_require__(118),
-	            template: __webpack_require__(74)
+	            controller: __webpack_require__(120),
+	            template: __webpack_require__(75)
 	        })
 	        .when("/entries/:id", {
-	            controller: __webpack_require__(119),
-	            template: __webpack_require__(75)
+	            controller: __webpack_require__(121),
+	            template: __webpack_require__(76)
 	        })
 	        .when("/", {
 	            redirectTo: "/home"
@@ -45375,7 +45377,7 @@
 
 
 /***/ },
-/* 125 */
+/* 127 */
 /***/ function(module, exports) {
 
 	/**
@@ -45595,7 +45597,7 @@
 
 
 /***/ },
-/* 126 */
+/* 128 */
 /***/ function(module, exports) {
 
 	/**
@@ -45627,7 +45629,7 @@
 
 
 /***/ },
-/* 127 */
+/* 129 */
 /***/ function(module, exports) {
 
 	/**
