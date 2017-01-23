@@ -1,10 +1,30 @@
 //
    Created by hyku on 2016/12/4.
-
+div {{ item | json }}
 form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
     div.form-group
         label 问题
         input.form-control(type="text", ng-model="item.question", required, name="question")
+    div.form-group()
+        label 需要触发?
+        input.form-control(type="checkbox", ng-model="hasFuse", ng-init="hasFuse = item.trigger_by && true || false")
+    div.form-group(ng-if="hasFuse")
+        label 问题
+        select.form-control(ng-model="item.trigger_by.question_id", required="", name="triggered_question",
+        ng-change="triggerQuestionChange(item.trigger_by.question_id)")
+            option(value="") 选择
+            option(ng-repeat="question in status.availableQuestions", value="{{ question.id }}") {{ question.question }}
+    div.form-group(ng-if="hasFuse && item.trigger_by.question_id")
+        label 选项
+        select.form-control(ng-if="status.triggerQuestion.type==='single'", ng-model="item.trigger_by.options",
+        name="triggered_options", required="", ensure-digit="")
+            option(value="")
+            option(ng-repeat="option in status.triggerQuestion.options track by $index", value="{{ $index }}").
+                {{ option }}
+        select.form-control(ng-if="status.triggerQuestion.type==='multiple'", ng-model="item.trigger_by.options",
+        name="triggered_options", multiple="", required="", ensure-digit="")
+            option(ng-repeat="option in status.triggerQuestion.options track by $index", value="{{ $index }}").
+                {{ option }}
     div.form-group
         label 选项类型
         select.form-control(ng-model="item.type", required="", name="type")
@@ -12,7 +32,8 @@ form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
             option(value="multiple") 多选
     div.form-group
         label 选项数量
-        input.form-control(type="number", ng-model="optionCount", ng-init="optionCount=item.options && item.options.length || 2",
+        input.form-control(type="number", ng-model="optionCount",
+        ng-init="optionCount=item.options && item.options.length || 2",
         min="2", max="6")
     div.form-group(ng-repeat="i in [] | range:optionCount")
         label 选项 {{ $index + 1 }}

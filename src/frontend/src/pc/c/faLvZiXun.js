@@ -3,6 +3,7 @@
  */
 
 "use strict";
+require("./styles/faLvZiXun.less");
 
 function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
     $scope.data = {};
@@ -18,6 +19,9 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
     }
 
     $scope.loadEntries = function (classId) {
+        $scope.data.entries = [];
+        $scope.data.questions = [];
+        $scope.selectionMap = {};
         ResourceService.selectEntries({
             "class_id": classId
         })
@@ -31,6 +35,8 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
     };
 
     $scope.loadQuestions = function (entryId) {
+        $scope.data.questions = [];
+        $scope.selectionMap = {};
         ResourceService.selectQuestions({
             "entry_id": entryId
         })
@@ -153,12 +159,51 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
         var promise = ngDialog.open({
             template: require("./v/question.pug"),
             plain: true,
+            width: "80%",
             controller: function ($scope) {
                 $scope.item = {
                     question: question && question.question || undefined,
                     type: question && question.type || undefined,
                     options: question && question.options || [],
-                    entry_id: question && question.entry_id || entryId
+                    entry_id: question && question.entry_id || entryId,
+                    trigger_by: question && question.trigger_by && angular.copy(question.trigger_by)
+                };
+                $scope.status = {
+                    availableQuestions: []
+                };
+                ResourceService.selectQuestions({
+                    entry_id: $scope.item.entry_id
+                })
+                    .then(function (questions) {
+                        if (question) {
+                            questions.forEach(function (item, index) {
+                                if (item.id === question.id) {
+                                    questions.splice(index, 1);
+                                }
+                            });
+                            if (question.trigger_by && question.trigger_by.question_id) {
+                                $scope.triggerQuestionChange(question.trigger_by.question_id);
+                            }
+                        }
+                        $scope.status.availableQuestions = questions;
+                    })
+                    .catch(function (error) {
+                        toastr.error("Error on fetching questions");
+                    })
+                ;
+                function getQuestion(id) {
+                    var chosen = null;
+                    $scope.status.availableQuestions.forEach(function (item, index) {
+                        if (id === item.id) {
+                            chosen = item;
+                        }
+                    });
+                    return chosen;
+                }
+
+                $scope.triggerQuestionChange = function (questionId) {
+                    $scope.status.triggerQuestion = getQuestion(questionId);
+                    console.log($scope.status.triggerQuestion);
                 };
                 $scope.upload = function (file) {
                     return tools.uploadImage(file, "static");
@@ -202,35 +247,99 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
             })
         ;
     };
+    $scope.deleteQuestion = function (question) {
+        ResourceService.deleteQuestion(question.id)
+            .then(function () {
+                $scope.data.questions.forEach(function (item, index) {
+                    if (item.id === question.id) {
+                        $scope.data.questions.splice(index, 1);
+                    }
+                });
+            })
+            .catch(function (error) {
+                toastr.error(error);
+            })
+        ;
+    };
     $scope.selectionMap = {};
-    $scope.search = function (selections) {
-        console.log(selections)
-        var data = [];
-        for (var k in selections) {
-            var value = selections[k];
-            console.log(k + " -- " + value);
-            console.log(typeof value)
-            var item = {
-                question_id: k,
-                selections: []
-            };
-            if (typeof value === 'object') {
-                for (var option in value) {
-                    item.selections.push(parseInt(option));
-                }
+    $scope.questionClass = function (question) {
+        var classes = [];
+        if (question.trigger_by) {
+            var chosenOptions = $scope.selectionMap[question.trigger_by.question_id];
+            if (!chosenOptions || chosenOptions.length <= 0) {
+                classes.push("to_be_triggered");
             } else {
-                item.selections.push(parseInt(value));
+                var triggered = true;
+                question.trigger_by.options.forEach(function (item, index) {
+                    if (chosenOptions.indexOf(item) < 0) {
+                        triggered = false;
+                    }
+                });
+                if (triggered) {
+                    classes.push("triggered");
+                } else {
+                    classes.push("to_be_triggered");
+                }
             }
-            data.push(item);
         }
+        return classes;
+    };
+    $scope.search = function (selections) {
+        // console.log(selections)
+        var data = [];
+        angular.forEach(selections, function (value, key) {
+            var item = {
+                question_id: key,
+                selections: value
+            };
+            data.push(item);
+        });
+        ResourceService.selectConclusions({
+            selections: JSON.stringify(data)
+        })
+            .then(function (conclusions) {
+                if (conclusions.length > 0) {
+                    ngDialog.open({
+                        template: require("./v/conclusion.pug"),
+                        plain: true,
+                        width: "80%",
+                        data: {
+                            conclusion: conclusions[0]
+                        },
+                        controller: function ($scope) {
+                            $scope.item = $scope.ngDialogData.conclusion;
+                        }
+                    });
+                }
+            })
+            .catch(function (error) {
+                toastr.error(error);
+            })
+        ;
+    };
+    $scope.editConclusion = function (selections) {
+        // console.log(selections)
+        var data = [];
+        angular.forEach(selections, function (value, key) {
+            var item = {
+                question_id: key,
+                selections: value
+            };
+            data.push(item);
+        });
         var promise = ngDialog.open({
-            template: require("./v/conclusion.pug"),
+            template: require("./v/forms/conclusion.pug"),
             plain: true,
+            width: "80%",
+            data: {
+                data: data
+            },
             controller: function ($scope) {
                 var put = false;
                 $scope.conclusion = null;
+                $scope.selections = $scope.ngDialogData.data;
                 ResourceService.selectConclusions({
-                    selections: JSON.stringify(data)
+                    selections: JSON.stringify($scope.selections)
                 })
                     .then(function (conclusions) {
                         if (conclusions && conclusions.length > 0) {
@@ -238,7 +347,7 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
                             $scope.conclusion = conclusions[0];
                         } else {
                             $scope.conclusion = {
-                                selections: data
+                                selections: $scope.ngDialogData.data
                             };
                         }
                     })
@@ -287,7 +396,6 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
                 }
             }
         }).closePromise;
-
     };
 
     reload();

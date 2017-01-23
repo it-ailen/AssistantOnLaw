@@ -52,6 +52,20 @@ app
             return emptyArray;
         }
     })
+    .directive("ensureDigit", function() {
+        return {
+            require: "ngModel",
+            restrict: "A",
+            link: function ($scope, iElm, iAttrs, ngModel) {
+                ngModel.$parsers.push(function (val) {
+                    return parseInt(val, 10);
+                });
+                ngModel.$formatters.push(function (val) {
+                    return "" + val;
+                });
+            }
+        };
+    })
     .service("tools", require("./service/tools"))
     .provider("Configure", require("./service/configure"))
     .config(function($urlRouterProvider, ConfigureProvider) {

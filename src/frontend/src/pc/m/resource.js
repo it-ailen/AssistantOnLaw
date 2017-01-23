@@ -353,6 +353,19 @@ function func(Configure, $http) {
             })
             ;
     };
+    this.deleteQuestion = function (id) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/questions/" + id,
+                    method: "DELETE"
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
     this.selectConclusions = function (params) {
         return Configure.getHost()
             .then(function (host) {

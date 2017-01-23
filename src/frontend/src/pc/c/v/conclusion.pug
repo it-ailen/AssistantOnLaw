@@ -1,17 +1,7 @@
 //
-   Created by hyku on 2016/12/4.
+   Created by hyku on 2017/1/23.
 
-form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
-    div.form-group
-        label 标题
-        input.form-control(type="text", ng-model="conclusion.title", required, name="title")
-    div.form-group
-        label 正文
-        div(ng-show="$state.includes('frame.home.base.super')")
-            div.form-group
-                summernote#article-summernote(config="summerNoteOptions",
-                ng-model="conclusion.context", name="context",
-                on-image-upload="uploadImage(files)", editor="", editable="",
-                required="")
-    div.form-group
-        input.btn.btn-default(type="submit", value="提交", ng-disabled="form.$invalid")
+div.conclusion
+    div.title
+        h2(ng-bind="item.title")
+    div.content(ng-bind-html="item.context | safeHTML")

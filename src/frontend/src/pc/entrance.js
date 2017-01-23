@@ -81,6 +81,67 @@ function register(mod) {
                 }
             });
         })
+        .directive("questionInput", function () {
+            return {
+                restrict: "A",
+                template: require("./v/question.pug"),
+                replace: true,
+                require: "ngModel",
+                scope: {
+                    question: "=",
+                    choices: "=ngModel"
+                },
+                link: function ($scope, ele, attr, ngModelCtrl) {
+                    $scope.randomId = Math.floor(Math.random() * 1000);
+                    $scope.checkboxMap = {};
+                    if (!angular.isDefined($scope.choices)) {
+                        $scope.choices = [];
+                    }
+                    if ($scope.choices && $scope.choices.length > 0) {
+                        if ($scope.question.type === 'multiple') {
+                            angular.forEach($scope.choices, function (item) {
+                                $scope.checkboxMap[item] = true;
+                            });
+                        } else {
+                            $scope.checkboxMap.radio = $scope.choices[0];
+                        }
+
+                    }
+                    $scope.$watch("checkboxMap", function (newValue) {
+                        if (angular.isDefined(newValue) && angular.isDefined($scope.choices))
+                            $scope.choices.splice(0, $scope.choices.length);
+                        console.log("checkboxMap: ");
+                        console.log(newValue);
+                        if (angular.isDefined(newValue)) {
+                            if ($scope.question.type === 'multiple') {
+                                angular.forEach(newValue, function (value, key) {
+                                    if (value) {
+                                        $scope.choices.push(parseInt(key));
+                                    }
+                                });
+                            } else {
+                                if (angular.isDefined(newValue.radio)) {
+                                    $scope.choices.push(newValue.radio);
+                                }
+                            }
+                        }
+                    }, true);
+                }
+            };
+        })
+        .filter("indexToChar", function () {
+            return function (index) {
+                return String.fromCharCode(65 + index);
+            }
+        })
+        .filter("safeHTML", function ($sce) {
+            return function (input) {
+                if (input) {
+                    return $sce.trustAsHtml(input);
+                }
+                return "";
+            };
+        })
     ;
 }
 

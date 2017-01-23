@@ -1,0 +1,19 @@
+//
+   Created by hyku on 2016/12/4.
+
+form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
+    div.form-group
+        .form-text 当前选项: {{ selections | json }}
+    div.form-group.row
+        label.col-md-2.col-form-label 标题
+        div.col-md-8
+            input.form-control(type="text", ng-model="conclusion.title", required, name="title")
+    div.form-group.row
+        label.col-md-2.col-form-label 正文
+        div.col-md-8(ng-show="$state.includes('frame.home.base.super')")
+            summernote#article-summernote.form-control(config="summerNoteOptions",
+            ng-model="conclusion.context", name="context",
+            on-image-upload="uploadImage(files)", editor="", editable="",
+            required="")
+    div.form-group
+        input.btn.btn-default(type="submit", value="提交", ng-disabled="form.$invalid")

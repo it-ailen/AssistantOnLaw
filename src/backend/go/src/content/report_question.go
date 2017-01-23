@@ -8,29 +8,27 @@ import (
 	"log"
 )
 
-func (self *Manager) CreateQuestion(entry *Question) string {
+func (self *Manager) CreateQuestion(args SqlKV) string {
 	id := self.AllocateId(true)
-	kv := make(SqlKV)
-	kv["id"] = id
-	kv["entry_id"] = entry.EntryId
-	kv["question"] = entry.Question
-	kv["type"] = entry.Type
-	if len(entry.TriggerBy) > 0 {
-		kv["trigger_by"] = entry.TriggerBy
+    args["id"] = id
+	if triggerBy, ok := args["trigger_by"]; ok {
+        triggerByJson, _ := json.Marshal(triggerBy)
+		args["trigger_by"] = string(triggerByJson)
 	}
-	optionsJson, _ := json.Marshal(entry.Options)
-	kv["options"] = optionsJson
+	optionsJson, _ := json.Marshal(args["options"])
+	args["options"] = string(optionsJson)
 
-	cols, placeholders, args := kv.Insert()
+	cols, placeholders, sqlArgs := args.Insert()
 	s := fmt.Sprintf("INSERT INTO `report_question`(%s) VALUES(%s)",
 		cols, placeholders)
+    log.Printf("sql: %s args: %s", s, sqlArgs)
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {
 		panic(err)
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(args...)
+	_, err = stmt.Exec(sqlArgs...)
 	if err != nil {
 		panic(err)
 	}
@@ -38,14 +36,23 @@ func (self *Manager) CreateQuestion(entry *Question) string {
 }
 
 func (self *Manager) UpdateQuestion(id string, toUpdate SqlKV) {
+	if triggerBy, ok := toUpdate["trigger_by"]; ok {
+        triggerByJson, _ := json.Marshal(triggerBy)
+		toUpdate["trigger_by"] = string(triggerByJson)
+	}
+    if options, ok := toUpdate["options"]; ok {
+        optionJson, _ := json.Marshal(options)
+		toUpdate["options"] = optionJson
+    }
 	cols, args := toUpdate.Update()
+	args = append(args, id)
 	s := fmt.Sprintf("UPDATE `report_question` SET %s WHERE `id`=? ", cols)
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {
 		panic(err)
 	}
 	defer stmt.Close()
-
+	log.Printf("sql: %s, %v", s, args)
 	_, err = stmt.Exec(args...)
 	if err != nil {
 		panic(err)
@@ -99,7 +106,8 @@ func (self *Manager) SelectQuestions(filter *QuestionFilter) []*Question {
 			s += fmt.Sprintf("WHERE %s ", strings.Join(cols, " AND "))
 		}
 	}
-	log.Printf("sql: %s", s)
+	s += "ORDER BY `created_time` ASC "
+	log.Printf("sql: %s, args: %v", s, args)
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {
 		panic(err)
@@ -123,7 +131,11 @@ func (self *Manager) SelectQuestions(filter *QuestionFilter) []*Question {
 			panic(err)
 		}
 		if triggerBy.Valid {
-			question.TriggerBy = triggerBy.String
+			question.TriggerBy = new(QuestionTriggerInfo)
+			err = json.Unmarshal([]byte(triggerBy.String), question.TriggerBy)
+			if err != nil {
+				panic(err)
+			}
 		}
 		err = json.Unmarshal([]byte(optionsJson), &question.Options)
 		if err != nil {

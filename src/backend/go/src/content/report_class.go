@@ -1,9 +1,9 @@
 package content
 
 import (
+	"database/sql"
 	"fmt"
 	"strings"
-    "database/sql"
 )
 
 type Class struct {
@@ -15,10 +15,15 @@ type Class struct {
 
 type Entry struct {
 	ID         string `json:"id"`
-	Name      string `json:"name"`
+	Name       string `json:"name"`
 	Logo       string `json:"logo"`
 	LayoutType string `json:"layout_type"`
 	ClassId    string `json:"class_id"`
+}
+
+type QuestionTriggerInfo struct {
+	QuestionId string `json:"question_id,omitempty"`
+	Options    []uint `json:"options,omitempty"`
 }
 
 type Question struct {
@@ -26,8 +31,8 @@ type Question struct {
 	Question  string   `json:"question"`
 	Type      string   `json:"type"`
 	Options   []string `json:"options,omitempty"`
-	TriggerBy string   `json:"trigger_by,omitempty"`
-    EntryId   string   `json:"entry_id"`
+	TriggerBy *QuestionTriggerInfo `json:"trigger_by,omitempty"`
+	EntryId string `json:"entry_id"`
 }
 
 type Conclusion struct {
@@ -63,7 +68,7 @@ func (self SqlKV) Update() (string, []interface{}) {
 }
 
 func (self *Manager) CreateClass(cls *Class) string {
-    id := self.AllocateId(true)
+	id := self.AllocateId(true)
 	kv := make(SqlKV)
 	kv["id"] = id
 	kv["name"] = cls.Name
@@ -82,7 +87,7 @@ func (self *Manager) CreateClass(cls *Class) string {
 	if err != nil {
 		panic(err)
 	}
-    return id
+	return id
 }
 
 func (self *Manager) UpdateClass(id string, toUpdate SqlKV) {
@@ -115,63 +120,63 @@ func (self *Manager) DeleteClass(id string) {
 }
 
 type ClassFilter struct {
-    IDs []string
+	IDs []string
 }
 
 func (self *Manager) SelectClasses(filter *ClassFilter) []*Class {
-    s := "SELECT `id`, `name`, `description`, `logo`, `bg` FROM " +
-        "`report_class` "
-    args := make([]interface{}, 0, 1000)
-    if filter != nil {
-        cols := make([]string, 0, 10)
-        if len(filter.IDs) > 0 {
-            placeholders := make([]string, 0, 1000)
-            for _, id := range filter.IDs {
-                placeholders = append(placeholders, "?")
-                args = append(args, id)
-            }
-            cols = append(cols, fmt.Sprintf("`id` IN (%s)",
-                strings.Join(placeholders, ", ")))
-        }
-        if len(cols) > 0 {
-            s += fmt.Sprintf("WHERE %s", strings.Join(cols, " AND "))
-        }
-    }
-    stmt, err := self.conn.Prepare(s)
-    if err != nil {
-        panic(err)
-    }
-    defer stmt.Close()
+	s := "SELECT `id`, `name`, `description`, `logo`, `bg` FROM " +
+		"`report_class` "
+	args := make([]interface{}, 0, 1000)
+	if filter != nil {
+		cols := make([]string, 0, 10)
+		if len(filter.IDs) > 0 {
+			placeholders := make([]string, 0, 1000)
+			for _, id := range filter.IDs {
+				placeholders = append(placeholders, "?")
+				args = append(args, id)
+			}
+			cols = append(cols, fmt.Sprintf("`id` IN (%s)",
+				strings.Join(placeholders, ", ")))
+		}
+		if len(cols) > 0 {
+			s += fmt.Sprintf("WHERE %s", strings.Join(cols, " AND "))
+		}
+	}
+	stmt, err := self.conn.Prepare(s)
+	if err != nil {
+		panic(err)
+	}
+	defer stmt.Close()
 
-    rows, err := stmt.Query(args...)
-    if err != nil {
-        panic(err)
-    }
-    defer rows.Close()
+	rows, err := stmt.Query(args...)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
 
-    classes := make([]*Class, 0, 1000)
-    for rows.Next() {
-        cls := Class{}
-        logo := sql.NullString{}
-        bg := sql.NullString{}
-        err = rows.Scan(&cls.ID, &cls.Name, &cls.Description, &logo, &bg)
-        if err != nil {
-            panic(err)
-        }
-        if logo.Valid {
-            cls.Logo = logo.String
-        }
-        classes = append(classes, &cls)
-    }
-    return classes
+	classes := make([]*Class, 0, 1000)
+	for rows.Next() {
+		cls := Class{}
+		logo := sql.NullString{}
+		bg := sql.NullString{}
+		err = rows.Scan(&cls.ID, &cls.Name, &cls.Description, &logo, &bg)
+		if err != nil {
+			panic(err)
+		}
+		if logo.Valid {
+			cls.Logo = logo.String
+		}
+		classes = append(classes, &cls)
+	}
+	return classes
 }
 
 func (self *Manager) SelectClass(id string) *Class {
-    classes := self.SelectClasses(&ClassFilter{
-        IDs: []string{id},
-    })
-    if len(classes) > 0 {
-        return classes[0]
-    }
-    return nil
+	classes := self.SelectClasses(&ClassFilter{
+		IDs: []string{id},
+	})
+	if len(classes) > 0 {
+		return classes[0]
+	}
+	return nil
 }

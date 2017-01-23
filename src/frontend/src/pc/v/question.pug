@@ -1,0 +1,20 @@
+//
+   Created by hyku on 2017/1/21.
+.question-block(ng-switch="question.type")
+    style
+        include ./style/question.css
+    .question(ng-bind="question.question")
+    div(ng-if="question.trigger_by") Triggered by {{ question.trigger_by.question_id }}
+        span(ng-if="question.trigger_by.options && question.trigger_by.options.length > 0").
+            {{ question.trigger_by.options | json }}
+    .options.form-check(ng-switch-when="multiple")
+        div.option(ng-repeat="option in question.options track by $index")
+            label.form-check-label
+                input.form-check-input(type="checkbox", ng-model="checkboxMap[$index]")
+                span.option {{ $index | indexToChar }}. {{ option }}
+    .options.form-check(ng-switch-when="single")
+        div.option(ng-repeat="option in question.options track by $index")
+            label.form-check-label
+                input.form-check-input(type="radio", ng-model="checkboxMap.radio", name="radio_{{ randomId }}",
+                value="{{ $index }}", ensure-digit="")
+                span.option {{ $index | indexToChar }}. {{ option }}

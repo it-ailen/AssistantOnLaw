@@ -7,10 +7,11 @@ div.row(style="max-height: 100%;")
             div.panel-default
                 div.panel-heading
                     h4.panel-title 问题类别
-                        span.pull-right.glyphicon.glyphicon-plus(ng-click="updateClass()")
+                        span.pull-right.glyphicon.glyphicon-plus(ng-click="updateClass()",
+                        ng-show="$state.includes('frame.home.base.super')")
                 div.panel-body
                     div.panel.panel-default(ng-repeat="class in data.classes")
-                        div.panel-heading(ng-click="data.expandedClass=class.id; loadEntries(class.id)")
+                        div.panel-heading(ng-click="data.expandedClass=class.id; data.expandedEntry=null; loadEntries(class.id)")
                             h4.panel-title {{ class.name }}
                         div.panel-body.collapse(uib-collapse="data.expandedClass!=class.id")
                             table.table.table-hover
@@ -29,7 +30,7 @@ div.row(style="max-height: 100%;")
                 div.panel-heading
                     h4.panel-title 入口
                         span.pull-right.glyphicon.glyphicon-plus(ng-click="updateEntry(data.expandedClass)",
-                        ng-show="data.expandedClass")
+                        ng-show="data.expandedClass && $state.includes('frame.home.base.super')")
                 div.panel-body
                     div.panel.panel-default(ng-repeat="entry in data.entries")
                         div.panel-heading(ng-click="data.expandedEntry=entry.id; loadQuestions(entry.id)")
@@ -44,22 +45,23 @@ div.row(style="max-height: 100%;")
                 div.panel-heading
                     h4.panel-title 问题
                         span.pull-right.glyphicon.glyphicon-plus(ng-click="updateQuestion(data.expandedEntry)",
-                        ng-show="data.expandedEntry")
-            div.panel-body
-                div {{ selectionMap | json }}
-                form(name="form", ng-submit="search(selectionMap)")
-                    fieldset.form-group(ng-repeat="question in data.questions")
-                        legend {{ question.question }}
-                        div.form-check-inline(ng-repeat="option in question.options track by $index")
-                            label.form-check-label(ng-switch="question.type")
-                                input.form-check-input(ng-switch-when="multiple", value="{{ $index }}",
-                                name="check_{{ question.id }}", ng-model="selectionMap[question.id][$index]",
-                                type="checkbox")
-                                input.form-check-input(ng-switch-when="single", value="{{ $index }}",
-                                name="radio_{{ question.id }}", required="", ng-model="selectionMap[question.id]",
-                                type="radio")
-                                | {{ option }}
+                        ng-show="data.expandedEntry && $state.includes('frame.home.base.super')")
+            div.panel-body(ng-show="$state.includes('frame.home.base.super')")
+                form(name="form", ng-submit="editConclusion(selectionMap)")
+                    div.form-group.question-wrapper(ng-repeat="question in data.questions",
+                    ng-class="questionClass(question)", ng-init="selectionMap[question.id] = []")
+                        div.hover-actions
+                            span.remove-btn.glyphicon.glyphicon-remove(ng-click="deleteQuestion(question)")
+                            span.edit-btn.glyphicon.glyphicon-edit(ng-click="updateQuestion(question)")
+                        div(question-input="", question="question", ng-model="selectionMap[question.id]")
                     div.form-group
-                        input.btn.btn-primary(type="submit", value="咨询", ng-show="data.questions && data.questions.length>0",
-                        ng-disabled="form.$invalid")
-
+                        input.btn.btn-primary(type="submit", value="编辑结论",
+                        ng-show="data.questions && data.questions.length>0")
+            div.panel-body(ng-show="!$state.includes('frame.home.base.super')")
+                form(name="form", ng-submit="search(selectionMap)")
+                    div.form-group.question-wrapper(ng-repeat="question in data.questions",
+                    ng-class="questionClass(question)", ng-init="selectionMap[question.id] = []")
+                        div(question-input="", question="question", ng-model="selectionMap[question.id]")
+                    div.form-group
+                        input.btn.btn-primary(type="submit", value="查询",
+                        ng-show="data.questions && data.questions.length>0")
