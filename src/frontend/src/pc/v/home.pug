@@ -35,3 +35,6 @@ div#home
             div#faLvZiXun.entry-title
                 span 自助咨询
             div.entry.faLvZiXun(ui-view="faLvZiXun")
+    div.float-menu(ng-if="!$state.includes('frame.home.base.super')")
+        div.menu-btn(ng-click="popSelfConsultant()")
+            span.icon.iconfont.icon-icoo_kefurg

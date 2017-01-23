@@ -6,7 +6,7 @@
 
 require("./styles/home.less");
 
-function service($scope, $anchorScroll, $location, Configure) {
+function service($scope, $anchorScroll, $location, Configure, ngDialog) {
     console.log("home...");
     $scope.entries = [
         {
@@ -42,7 +42,18 @@ function service($scope, $anchorScroll, $location, Configure) {
             $anchorScroll();
         }
     };
+    $scope.popSelfConsultant = function() {
+        ngDialog.open({
+            template: require("./v/forms/self-consultant.pug"),
+            plain: true,
+            width: "80%",
+            controller: function($scope) {
+                $scope.submit = function (data) {
 
+                }
+            }
+        })
+    };
 }
 
 module.exports = service;
