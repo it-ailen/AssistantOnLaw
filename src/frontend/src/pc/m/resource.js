@@ -269,6 +269,19 @@ function func(Configure, $http) {
             })
             ;
     };
+    this.deleteClass = function (cls) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/classes/" + cls.id,
+                    method: "DELETE"
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
     this.selectEntries = function (params) {
         return Configure.getHost()
             .then(function (host) {
@@ -304,6 +317,19 @@ function func(Configure, $http) {
                     url: host + "/counsels/entries/" + id,
                     method: "PUT",
                     data: data
+                });
+            })
+            .then(function (resp) {
+                return resp.data;
+            })
+            ;
+    };
+    this.deleteEntry = function (ent) {
+        return Configure.getHost()
+            .then(function (host) {
+                return $http({
+                    url: host + "/counsels/entries/" + ent.id,
+                    method: "DELETE"
                 });
             })
             .then(function (resp) {

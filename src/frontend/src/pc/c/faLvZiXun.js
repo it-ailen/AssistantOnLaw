@@ -101,6 +101,20 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
             })
         ;
     };
+    $scope.deleteClass = function (cls) {
+        ResourceService.deleteClass(cls)
+            .then(function () {
+                angular.forEach($scope.data.classes, function (item, index) {
+                    if (item.id === cls.id) {
+                        $scope.data.classes.splice(index, 1);
+                    }
+                })
+            })
+            .catch(function (error) {
+                toastr.error(error);
+            })
+        ;
+    };
     $scope.updateEntry = function (classId, entry) {
         console.log("updateEntry????")
         var promise = ngDialog.open({
@@ -152,6 +166,20 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
                         $scope.data.entries.push(newEntry);
                     }
                 }
+            })
+        ;
+    };
+    $scope.deleteEntry = function (ent) {
+        ResourceService.deleteEntry(ent)
+            .then(function () {
+                angular.forEach($scope.data.entries, function (item, index) {
+                    if (item.id === ent.id) {
+                        $scope.data.entries.splice(index, 1);
+                    }
+                })
+            })
+            .catch(function (error) {
+                toastr.error(error);
             })
         ;
     };

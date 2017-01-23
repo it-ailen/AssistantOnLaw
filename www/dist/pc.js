@@ -60920,7 +60920,7 @@
 /* 88 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\"><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题类别<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateClass()\" ng-show=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"class in data.classes\"><div class=\"panel-heading\" ng-click=\"data.expandedClass=class.id; data.expandedEntry=null; loadEntries(class.id)\"><h4 class=\"panel-title\">{{ class.name }}</h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedClass!=class.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ class.name }}</td></tr><tr><th>描述</th><td>{{ class.description }}</td></tr><tr><th>图标</th><td><img width=\"40\" height=\"40\" ng-src=\"{{ class.logo }}\"/></td></tr></table></div></div></div></div></div><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">入口<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateEntry(data.expandedClass)\" ng-show=\"data.expandedClass &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"entry in data.entries\"><div class=\"panel-heading\" ng-click=\"data.expandedEntry=entry.id; loadQuestions(entry.id)\"><h4 class=\"panel-title\">{{ entry.name }}</h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedEntry!=entry.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ entry.name }}</td></tr></table></div></div></div></div></div><div class=\"col-md-6\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateQuestion(data.expandedEntry)\" ng-show=\"data.expandedEntry &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div></div><div class=\"panel-body\" ng-show=\"$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"editConclusion(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div class=\"hover-actions\"><span class=\"remove-btn glyphicon glyphicon-remove\" ng-click=\"deleteQuestion(question)\"></span><span class=\"edit-btn glyphicon glyphicon-edit\" ng-click=\"updateQuestion(question)\"></span></div><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"编辑结论\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div><div class=\"panel-body\" ng-show=\"!$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"search(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"查询\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div></div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\"><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题类别<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateClass()\" ng-show=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"class in data.classes\"><div class=\"panel-heading\" ng-click=\"data.expandedClass=class.id; data.expandedEntry=null; loadEntries(class.id)\"><h4 class=\"panel-title\">{{ class.name }}<span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"deleteClass(class)\" ng-if=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedClass!=class.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ class.name }}</td></tr><tr><th>描述</th><td>{{ class.description }}</td></tr><tr><th>图标</th><td><img width=\"40\" height=\"40\" ng-src=\"{{ class.logo }}\"/></td></tr></table></div></div></div></div></div><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">入口<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateEntry(data.expandedClass)\" ng-show=\"data.expandedClass &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"entry in data.entries\"><div class=\"panel-heading\" ng-click=\"data.expandedEntry=entry.id; loadQuestions(entry.id)\"><h4 class=\"panel-title\">{{ entry.name }}<span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"deleteEntry(entry)\" ng-if=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedEntry!=entry.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ entry.name }}</td></tr></table></div></div></div></div></div><div class=\"col-md-6\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateQuestion(data.expandedEntry)\" ng-show=\"data.expandedEntry &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div></div><div class=\"panel-body\" ng-show=\"$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"editConclusion(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div class=\"hover-actions\"><span class=\"remove-btn glyphicon glyphicon-remove\" ng-click=\"deleteQuestion(question)\"></span><span class=\"edit-btn glyphicon glyphicon-edit\" ng-click=\"updateQuestion(question)\"></span></div><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"编辑结论\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div><div class=\"panel-body\" ng-show=\"!$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"search(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"查询\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div></div></div></div>";
 
 /***/ },
 /* 89 */
@@ -61626,6 +61626,20 @@
 	            })
 	        ;
 	    };
+	    $scope.deleteClass = function (cls) {
+	        ResourceService.deleteClass(cls)
+	            .then(function () {
+	                angular.forEach($scope.data.classes, function (item, index) {
+	                    if (item.id === cls.id) {
+	                        $scope.data.classes.splice(index, 1);
+	                    }
+	                })
+	            })
+	            .catch(function (error) {
+	                toastr.error(error);
+	            })
+	        ;
+	    };
 	    $scope.updateEntry = function (classId, entry) {
 	        console.log("updateEntry????")
 	        var promise = ngDialog.open({
@@ -61677,6 +61691,20 @@
 	                        $scope.data.entries.push(newEntry);
 	                    }
 	                }
+	            })
+	        ;
+	    };
+	    $scope.deleteEntry = function (ent) {
+	        ResourceService.deleteEntry(ent)
+	            .then(function () {
+	                angular.forEach($scope.data.entries, function (item, index) {
+	                    if (item.id === ent.id) {
+	                        $scope.data.entries.splice(index, 1);
+	                    }
+	                })
+	            })
+	            .catch(function (error) {
+	                toastr.error(error);
 	            })
 	        ;
 	    };
@@ -63333,6 +63361,19 @@
 	            })
 	            ;
 	    };
+	    this.deleteClass = function (cls) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/classes/" + cls.id,
+	                    method: "DELETE"
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
 	    this.selectEntries = function (params) {
 	        return Configure.getHost()
 	            .then(function (host) {
@@ -63368,6 +63409,19 @@
 	                    url: host + "/counsels/entries/" + id,
 	                    method: "PUT",
 	                    data: data
+	                });
+	            })
+	            .then(function (resp) {
+	                return resp.data;
+	            })
+	            ;
+	    };
+	    this.deleteEntry = function (ent) {
+	        return Configure.getHost()
+	            .then(function (host) {
+	                return $http({
+	                    url: host + "/counsels/entries/" + ent.id,
+	                    method: "DELETE"
 	                });
 	            })
 	            .then(function (resp) {

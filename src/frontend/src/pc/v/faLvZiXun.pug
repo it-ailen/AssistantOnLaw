@@ -13,6 +13,8 @@ div.row(style="max-height: 100%;")
                     div.panel.panel-default(ng-repeat="class in data.classes")
                         div.panel-heading(ng-click="data.expandedClass=class.id; data.expandedEntry=null; loadEntries(class.id)")
                             h4.panel-title {{ class.name }}
+                                span.glyphicon.glyphicon-remove.pull-right(ng-click="deleteClass(class)",
+                                ng-if="$state.includes('frame.home.base.super')")
                         div.panel-body.collapse(uib-collapse="data.expandedClass!=class.id")
                             table.table.table-hover
                                 tr
@@ -35,6 +37,8 @@ div.row(style="max-height: 100%;")
                     div.panel.panel-default(ng-repeat="entry in data.entries")
                         div.panel-heading(ng-click="data.expandedEntry=entry.id; loadQuestions(entry.id)")
                             h4.panel-title {{ entry.name }}
+                                span.glyphicon.glyphicon-remove.pull-right(ng-click="deleteEntry(entry)",
+                                ng-if="$state.includes('frame.home.base.super')")
                         div.panel-body.collapse(uib-collapse="data.expandedEntry!=entry.id")
                             table.table.table-hover
                                 tr

@@ -78,7 +78,7 @@ func (self *EntryHandler) DELETE(w http.ResponseWriter, r *http.Request) *foolht
     id := foolhttp.RouteArgument(r, "id")
     mgr := content.GetManager()
     entry := mgr.SelectEntry(id)
-    if entry != nil {
+    if entry == nil {
 		panic(foolhttp.NotFoundHTTPError("Invalid id"))
     }
     mgr.DeleteEntry(id)
