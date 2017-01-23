@@ -63,11 +63,11 @@
 	__webpack_require__(40);
 
 	__webpack_require__(28);
-	__webpack_require__(94);
+	__webpack_require__(98);
 
-	__webpack_require__(116);
+	__webpack_require__(121);
 
-	__webpack_require__(109);
+	__webpack_require__(114);
 
 
 	var app = angular.module("LA.admin", [
@@ -85,7 +85,7 @@
 	    .service("tools", __webpack_require__(32))
 	;
 
-	var admin = __webpack_require__(110);
+	var admin = __webpack_require__(115);
 	admin.register(app);
 
 	module.exports = app;
@@ -43230,7 +43230,8 @@
 /* 61 */,
 /* 62 */,
 /* 63 */,
-/* 64 */
+/* 64 */,
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -43462,49 +43463,48 @@
 
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports) {
 
 	module.exports = "<table class=\"table issue-item\">\n  <tr>\n    <td>ID</td>\n    <td>{{ item.id }}</td>\n  </tr>\n  <tr>\n    <td>创建时间</td>\n    <td>{{ item.created_time | ms_2_time }}</td>\n  </tr>\n  <tr>\n    <td>状态</td>\n    <td>{{ item.status }}</td>\n  </tr>\n  <tr>\n    <td>姓名</td>\n    <td>{{ item.client.name }}</td>\n  </tr>\n  <tr>\n    <td>联系方式</td>\n    <td>{{ item.client.contact }}</td>\n  </tr>\n  <tr>\n    <td>详情</td>\n    <td>\n      <span>{{ item.detail.description }}</span>\n    </td>\n  </tr>\n  <tr ng-if=\"item.detail.attachments && item.detail.attachments.length > 0\">\n    <td>附件</td>\n    <td>\n      <span ng-repeat=\"attachment in item.detail.attachments track by $index\">\n        <a ng-href=\"{{ attachment }}\" target=\"_blank\">{{ attachment }}</a>\n      </span>\n    </td>\n  </tr>\n  <tr ng-if=\"item.tags && item.tags.length > 0\">\n    <td>标签</td>\n    <td><span ng-repeat=\"tag in item.tags\" class=\"tag\">{{ tag }}</span></td>\n  </tr>\n  <tr ng-if=\"item.solution\">\n    <td>解答</td>\n    <td>{{ item.solution | safehtml }}</td>\n  </tr>\n</table>";
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports) {
 
 	module.exports = "<form name=\"form\" class=\"form-horizontal\" role=\"form\" ng-submit=\"submit()\">\n  <div class=\"form-group\" ng-show=\"ngDialogData.item\">\n    <label class=\"col-sm-2 control-label\">ID</label>\n    <div class=\"col-sm-10\">\n      <p class=\"form-control-static\">{{ item.id }}</p>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"col-sm-2 control-label\">名称</label>\n    <div class=\"col-sm-6\">\n      <input name=\"name\" type=\"text\" class=\"form-control\" ng-model=\"item.name\" required>\n    </div>\n    <div class=\"col-sm-4 form-error\" ng-show=\"form.name.$error\">\n      <span ng-show=\"form.name.$error.required\">必填</span>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <label class=\"col-sm-2 control-label\">图标</label>\n    <div class=\"col-sm-6\">\n      <ng-image-input name=\"icon\" ng-model=\"item.icon\" required upload=\"uploadIcon\"\n                      src-to-url=\"imgSrcToUrl\"></ng-image-input>\n      <!--<input type=\"file\" name=\"icon\" ng-model=\"item.icon\" onchange=\"angular.element(this).scope().iconChange()\" required>-->\n    </div>\n    <div class=\"col-sm-4 form-error\">\n      <span ng-show=\"form.icon.$error.required\">必填</span>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div class=\"col-sm-offset-4 col-sm-2\">\n      <input type=\"submit\" class=\"btn btn-default\" value=\"保存\"\n             ng-disabled=\"form.$invalid || form.$pristine || formStatus === 'submitting'\">\n    </div>\n    <div class=\"col-sm-2\">\n      <input type=\"button\" class=\"btn btn-warn\" value=\"取消\"\n             ng-click=\"closeThisDialog({status: 'dismiss'})\">\n    </div>\n  </div>\n</form>\n";
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports) {
 
 	module.exports = "<form role=\"form\" name=\"form\" class=\"form-horizontal\" ng-submit=\"submit()\">\n  <div class=\"form-group\" ng-show=\"ngDialogData.item\">\n    <label class=\"col-sm-2 control-label\">ID</label>\n    <div class=\"col-sm-6\">\n      <p class=\"form-control-static\">{{ item.id }}</p>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"col-sm-2 control-label\">显示文字</label>\n    <div class=\"col-sm-6\">\n      <input name=\"text\" type=\"text\" class=\"form-control\" ng-model=\"item.text\" required>\n    </div>\n    <div class=\"col-sm-4 form-error\" ng-show=\"form.text.$error\">\n      <span ng-show=\"form.text.$error.required\">必填</span>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"col-sm-2 control-label\">布局类型</label>\n    <div class=\"col-sm-6\">\n      <select ng-model=\"item.layout_type\" name=\"layout_out\" class=\"form-control\" required>\n        <option value=\"single\">单页</option>\n        <option value=\"multiple\">多页</option>\n      </select>\n    </div>\n    <div class=\"col-sm-4 form-error\" ng-show=\"form.layout_type.$error\">\n      <span ng-show=\"form.layout_type.$error.required\">必填</span>\n    </div>\n  </div>\n\n\n  <div class=\"form-group\">\n    <div class=\"col-sm-offset-4 col-sm-2\">\n      <input type=\"submit\" class=\"btn btn-default\" value=\"保存\"\n             ng-disabled=\"form.$invalid || form.$pristine || formStatus === 'submitting'\">\n    </div>\n    <div class=\"col-sm-2\">\n      <input type=\"button\" class=\"btn btn-warn\" value=\"取消\"\n             ng-click=\"closeThisDialog({status: 'dismiss'})\">\n    </div>\n  </div>\n</form>";
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports) {
 
 	module.exports = "<form name=\"form\" role=\"form\" class=\"form-horizontal\" ng-submit=\"submit()\">\n  <div class=\"form-group\">\n    <label class=\"grid-col-4 control-label\">Parent</label>\n    <div class=\"grid-col-10\">\n      <p class=\"form-control-static\">{{ ngDialogData.parent.id }}</p>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"grid-col-4 control-label\">类型</label>\n    <div class=\"grid-col-10\">\n      <select ng-model=\"item.type\" class=\"form-control\">\n        <option value=\"option\">选项</option>\n        <option value=\"report\">报告</option>\n      </select>\n    </div>\n  </div>\n  <div ng-if=\"item.type==='option'\">\n    <div class=\"form-group\">\n      <label class=\"grid-col-4 control-label\"></label>\n      <div class=\"grid-col-10\">\n        <input type=\"text\" class=\"form-control\" ng-model=\"item.text\"\n               required>\n      </div>\n    </div>\n  </div>\n  <div ng-if=\"item.type==='report'\">\n    <div class=\"form-group\">\n      <label class=\"grid-col-4 control-label\">标题</label>\n      <div class=\"grid-col-10\">\n        <input type=\"text\" class=\"form-control\" ng-model=\"item.report.title\">\n      </div>\n    </div>\n    <div class=\"form-group\">\n      <label class=\"grid-col-4 control-label\">结论</label>\n      <div class=\"grid-col-10\">\n        <textarea ng-model=\"item.report.conclusion\" class=\"form-control\"></textarea>\n      </div>\n    </div>\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">\n        <h4 class=\"panel-title\">\n          <span>法条</span>\n          <span class=\"glyphicon glyphicon-plus\" ng-click=\"addDecree()\"></span>\n        </h4>\n      </div>\n      <div class=\"panel-body\">\n        <div class=\"decree\" ng-repeat=\"decree in item.report.decrees track by $index\">\n          <textarea class=\"form-control\" ng-model=\"item.report.decrees[$index].content\"></textarea>\n        </div>\n      </div>\n    </div>\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">\n        <h4 class=\"panel-title\">\n          <span>案例</span>\n          <span class=\"glyphicon glyphicon-plus\" ng-click=\"addCase()\"></span>\n        </h4>\n      </div>\n      <div class=\"panel-body\">\n        <div class=\"decree\" ng-repeat=\"case in item.report.cases track by $index\">\n          <textarea class=\"form-control\" ng-model=\"item.report.cases[$index].content\"></textarea>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div class=\"grid-col-offset-6 grid-col-4\">\n      <input type=\"submit\" class=\"btn btn-default\" value=\"保存\"\n             ng-disabled=\"form.$invalid || form.$pristine || submitStatus === 'submitting'\">\n    </div>\n    <div class=\"grid-col-4\">\n      <input type=\"button\" class=\"btn btn-warn\" value=\"取消\"\n             ng-click=\"closeThisDialog({status: 'dismiss'})\">\n    </div>\n  </div>\n</form>";
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports) {
 
 	module.exports = "<form name=\"form\" role=\"form\" class=\"form-horizontal\" ng-submit=\"submit()\">\n  <div class=\"form-group\">\n    <label class=\"grid-col-4 control-label\">标题</label>\n    <div class=\"grid-col-10\">\n      <input class=\"form-control\" type=\"text\" name=\"title\" ng-model=\"data.title\"\n             required>\n    </div>\n  </div>\n  <div class=\"form-group\">\n    <label class=\"grid-col-4 control-label\">\n      <span>图片</span>\n      <span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"addPoster()\"></span>\n    </label>\n    <div class=\"grid-col-10\">\n      <div class=\"poster\" ng-repeat=\"poster in data.posters track by $index\">\n        <ng-image-input ng-model=\"poster\" required upload=\"uploadHomePoster\"\n                        src-to-url=\"imgSrcToUrl\"></ng-image-input>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"form-group\">\n    <div class=\"grid-col-offset-6 grid-col-4\">\n      <input type=\"submit\" class=\"btn btn-default\" value=\"保存\"\n             ng-disabled=\"form.$invalid || form.$pristine || submitStatus === 'submitting'\">\n    </div>\n    <div class=\"grid-col-4\">\n      <input type=\"button\" class=\"btn btn-warn\" value=\"取消\"\n             ng-click=\"closeThisDialog({status: 'dismiss'})\">\n    </div>\n  </div>\n</form>";
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"page-admin-home\" class=\"grid-row\">\n  <div class=\"grid-col-6\" ng-if=\"false\">\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">\n        <h4 class=\"panel-title\">\n          <span>首页</span>\n          <span class=\"pull-right glyphicon glyphicon-edit\" ng-click=\"editPageHome()\"></span>\n        </h4>\n      </div>\n      <div class=\"panel-body\">\n        <div page-preview-home ng-model=\"home\"></div>\n      </div>\n    </div>\n  </div>\n  <div class=\"grid-col-4\">\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">\n        <h6 class=\"panel-title\">\n          <span>Channel</span>\n          <span class=\"glyphicon glyphicon-plus pull-right\" ng-click=\"editChannel()\"></span>\n        </h6>\n      </div>\n      <div class=\"panel-body\">\n        <div class=\"panel panel-default channel\" ng-repeat=\"channel in channels track by $index\"\n             ng-class=\"channelClass(channel)\" ng-click=\"channelClick(channel)\">\n          <div class=\"panel-title\">\n            <div class=\"icon\">\n              <img ng-src=\"{{ channel.icon }}\">\n            </div>\n            <div class=\"text\">{{ channel.name }}</div>\n            <div class=\"operation\">\n              <span class=\"glyphicon glyphicon-edit\" ng-click=\"editChannel(channel)\"></span>\n              <span class=\"glyphicon glyphicon-remove\" ng-click=\"removeChannel($index, channel)\"></span>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"grid-col-4\" ng-if=\"status.channel\">\n    <div class=\"panel panel-default\">\n      <div class=\"panel-title\">\n        <span>Entries & Steps</span>\n        <span class=\"glyphicon glyphicon-plus pull-right\" ng-click=\"editEntryOrOption('entry', status.channel)\"></span>\n      </div>\n      <div class=\"panel-body\">\n        <div class=\"panel panel-default entry\" ng-repeat=\"entry in entries track by $index\">\n          <tree root=\"entry\" adapter=\"entryAdapter\"\n                children-loader=\"loadChildren\"\n                add-item=\"addItem\" remove-item=\"removeItem\"\n                node-click=\"itemClick\" edit-item=\"itemEdit\">\n          </tree>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"grid-col-6\">\n    <div class=\"panel panel-default\" ng-if=\"currentItem\">\n      <div class=\"panel-title\">{{ currentItem.type }}</div>\n      <div class=\"panel-body\" ng-if=\"currentItem.type==='entry'\">\n        <table class=\"table\">\n          <tr>\n            <td>id</td>\n            <td>{{ currentItem.id }}</td>\n          </tr>\n          <tr>\n            <td>text</td>\n            <td>{{ currentItem.text }}</td>\n          </tr>\n          <tr>\n            <td>页面类型</td>\n            <td>{{ currentItem.layout_type }}</td>\n          </tr>\n        </table>\n      </div>\n      <div class=\"panel-body\" ng-if=\"currentItem.type==='option'\">\n        <table class=\"table\">\n          <tr>\n            <td>id</td>\n            <td>{{ currentItem.id }}</td>\n          </tr>\n          <tr>\n            <td>text</td>\n            <td>{{ currentItem.text }}</td>\n          </tr>\n        </table>\n      </div>\n      <div class=\"panel-body\" ng-if=\"currentItem.type==='report'\">\n        <table class=\"table\">\n          <tr>\n            <td>id</td>\n            <td>{{ currentItem.id }}</td>\n          </tr>\n          <tr>\n            <td>标题</td>\n            <td>{{ currentItem.report.title }}</td>\n          </tr>\n          <tr>\n            <td>结论</td>\n            <td>{{ currentItem.report.conclusion }}</td>\n          </tr>\n          <tr ng-if=\"currentItem.report.decrees && currentItem.report.decrees.length > 0\">\n            <td>法条</td>\n            <td>\n              <span ng-repeat=\"decree in currentItem.report.decrees\">\n                {{ decree.content }}\n              </span>\n            </td>\n          </tr>\n          <tr ng-if=\"currentItem.report.cases && currentItem.report.cases.length > 0\">\n            <td>案例</td>\n            <td>\n              <span ng-repeat=\"case in currentItem.report.cases\">\n                {{ case.content }}\n              </span>\n            </td>\n          </tr>\n        </table>\n      </div>\n    </div>\n  </div>\n</div>";
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports) {
 
 	module.exports = "<div id=\"page-issue-todo\">\n  <div title-bar></div>\n  <div class=\"row-fluid\">\n    <div class=\"col-md-4 left-list\">\n      <div class=\"panel panel-default\">\n        <div class=\"panel-heading\">\n          <h4 class=\"panel-title\">待处理列表</h4>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"issue-item\" ng-repeat=\"issue in data.issues\" ng-click=\"expandIssue(issue)\">\n            {{ issue.id }}\n          </div>\n        </div>\n      </div>\n    </div>\n    <div class=\"col-md-8\">\n      <div class=\"panel panel-default\" ng-show=\"status.current\">\n        <div class=\"panel-heading\">\n          <h4 class=\"panel-title\">\n            <span>详情</span>\n            <a href class=\"pull-right\" data-toggle=\"tooltip\"\n               title=\"解答\" ng-click=\"addSolution(status.current)\">\n              <span class=\"glyphicon glyphicon-console\" aria-hidden=\"true\"></span>\n            </a>\n          </h4>\n        </div>\n        <div class=\"panel-body\">\n          <div issue=\"status.current\">\n          </div>\n          <div class=\"reply\">\n            <form name=\"form\" ng-submit=\"submit()\" class=\"form-horizontal\">\n              <div class=\"form-group\">\n                <label class=\"col-md-2 control-label\">标签</label>\n                <div class=\"col-md-10\">\n                  <input type=\"text\" ng-model=\"solution.tags\" class=\"form-control\">\n                  <p class=\"help-block\">用空格分隔</p>\n                </div>\n              </div>\n              <div class=\"form-group\">\n                <label class=\"col-md-2 control-label\">解答</label>\n                <div class=\"col-md-10\">\n                  <div text-angular ng-model=\"solution.solution\"></div>\n                </div>\n              </div>\n              <div class=\"form-group\">\n                <input type=\"submit\" class=\"btn btn-default\" ng-disabled=\"form.$invalid || form.$pristine\" value=\"提交\">\n              </div>\n            </form>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>";
 
 /***/ },
-/* 72 */,
 /* 73 */,
 /* 74 */,
 /* 75 */,
@@ -43524,7 +43524,11 @@
 /* 89 */,
 /* 90 */,
 /* 91 */,
-/* 92 */
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43550,7 +43554,7 @@
 	}
 
 /***/ },
-/* 93 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43576,7 +43580,7 @@
 	}
 
 /***/ },
-/* 94 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
@@ -43602,10 +43606,6 @@
 	}
 
 /***/ },
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
 /* 99 */,
 /* 100 */,
 /* 101 */,
@@ -43614,7 +43614,12 @@
 /* 104 */,
 /* 105 */,
 /* 106 */,
-/* 107 */
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */
 /***/ function(module, exports) {
 
 	/**
@@ -43671,7 +43676,7 @@
 
 
 /***/ },
-/* 108 */
+/* 113 */
 /***/ function(module, exports) {
 
 	/**
@@ -43994,7 +43999,7 @@
 
 
 /***/ },
-/* 109 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44003,7 +44008,7 @@
 
 	"use strict";
 
-	var dateFormat = __webpack_require__(64);
+	var dateFormat = __webpack_require__(65);
 
 	var app = angular.module("admin.custom.item", [])
 	        .filter("ms_2_time", function () {
@@ -44031,7 +44036,7 @@
 	            scope: {
 	                item: "=issue"
 	            },
-	            template: __webpack_require__(65),
+	            template: __webpack_require__(66),
 	            link: function($scope, ele, attr) {
 	            }
 	        };
@@ -44042,7 +44047,7 @@
 
 
 /***/ },
-/* 110 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44051,10 +44056,10 @@
 
 	"use strict";
 
-	__webpack_require__(93);
+	__webpack_require__(97);
 
 	function register_controllers(app) {
-	    app.service("AdminDataService", __webpack_require__(108))
+	    app.service("AdminDataService", __webpack_require__(113))
 	    ;
 	    app.config(function($routeProvider) {
 	        route($routeProvider);
@@ -44064,12 +44069,12 @@
 	function route($routeProvider) {
 	    $routeProvider
 	        .when("/home", {
-	            controller: __webpack_require__(115),
-	            template: __webpack_require__(70)
+	            controller: __webpack_require__(120),
+	            template: __webpack_require__(71)
 	        })
 	        .when("/issues/todo", {
-	            controller: __webpack_require__(107),
-	            template: __webpack_require__(71)
+	            controller: __webpack_require__(112),
+	            template: __webpack_require__(72)
 	        })
 	        .when("/issues", {
 	            redirectTo: "/issues/todo"
@@ -44086,7 +44091,7 @@
 
 
 /***/ },
-/* 111 */
+/* 116 */
 /***/ function(module, exports) {
 
 	/**
@@ -44140,7 +44145,7 @@
 
 
 /***/ },
-/* 112 */
+/* 117 */
 /***/ function(module, exports) {
 
 	/**
@@ -44188,7 +44193,7 @@
 
 
 /***/ },
-/* 113 */
+/* 118 */
 /***/ function(module, exports) {
 
 	/**
@@ -44245,7 +44250,7 @@
 
 
 /***/ },
-/* 114 */
+/* 119 */
 /***/ function(module, exports) {
 
 	/**
@@ -44272,7 +44277,7 @@
 
 
 /***/ },
-/* 115 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44281,7 +44286,7 @@
 
 	"use strict";
 
-	__webpack_require__(92);
+	__webpack_require__(96);
 
 	function controller($scope, AdminDataService, $q, ngDialog, tools) {
 	    $scope.status = {};
@@ -44296,9 +44301,9 @@
 	    ;
 	    $scope.editChannel = function(channel) {
 	        ngDialog.open({
-	            template: __webpack_require__(66),
+	            template: __webpack_require__(67),
 	            plain: true,
-	            controller: __webpack_require__(111),
+	            controller: __webpack_require__(116),
 	            data: {
 	                item: channel
 	            }
@@ -44355,9 +44360,9 @@
 	        var defer = $q.defer();
 	        if (type === 'option' || type === 'report') {
 	            var dialog = ngDialog.open({
-	                template: __webpack_require__(68),
+	                template: __webpack_require__(69),
 	                plain: true,
-	                controller: __webpack_require__(113),
+	                controller: __webpack_require__(118),
 	                data: {
 	                    parent: parent,
 	                    item: item
@@ -44371,9 +44376,9 @@
 	            ;
 	        } else {
 	            ngDialog.open({
-	                template: __webpack_require__(67),
+	                template: __webpack_require__(68),
 	                plain: true,
-	                controller: __webpack_require__(112),
+	                controller: __webpack_require__(117),
 	                data: {
 	                    channel: channel,
 	                    item: item
@@ -44445,9 +44450,9 @@
 	    };
 	    $scope.editPageHome = function() {
 	        ngDialog.open({
-	            template: __webpack_require__(69),
+	            template: __webpack_require__(70),
 	            plain: true,
-	            controller: __webpack_require__(114),
+	            controller: __webpack_require__(119),
 	            data: {
 	                data: $scope.home
 	            },
@@ -44460,7 +44465,7 @@
 
 
 /***/ },
-/* 116 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
