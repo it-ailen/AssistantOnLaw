@@ -89,9 +89,16 @@ app
                     }
                     return [];
                 });
-                // ngModel.$formatters.push(function (val) {
-                //     return "" + val;
-                // });
+                ngModel.$formatters.push(function (val) {
+                    if (angular.isArray(val)) {
+                        var array = [];
+                        angular.forEach(val, function (item) {
+                            array.push("" + item);
+                        });
+                        return array;
+                    }
+                    return [];
+                });
             }
         }
     })

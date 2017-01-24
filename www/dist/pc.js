@@ -158,9 +158,16 @@
 	                    }
 	                    return [];
 	                });
-	                // ngModel.$formatters.push(function (val) {
-	                //     return "" + val;
-	                // });
+	                ngModel.$formatters.push(function (val) {
+	                    if (angular.isArray(val)) {
+	                        var array = [];
+	                        angular.forEach(val, function (item) {
+	                            array.push("" + item);
+	                        });
+	                        return array;
+	                    }
+	                    return [];
+	                });
 	            }
 	        }
 	    })
@@ -60811,7 +60818,7 @@
 
 
 	// module
-	exports.push([module.id, ".question-wrapper {\n  display: block;\n  position: relative;\n  padding: 4px;\n}\n.question-wrapper.to_be_triggered {\n  background-color: #cdcdcd;\n  pointer-events: none;\n  cursor: not-allowed;\n}\n.question-wrapper .hover-actions {\n  position: absolute;\n  right: 0;\n  top: 0;\n  visibility: hidden;\n  text-align: right;\n}\n.question-wrapper:hover {\n  background-color: white;\n}\n.question-wrapper:hover .hover-actions {\n  visibility: visible;\n}\n.question-wrapper .title {\n  font-size: 16px;\n  font-weight: bold;\n}\n.question-wrapper .option {\n  font-size: 12px;\n  padding: 4px;\n}\n", ""]);
+	exports.push([module.id, ".question-wrapper {\n  display: block;\n  position: relative;\n  padding: 4px;\n}\n.question-wrapper.to_be_triggered .card {\n  background-color: #cdcdcd;\n  pointer-events: none;\n  cursor: not-allowed;\n}\n.question-wrapper .hover-actions {\n  position: absolute;\n  right: 0;\n  top: 0;\n  visibility: hidden;\n  text-align: right;\n}\n.question-wrapper:hover {\n  background-color: white;\n}\n.question-wrapper:hover .hover-actions {\n  visibility: visible;\n  text-align: right;\n}\n.question-wrapper:hover .hover-actions span {\n  margin-left: 10px;\n}\n.question-wrapper .title {\n  font-size: 16px;\n  font-weight: bold;\n}\n.question-wrapper .option {\n  font-size: 12px;\n  padding: 4px;\n}\n", ""]);
 
 	// exports
 

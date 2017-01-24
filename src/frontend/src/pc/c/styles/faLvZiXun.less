@@ -2,7 +2,7 @@
   display: block;
   position: relative;
   padding: 4px;
-  &.to_be_triggered {
+  &.to_be_triggered .card {
     background-color: #cdcdcd;
     pointer-events: none;
     cursor: not-allowed;
@@ -18,6 +18,10 @@
     background-color: white;
     .hover-actions {
       visibility: visible;
+      text-align: right;
+      span {
+        margin-left: 10px;
+      }
     }
   }
   .title {
