@@ -135,6 +135,35 @@
 	            }
 	        };
 	    })
+	    .directive("ensureIntegerArray", function() {
+	        return {
+	            require: "ngModel",
+	            restrict: "A",
+	            link: function ($scope, iEle, iAttr, ngModel) {
+	                ngModel.$parsers.push(function (val) {
+	                    console.log("ensureIntegerArray:::");
+	                    console.log(val);
+	                    if (angular.isArray(val)) {
+	                        var array = [];
+	                        angular.forEach(val, function(item) {
+	                            if (angular.isString(item)) {
+	                                array.push(parseInt(item, 10));
+	                            } else if (angular.isNumber(item)) {
+	                                array.push(item);
+	                            } else {
+	                                return undefined;
+	                            }
+	                        });
+	                        return array;
+	                    }
+	                    return [];
+	                });
+	                // ngModel.$formatters.push(function (val) {
+	                //     return "" + val;
+	                // });
+	            }
+	        }
+	    })
 	    .service("tools", __webpack_require__(32))
 	    .provider("Configure", __webpack_require__(145))
 	    .config(function($urlRouterProvider, ConfigureProvider) {
@@ -60902,7 +60931,7 @@
 /* 85 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/4.--><div>{{ rawItem | json }}</div><div>{{ item | json }}</div><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>问题</label><input class=\"form-control\" type=\"text\" ng-model=\"item.question\" required=\"required\" name=\"question\"/></div><div class=\"form-group\"><label>需要触发?</label><input class=\"form-control\" type=\"checkbox\" ng-model=\"hasFuse\" ng-init=\"hasFuse = item.trigger_by &amp;&amp; true || false\"/></div><div class=\"form-group\" ng-if=\"hasFuse\"><label>问题</label><select class=\"form-control\" ng-model=\"item.trigger_by.question_id\" required=\"\" name=\"triggered_question\" ng-change=\"triggerQuestionChange(item.trigger_by.question_id)\"><option value=\"\">选择</option><option ng-repeat=\"question in status.availableQuestions track by $index\" value=\"{{ question.id }}\">{{ question.question }}</option></select></div><div class=\"form-group\" ng-if=\"hasFuse &amp;&amp; item.trigger_by.question_id\"><label>选项</label><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='single'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" required=\"\" ensure-digit=\"\"><option value=\"\"></option><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='multiple'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" multiple=\"\" required=\"\" ensure-digit=\"\"><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select></div><div class=\"form-group\"><label>选项类型</label><select class=\"form-control\" ng-model=\"item.type\" required=\"\" name=\"type\"><option value=\"single\">单选</option><option value=\"multiple\">多选</option></select></div><div class=\"form-group\"><label>选项数量</label><input class=\"form-control\" type=\"number\" ng-model=\"optionCount\" ng-init=\"optionCount=item.options &amp;&amp; item.options.length || 2\" min=\"2\" max=\"6\"/></div><div class=\"form-group\" ng-repeat=\"i in [] | range:optionCount\"><label>选项 {{ $index + 1 }}</label><input class=\"form-control\" type=\"text\" ng-model=\"item.options[$index]\" required=\"\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
+	module.exports = "<!--Created by hyku on 2016/12/4.--><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>问题</label><input class=\"form-control\" type=\"text\" ng-model=\"item.question\" required=\"required\" name=\"question\"/></div><div class=\"form-group\"><label>需要触发?</label><input class=\"form-control\" type=\"checkbox\" ng-model=\"hasFuse\" ng-init=\"hasFuse = item.trigger_by &amp;&amp; true || false\"/></div><div class=\"form-group\" ng-if=\"hasFuse\"><label>问题</label><select class=\"form-control\" ng-model=\"item.trigger_by.question_id\" required=\"\" name=\"triggered_question\" ng-change=\"triggerQuestionChange(item.trigger_by.question_id)\"><option value=\"\">选择</option><option ng-repeat=\"question in status.availableQuestions track by $index\" value=\"{{ question.id }}\">{{ question.question }}</option></select></div><div class=\"form-group\" ng-if=\"hasFuse &amp;&amp; item.trigger_by.question_id\"><label>选项</label><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='single'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" required=\"\" ensure-digit=\"\"><option value=\"\"></option><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='multiple'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" multiple=\"\" required=\"\" ensure-integer-array=\"\"><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select><div class=\"help-block\">trigger: {{ item.trigger_by | json }}</div></div><div class=\"form-group\"><label>选项类型</label><select class=\"form-control\" ng-model=\"item.type\" required=\"\" name=\"type\"><option value=\"single\">单选</option><option value=\"multiple\">多选</option></select></div><div class=\"form-group\"><label>选项数量</label><input class=\"form-control\" type=\"number\" ng-model=\"optionCount\" ng-init=\"optionCount=item.options &amp;&amp; item.options.length || 2\" min=\"2\" max=\"6\"/></div><div class=\"form-group\" ng-repeat=\"i in [] | range:optionCount\"><label>选项 {{ $index + 1 }}</label><input class=\"form-control\" type=\"text\" ng-model=\"item.options[$index]\" required=\"\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 86 */

@@ -66,6 +66,35 @@ app
             }
         };
     })
+    .directive("ensureIntegerArray", function() {
+        return {
+            require: "ngModel",
+            restrict: "A",
+            link: function ($scope, iEle, iAttr, ngModel) {
+                ngModel.$parsers.push(function (val) {
+                    console.log("ensureIntegerArray:::");
+                    console.log(val);
+                    if (angular.isArray(val)) {
+                        var array = [];
+                        angular.forEach(val, function(item) {
+                            if (angular.isString(item)) {
+                                array.push(parseInt(item, 10));
+                            } else if (angular.isNumber(item)) {
+                                array.push(item);
+                            } else {
+                                return undefined;
+                            }
+                        });
+                        return array;
+                    }
+                    return [];
+                });
+                // ngModel.$formatters.push(function (val) {
+                //     return "" + val;
+                // });
+            }
+        }
+    })
     .service("tools", require("./service/tools"))
     .provider("Configure", require("./service/configure"))
     .config(function($urlRouterProvider, ConfigureProvider) {
