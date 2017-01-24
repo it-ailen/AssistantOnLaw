@@ -35,7 +35,7 @@ form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
         label 选项数量
         input.form-control(type="number", ng-model="optionCount",
         ng-init="optionCount=item.options && item.options.length || 2",
-        min="2", max="6")
+        min="2", max="10")
     div.form-group(ng-repeat="i in [] | range:optionCount")
         label 选项 {{ $index + 1 }}
         input.form-control(type="text", ng-model="item.options[$index]", required="")
