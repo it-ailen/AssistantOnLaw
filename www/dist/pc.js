@@ -60902,7 +60902,7 @@
 /* 85 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/4.--><div>{{ item | json }}</div><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>问题</label><input class=\"form-control\" type=\"text\" ng-model=\"item.question\" required=\"required\" name=\"question\"/></div><div class=\"form-group\"><label>需要触发?</label><input class=\"form-control\" type=\"checkbox\" ng-model=\"hasFuse\" ng-init=\"hasFuse = item.trigger_by &amp;&amp; true || false\"/></div><div class=\"form-group\" ng-if=\"hasFuse\"><label>问题</label><select class=\"form-control\" ng-model=\"item.trigger_by.question_id\" required=\"\" name=\"triggered_question\" ng-change=\"triggerQuestionChange(item.trigger_by.question_id)\"><option value=\"\">选择</option><option ng-repeat=\"question in status.availableQuestions\" value=\"{{ question.id }}\">{{ question.question }}</option></select></div><div class=\"form-group\" ng-if=\"hasFuse &amp;&amp; item.trigger_by.question_id\"><label>选项</label><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='single'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" required=\"\" ensure-digit=\"\"><option value=\"\"></option><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='multiple'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" multiple=\"\" required=\"\" ensure-digit=\"\"><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select></div><div class=\"form-group\"><label>选项类型</label><select class=\"form-control\" ng-model=\"item.type\" required=\"\" name=\"type\"><option value=\"single\">单选</option><option value=\"multiple\">多选</option></select></div><div class=\"form-group\"><label>选项数量</label><input class=\"form-control\" type=\"number\" ng-model=\"optionCount\" ng-init=\"optionCount=item.options &amp;&amp; item.options.length || 2\" min=\"2\" max=\"6\"/></div><div class=\"form-group\" ng-repeat=\"i in [] | range:optionCount\"><label>选项 {{ $index + 1 }}</label><input class=\"form-control\" type=\"text\" ng-model=\"item.options[$index]\" required=\"\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
+	module.exports = "<!--Created by hyku on 2016/12/4.--><div>{{ rawItem | json }}</div><div>{{ item | json }}</div><form class=\"form-horizontal\" name=\"form\" novalidate=\"\" ng-submit=\"submit()\"><div class=\"form-group\"><label>问题</label><input class=\"form-control\" type=\"text\" ng-model=\"item.question\" required=\"required\" name=\"question\"/></div><div class=\"form-group\"><label>需要触发?</label><input class=\"form-control\" type=\"checkbox\" ng-model=\"hasFuse\" ng-init=\"hasFuse = item.trigger_by &amp;&amp; true || false\"/></div><div class=\"form-group\" ng-if=\"hasFuse\"><label>问题</label><select class=\"form-control\" ng-model=\"item.trigger_by.question_id\" required=\"\" name=\"triggered_question\" ng-change=\"triggerQuestionChange(item.trigger_by.question_id)\"><option value=\"\">选择</option><option ng-repeat=\"question in status.availableQuestions track by $index\" value=\"{{ question.id }}\">{{ question.question }}</option></select></div><div class=\"form-group\" ng-if=\"hasFuse &amp;&amp; item.trigger_by.question_id\"><label>选项</label><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='single'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" required=\"\" ensure-digit=\"\"><option value=\"\"></option><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select><select class=\"form-control\" ng-if=\"status.triggerQuestion.type==='multiple'\" ng-model=\"item.trigger_by.options\" name=\"triggered_options\" multiple=\"\" required=\"\" ensure-digit=\"\"><option ng-repeat=\"option in status.triggerQuestion.options track by $index\" value=\"{{ $index }}\">{{ option }}</option></select></div><div class=\"form-group\"><label>选项类型</label><select class=\"form-control\" ng-model=\"item.type\" required=\"\" name=\"type\"><option value=\"single\">单选</option><option value=\"multiple\">多选</option></select></div><div class=\"form-group\"><label>选项数量</label><input class=\"form-control\" type=\"number\" ng-model=\"optionCount\" ng-init=\"optionCount=item.options &amp;&amp; item.options.length || 2\" min=\"2\" max=\"6\"/></div><div class=\"form-group\" ng-repeat=\"i in [] | range:optionCount\"><label>选项 {{ $index + 1 }}</label><input class=\"form-control\" type=\"text\" ng-model=\"item.options[$index]\" required=\"\"/></div><div class=\"form-group\"><input class=\"btn btn-default\" type=\"submit\" value=\"提交\" ng-disabled=\"form.$invalid\"/></div></form>";
 
 /***/ },
 /* 86 */
@@ -60920,7 +60920,7 @@
 /* 88 */
 /***/ function(module, exports) {
 
-	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\"><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题类别<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateClass()\" ng-show=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"class in data.classes\"><div class=\"panel-heading\" ng-click=\"data.expandedClass=class.id; data.expandedEntry=null; loadEntries(class.id)\"><h4 class=\"panel-title\">{{ class.name }}<span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"deleteClass(class)\" ng-if=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedClass!=class.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ class.name }}</td></tr><tr><th>描述</th><td>{{ class.description }}</td></tr><tr><th>图标</th><td><img width=\"40\" height=\"40\" ng-src=\"{{ class.logo }}\"/></td></tr></table></div></div></div></div></div><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">入口<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateEntry(data.expandedClass)\" ng-show=\"data.expandedClass &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"entry in data.entries\"><div class=\"panel-heading\" ng-click=\"data.expandedEntry=entry.id; loadQuestions(entry.id)\"><h4 class=\"panel-title\">{{ entry.name }}<span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"deleteEntry(entry)\" ng-if=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedEntry!=entry.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ entry.name }}</td></tr></table></div></div></div></div></div><div class=\"col-md-6\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateQuestion(data.expandedEntry)\" ng-show=\"data.expandedEntry &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div></div><div class=\"panel-body\" ng-show=\"$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"editConclusion(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div class=\"hover-actions\"><span class=\"remove-btn glyphicon glyphicon-remove\" ng-click=\"deleteQuestion(question)\"></span><span class=\"edit-btn glyphicon glyphicon-edit\" ng-click=\"updateQuestion(question)\"></span></div><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"编辑结论\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div><div class=\"panel-body\" ng-show=\"!$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"search(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"查询\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div></div></div></div>";
+	module.exports = "<!--Created by hyku on 2016/12/3.\n--><div class=\"row\" style=\"max-height: 100%\"><div class=\"row\"><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题类别<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateClass()\" ng-show=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"class in data.classes\"><div class=\"panel-heading\" ng-click=\"data.expandedClass=class.id; data.expandedEntry=null; loadEntries(class.id)\"><h4 class=\"panel-title\">{{ class.name }}<span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"deleteClass(class)\" ng-if=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedClass!=class.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ class.name }}</td></tr><tr><th>描述</th><td>{{ class.description }}</td></tr><tr><th>图标</th><td><img width=\"40\" height=\"40\" ng-src=\"{{ class.logo }}\"/></td></tr></table></div></div></div></div></div><div class=\"col-md-3\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">入口<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateEntry(data.expandedClass)\" ng-show=\"data.expandedClass &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body\"><div class=\"panel panel-default\" ng-repeat=\"entry in data.entries\"><div class=\"panel-heading\" ng-click=\"data.expandedEntry=entry.id; loadQuestions(entry.id)\"><h4 class=\"panel-title\">{{ entry.name }}<span class=\"glyphicon glyphicon-remove pull-right\" ng-click=\"deleteEntry(entry)\" ng-if=\"$state.includes('frame.home.base.super')\"></span></h4></div><div class=\"panel-body collapse\" uib-collapse=\"data.expandedEntry!=entry.id\"><table class=\"table table-hover\"><tr><th>名称</th><td>{{ entry.name }}</td></tr></table></div></div></div></div></div><div class=\"col-md-6\"><div class=\"panel-default\"><div class=\"panel-heading\"><h4 class=\"panel-title\">问题<span class=\"pull-right glyphicon glyphicon-plus\" ng-click=\"updateQuestion(data.expandedEntry)\" ng-show=\"data.expandedEntry &amp;&amp; $state.includes('frame.home.base.super')\"></span></h4></div></div><div class=\"panel-body\" ng-show=\"$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"editConclusion(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div class=\"hover-actions\"><span class=\"remove-btn glyphicon glyphicon-remove\" ng-click=\"deleteQuestion(question)\"></span><span class=\"edit-btn glyphicon glyphicon-edit\" ng-click=\"updateQuestion(data.expandedEntry, question)\"></span></div><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"编辑结论\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div><div class=\"panel-body\" ng-show=\"!$state.includes('frame.home.base.super')\"><form name=\"form\" ng-submit=\"search(selectionMap)\"><div class=\"form-group question-wrapper\" ng-repeat=\"question in data.questions\" ng-class=\"questionClass(question)\" ng-init=\"selectionMap[question.id] = []\"><div question-input=\"\" question=\"question\" ng-model=\"selectionMap[question.id]\"></div></div><div class=\"form-group\"><input class=\"btn btn-primary\" type=\"submit\" value=\"查询\" ng-show=\"data.questions &amp;&amp; data.questions.length&gt;0\"/></div></form></div></div></div></div>";
 
 /***/ },
 /* 89 */
@@ -61531,7 +61531,8 @@
 	__webpack_require__(105);
 
 	function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
-	    $scope.data = {};
+	    var globalStatus = {};
+	    $scope.data = globalStatus;
 	    function reload() {
 	        ResourceService.selectClasses()
 	            .then(function (classes) {
@@ -61714,6 +61715,7 @@
 	            plain: true,
 	            width: "80%",
 	            controller: function ($scope) {
+	                $scope.rawItem = question;
 	                $scope.item = {
 	                    question: question && question.question || undefined,
 	                    type: question && question.type || undefined,
@@ -61721,29 +61723,39 @@
 	                    entry_id: question && question.entry_id || entryId,
 	                    trigger_by: question && question.trigger_by && angular.copy(question.trigger_by)
 	                };
+	                console.log(question);
+	                console.log($scope.item);
 	                $scope.status = {
 	                    availableQuestions: []
 	                };
-	                ResourceService.selectQuestions({
-	                    entry_id: $scope.item.entry_id
-	                })
-	                    .then(function (questions) {
-	                        if (question) {
-	                            questions.forEach(function (item, index) {
-	                                if (item.id === question.id) {
-	                                    questions.splice(index, 1);
-	                                }
-	                            });
-	                            if (question.trigger_by && question.trigger_by.question_id) {
-	                                $scope.triggerQuestionChange(question.trigger_by.question_id);
-	                            }
-	                        }
-	                        $scope.status.availableQuestions = questions;
-	                    })
-	                    .catch(function (error) {
-	                        toastr.error("Error on fetching questions");
-	                    })
-	                ;
+	                // ResourceService.selectQuestions({
+	                //     entry_id: $scope.item.entry_id
+	                // })
+	                //     .then(function (questions) {
+	                //         if (question) {
+	                //             questions.forEach(function (item, index) {
+	                //                 if (item.id === question.id) {
+	                //                     questions.splice(index, 1);
+	                //                 }
+	                //             });
+	                //             if (question.trigger_by && question.trigger_by.question_id) {
+	                //                 $scope.triggerQuestionChange(question.trigger_by.question_id);
+	                //             }
+	                //         }
+	                //         $scope.status.availableQuestions = questions;
+	                //     })
+	                //     .catch(function (error) {
+	                //         toastr.error("Error on fetching questions");
+	                //     })
+	                // ;
+	                globalStatus.questions && angular.forEach(globalStatus.questions, function(item, index) {
+	                    console.log("index:" + index);
+	                    console.log(item);
+	                    if (!question || item.id !== question.id) {
+	                        $scope.status.availableQuestions.push(item);
+	                    }
+	                });
+	                console.log($scope.status.availableQuestions);
 	                function getQuestion(id) {
 	                    var chosen = null;
 	                    $scope.status.availableQuestions.forEach(function (item, index) {
@@ -61758,6 +61770,7 @@
 	                    $scope.status.triggerQuestion = getQuestion(questionId);
 	                    console.log($scope.status.triggerQuestion);
 	                };
+	                question && question.trigger_by && $scope.triggerQuestionChange(question.trigger_by.question_id);
 	                $scope.upload = function (file) {
 	                    return tools.uploadImage(file, "static");
 	                };

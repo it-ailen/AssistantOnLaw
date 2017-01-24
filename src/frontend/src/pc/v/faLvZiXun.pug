@@ -56,7 +56,7 @@ div.row(style="max-height: 100%;")
                     ng-class="questionClass(question)", ng-init="selectionMap[question.id] = []")
                         div.hover-actions
                             span.remove-btn.glyphicon.glyphicon-remove(ng-click="deleteQuestion(question)")
-                            span.edit-btn.glyphicon.glyphicon-edit(ng-click="updateQuestion(question)")
+                            span.edit-btn.glyphicon.glyphicon-edit(ng-click="updateQuestion(data.expandedEntry, question)")
                         div(question-input="", question="question", ng-model="selectionMap[question.id]")
                     div.form-group
                         input.btn.btn-primary(type="submit", value="编辑结论",

@@ -6,7 +6,8 @@
 require("./styles/faLvZiXun.less");
 
 function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
-    $scope.data = {};
+    var globalStatus = {};
+    $scope.data = globalStatus;
     function reload() {
         ResourceService.selectClasses()
             .then(function (classes) {
@@ -189,6 +190,7 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
             plain: true,
             width: "80%",
             controller: function ($scope) {
+                $scope.rawItem = question;
                 $scope.item = {
                     question: question && question.question || undefined,
                     type: question && question.type || undefined,
@@ -196,29 +198,39 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
                     entry_id: question && question.entry_id || entryId,
                     trigger_by: question && question.trigger_by && angular.copy(question.trigger_by)
                 };
+                console.log(question);
+                console.log($scope.item);
                 $scope.status = {
                     availableQuestions: []
                 };
-                ResourceService.selectQuestions({
-                    entry_id: $scope.item.entry_id
-                })
-                    .then(function (questions) {
-                        if (question) {
-                            questions.forEach(function (item, index) {
-                                if (item.id === question.id) {
-                                    questions.splice(index, 1);
-                                }
-                            });
-                            if (question.trigger_by && question.trigger_by.question_id) {
-                                $scope.triggerQuestionChange(question.trigger_by.question_id);
-                            }
-                        }
-                        $scope.status.availableQuestions = questions;
-                    })
-                    .catch(function (error) {
-                        toastr.error("Error on fetching questions");
-                    })
-                ;
+                // ResourceService.selectQuestions({
+                //     entry_id: $scope.item.entry_id
+                // })
+                //     .then(function (questions) {
+                //         if (question) {
+                //             questions.forEach(function (item, index) {
+                //                 if (item.id === question.id) {
+                //                     questions.splice(index, 1);
+                //                 }
+                //             });
+                //             if (question.trigger_by && question.trigger_by.question_id) {
+                //                 $scope.triggerQuestionChange(question.trigger_by.question_id);
+                //             }
+                //         }
+                //         $scope.status.availableQuestions = questions;
+                //     })
+                //     .catch(function (error) {
+                //         toastr.error("Error on fetching questions");
+                //     })
+                // ;
+                globalStatus.questions && angular.forEach(globalStatus.questions, function(item, index) {
+                    console.log("index:" + index);
+                    console.log(item);
+                    if (!question || item.id !== question.id) {
+                        $scope.status.availableQuestions.push(item);
+                    }
+                });
+                console.log($scope.status.availableQuestions);
                 function getQuestion(id) {
                     var chosen = null;
                     $scope.status.availableQuestions.forEach(function (item, index) {
@@ -233,6 +245,7 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
                     $scope.status.triggerQuestion = getQuestion(questionId);
                     console.log($scope.status.triggerQuestion);
                 };
+                question && question.trigger_by && $scope.triggerQuestionChange(question.trigger_by.question_id);
                 $scope.upload = function (file) {
                     return tools.uploadImage(file, "static");
                 };
