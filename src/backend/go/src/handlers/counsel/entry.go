@@ -62,7 +62,7 @@ func (self *EntryHandler) PUT(w http.ResponseWriter, r *http.Request) *foolhttp.
 
     mgr := content.GetManager()
     entry := mgr.SelectEntry(id)
-    if entry != nil {
+    if entry == nil {
 		panic(foolhttp.NotFoundHTTPError("Invalid id"))
     }
     mgr.UpdateEntry(id, args)

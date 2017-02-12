@@ -1,0 +1,1 @@
+UPDATE `report_question` SET `trigger_by`=NULL;

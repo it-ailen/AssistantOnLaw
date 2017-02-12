@@ -32,6 +32,7 @@ func (self *Manager) CreateEntry(entry *Entry) string {
 
 func (self *Manager) UpdateEntry(id string, toUpdate SqlKV) {
 	cols, args := toUpdate.Update()
+	args = append(args, id)
 	s := fmt.Sprintf("UPDATE `report_entry` SET %s WHERE `id`=? ", cols)
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {

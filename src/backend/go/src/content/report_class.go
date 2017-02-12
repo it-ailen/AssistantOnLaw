@@ -23,16 +23,16 @@ type Entry struct {
 
 type QuestionTriggerInfo struct {
 	QuestionId string `json:"question_id,omitempty"`
-	Options    []uint `json:"options,omitempty"`
+	Options    []int  `json:"options,omitempty"`
 }
 
 type Question struct {
-	ID        string   `json:"id"`
-	Question  string   `json:"question"`
-	Type      string   `json:"type"`
-	Options   []string `json:"options,omitempty"`
+	ID        string               `json:"id"`
+	Question  string               `json:"question"`
+	Type      string               `json:"type"`
+	Options   []string             `json:"options,omitempty"`
 	TriggerBy *QuestionTriggerInfo `json:"trigger_by,omitempty"`
-	EntryId string `json:"entry_id"`
+	EntryId   string               `json:"entry_id"`
 }
 
 type Conclusion struct {
@@ -92,6 +92,7 @@ func (self *Manager) CreateClass(cls *Class) string {
 
 func (self *Manager) UpdateClass(id string, toUpdate SqlKV) {
 	cols, args := toUpdate.Update()
+	args = append(args, id)
 	s := fmt.Sprintf("UPDATE `report_class` SET %s WHERE `id`=? ", cols)
 	stmt, err := self.conn.Prepare(s)
 	if err != nil {

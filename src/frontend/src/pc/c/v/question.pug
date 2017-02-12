@@ -16,12 +16,7 @@ form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
                 {{ question.question }}
     div.form-group(ng-if="hasFuse && item.trigger_by.question_id")
         label 选项
-        select.form-control(ng-if="status.triggerQuestion.type==='single'", ng-model="item.trigger_by.options",
-        name="triggered_options", required="", ensure-digit="")
-            option(value="")
-            option(ng-repeat="option in status.triggerQuestion.options track by $index", value="{{ $index }}").
-                {{ option }}
-        select.form-control(ng-if="status.triggerQuestion.type==='multiple'", ng-model="item.trigger_by.options",
+        select.form-control(ng-model="item.trigger_by.options",
         name="triggered_options", multiple="", required="", ensure-integer-array="")
             option(ng-repeat="option in status.triggerQuestion.options track by $index", value="{{ $index }}").
                 {{ option }}
@@ -35,7 +30,7 @@ form.form-horizontal(name="form", novalidate="", ng-submit="submit()")
         label 选项数量
         input.form-control(type="number", ng-model="optionCount",
         ng-init="optionCount=item.options && item.options.length || 2",
-        min="2", max="10")
+        min="2", max="20")
     div.form-group(ng-repeat="i in [] | range:optionCount")
         label 选项 {{ $index + 1 }}
         input.form-control(type="text", ng-model="item.options[$index]", required="")

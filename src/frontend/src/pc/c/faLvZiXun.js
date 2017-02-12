@@ -310,12 +310,18 @@ function func($scope, ResourceService, ngDialog, toastr, tools, $sce) {
             if (!chosenOptions || chosenOptions.length <= 0) {
                 classes.push("to_be_triggered");
             } else {
-                var triggered = true;
-                question.trigger_by.options.forEach(function (item, index) {
-                    if (chosenOptions.indexOf(item) < 0) {
-                        triggered = false;
+                var triggered = false;
+                if (question.trigger_by.options.length === 0) {
+                    if (chosenOptions.length > 0) {
+                        triggered = true;
                     }
-                });
+                } else {
+                    question.trigger_by.options.forEach(function (item, index) {
+                        if (chosenOptions.indexOf(item) >= 0) {
+                            triggered = true;
+                        }
+                    });
+                }
                 if (triggered) {
                     classes.push("triggered");
                 } else {

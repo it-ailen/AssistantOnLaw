@@ -2,11 +2,11 @@ package counsel
 
 import (
 	"content"
+	"encoding/json"
 	"foolhttp"
 	"handlers/accounts"
-	"net/http"
-	"numeric_tools"
 	"log"
+	"net/http"
 )
 
 type QuestionHandler struct{}
@@ -33,23 +33,13 @@ func (self *QuestionHandler) POST(w http.ResponseWriter, r *http.Request) *foolh
 			    "properties": {
 			        "question_id": {"type": "string"},
 			        "options": {
-			        	"oneOf": [
-			        		{
-			        			"type": "integer",
-			        			"minimum": 0
-			        		},
-			        		{
-								"type": "array",
-								"items": {
-									"type": "integer",
-									"minimum": 0
-								},
-								"minItems": 1
-			        		}
-			        	]
+			        	"type": "array",
+			        	"items": {
+			        		"type": "integer",
+			        		"minimum": 0
+			        	}
 			        }
-			    },
-			    "required": ["question_id", "options"]
+			    }
 			},
 			"options": {
 			    "type": "array",
@@ -60,33 +50,43 @@ func (self *QuestionHandler) POST(w http.ResponseWriter, r *http.Request) *foolh
 		},
 		"required": ["question", "type", "entry_id", "options"]
 	}`
-	//question := content.Question{}
+	requestArgs := struct {
+		Question  string          `json:"question"`
+		Type      string          `json:"type"`
+		EntryId   string          `json:"entry_id"`
+		Options   []string        `json:"options"`
+		TriggerBy json.RawMessage `json:"trigger_by"`
+	}{}
 	args := make(content.SqlKV)
-	foolhttp.JsonSchemaCheck(r, schemaDefine, &args)
+	foolhttp.JsonSchemaCheck(r, schemaDefine, &requestArgs)
+	args["question"] = requestArgs.Question
+	args["type"] = requestArgs.Type
+	args["entry_id"] = requestArgs.EntryId
+	args["options"] = requestArgs.Options
 
 	mgr := content.GetManager()
-	if triggerBy, ok := args["trigger_by"]; ok {
-		triggerByMap := triggerBy.(map[string]interface{})
-		questionId := triggerByMap["question_id"].(string)
-		q := mgr.SelectQuestion(questionId)
+	if len(requestArgs.TriggerBy) > 0 {
+		triggerArgs := struct {
+			QuestionId string `json:"question_id"`
+			Options    []int  `json:"options"`
+		}{}
+		err := json.Unmarshal(requestArgs.TriggerBy, &triggerArgs)
+		if err != nil {
+			panic(foolhttp.BadArgHTTPError("Invalid json for trigger_by"))
+		}
+		q := mgr.SelectQuestion(triggerArgs.QuestionId)
 		if q == nil {
 			panic(foolhttp.BadArgHTTPError("Invalid question id"))
 		}
-		options := triggerByMap["options"]
-		if optionIndex, ok := options.(float64); ok {
-			index, _ := numeric_tools.EnsureInt(optionIndex)
-			if index < 0 || index >= len(q.Options) {
-				panic(foolhttp.BadArgHTTPError("Invalid option index(%s)", optionIndex))
-			}
-			triggerByMap["options"] = []int{index}
-		} else if optionsArray, ok := options.([]interface{}); ok {
-			for _, val := range optionsArray {
-				index, _ := numeric_tools.EnsureInt(val)
-				if index < 0 || index >= len(q.Options) {
-					panic(foolhttp.BadArgHTTPError("Invalid option index(%s)", val))
-				}
+		for _, index := range triggerArgs.Options {
+			if index >= len(q.Options) {
+				panic(foolhttp.BadArgHTTPError("Invalid option index(%s)", index))
 			}
 		}
+		triggerMap := map[string][]int{
+			triggerArgs.QuestionId: triggerArgs.Options,
+		}
+		args["trigger_by"] = triggerMap
 	}
 	id := mgr.CreateQuestion(args)
 	inst := mgr.SelectQuestion(id)
@@ -108,32 +108,17 @@ func (self *QuestionHandler) PUT(w http.ResponseWriter, r *http.Request) *foolht
 			},
 			"entry_id": {"type": "string"},
 			"trigger_by": {
-			    "oneOf": [
-                    {
-                        "type": "object",
-                        "properties": {
-                            "question_id": {"type": "string"},
-							"options": {
-								"oneOf": [
-									{
-										"type": "integer",
-										"minimum": 0
-									},
-									{
-										"type": "array",
-										"items": {
-											"type": "integer",
-											"minimum": 0
-										},
-										"minItems": 1
-									}
-								]
-							}
-                        },
-                        "required": ["question_id", "options"]
-                    },
-                    {"type": "null"}
-                ]
+			    "type": "object",
+			    "properties": {
+			        "question_id": {"type": ["string", "null"]},
+			        "options": {
+			        	"type": "array",
+			        	"items": {
+			        		"type": "integer",
+			        		"minimum": 0
+			        	}
+			        }
+			    }
 			},
 			"options": {
 			    "type": "array",
@@ -143,37 +128,59 @@ func (self *QuestionHandler) PUT(w http.ResponseWriter, r *http.Request) *foolht
 			}
 		}
 	}`
+	requestArgs := struct {
+		Question  string          `json:"question"`
+		Type      string          `json:"type"`
+		EntryId   string          `json:"entry_id"`
+		Options   []string          `json:"options"`
+		TriggerBy json.RawMessage `json:"trigger_by"`
+	}{}
 	args := make(content.SqlKV)
-	foolhttp.JsonSchemaCheck(r, schemaDefine, &args)
+	foolhttp.JsonSchemaCheck(r, schemaDefine, &requestArgs)
+	if len(requestArgs.Question) > 0 {
+		args["question"] = requestArgs.Question
+	}
+	if len(requestArgs.Type) > 0 {
+		args["type"] = requestArgs.Type
+	}
+	if len(requestArgs.EntryId) > 0 {
+		args["entry_id"] = requestArgs.EntryId
+	}
+	if len(requestArgs.Options) > 0 {
+		args["options"] = requestArgs.Options
+	}
 
 	id := foolhttp.RouteArgument(r, "id")
-
 	mgr := content.GetManager()
 	entry := mgr.SelectQuestion(id)
 	if entry == nil {
 		panic(foolhttp.NotFoundHTTPError("Invalid id"))
 	}
-	if triggerBy, ok := args["trigger_by"]; ok {
-		triggerByMap := triggerBy.(map[string]interface{})
-		questionId := triggerByMap["question_id"].(string)
-		q := mgr.SelectQuestion(questionId)
-		if q == nil {
-			panic(foolhttp.BadArgHTTPError("Invalid question id"))
+	if len(requestArgs.TriggerBy) > 0 {
+		triggerArgs := struct {
+			QuestionId string `json:"question_id"`
+			Options    []int  `json:"options"`
+		}{}
+		err := json.Unmarshal(requestArgs.TriggerBy, &triggerArgs)
+		if err != nil {
+			panic(foolhttp.BadArgHTTPError("Invalid json for trigger_by"))
 		}
-		options := triggerByMap["options"]
-		if optionIndex, ok := options.(float64); ok {
-			index, _ := numeric_tools.EnsureInt(optionIndex)
-			if index < 0 || index >= len(q.Options) {
-				panic(foolhttp.BadArgHTTPError("Invalid option index(%s)", optionIndex))
+		if len(triggerArgs.QuestionId) == 0 {
+			args["trigger_by"] = nil
+		} else {
+			q := mgr.SelectQuestion(triggerArgs.QuestionId)
+			if q == nil {
+				panic(foolhttp.BadArgHTTPError("Invalid question id"))
 			}
-			triggerByMap["options"] = []int{index}
-		} else if optionsArray, ok := options.([]interface{}); ok {
-			for _, val := range optionsArray {
-				index, _ := numeric_tools.EnsureInt(val)
-				if index < 0 || index >= len(q.Options) {
-					panic(foolhttp.BadArgHTTPError("Invalid option index(%s)", val))
+			for _, index := range triggerArgs.Options {
+				if index >= len(q.Options) {
+					panic(foolhttp.BadArgHTTPError("Invalid option index(%s)", index))
 				}
 			}
+			triggerMap := map[string][]int{
+				triggerArgs.QuestionId: triggerArgs.Options,
+			}
+			args["trigger_by"] = triggerMap
 		}
 	}
 	log.Printf("args: %v", args)

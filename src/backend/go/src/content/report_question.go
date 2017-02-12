@@ -130,16 +130,21 @@ func (self *Manager) SelectQuestions(filter *QuestionFilter) []*Question {
 		if err != nil {
 			panic(err)
 		}
-		if triggerBy.Valid {
-			question.TriggerBy = new(QuestionTriggerInfo)
-			err = json.Unmarshal([]byte(triggerBy.String), question.TriggerBy)
-			if err != nil {
-				panic(err)
-			}
-		}
 		err = json.Unmarshal([]byte(optionsJson), &question.Options)
 		if err != nil {
 			panic(err)
+		}
+		if triggerBy.Valid {
+			question.TriggerBy = new(QuestionTriggerInfo)
+			dbView := make(map[string][]int)
+			err = json.Unmarshal([]byte(triggerBy.String), &dbView)
+			if err != nil {
+				panic(err)
+			}
+			for questionId, options := range dbView {
+				question.TriggerBy.QuestionId = questionId
+				question.TriggerBy.Options = options
+			}
 		}
 		res = append(res, &question)
 	}
